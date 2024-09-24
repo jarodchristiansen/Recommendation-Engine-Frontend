@@ -6,6 +6,7 @@ import AudioHeroImage from "../images/audioboard-hero-2.jpg";
 import LesserKnownArtists from "../images/lesser-known-artists.jpg";
 import IndieArtists from "../images/indie-musicians.jpg";
 import BanjoMusician from "../images/banjo.jpeg";
+import DashboardImage from "../images/dashboard.png";
 
 import Image from "next/image";
 
@@ -61,7 +62,7 @@ export default function Home() {
           <Link href="/auth">
             <Button
               onClick={() => console.log("Button clicked")}
-              variant="primary"
+              variant="danger"
             >
               Create Your Playlist
             </Button>
@@ -207,13 +208,18 @@ export default function Home() {
           </p>
           <div className="text-center">
             {/* Replace with a preview image */}
-            <img
-              src="/images/dashboard-preview.png"
+            <Image
+              src={DashboardImage}
               alt="Dashboard Preview"
               className="mx-auto rounded-lg shadow-lg"
+              height={500}
+              width={800}
             />
             <Link href="/dashboard">
-              <Button onClick={() => console.log("Button clicked")}>
+              <Button
+                onClick={() => console.log("Button clicked")}
+                variant="danger"
+              >
                 {" "}
                 Explore Dashboard
               </Button>
@@ -242,20 +248,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      {/* <section className="py-20 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Discover Your Sound?
-          </h2>
-          <Link href="/auth">
-            <button className="bg-blue-500 text-white px-8 py-4 rounded-full hover:bg-blue-600 transition-all">
-              Sign Up Now
-            </button>
-          </Link>
-        </div>
-      </section> */}
-
       <section className="py-20 bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to Find Your Sound?</h2>
@@ -264,7 +256,10 @@ export default function Home() {
             Fan
           </p>
           <Link href="/auth">
-            <Button onClick={() => console.log("Button clicked")}>
+            <Button
+              onClick={() => console.log("Button clicked")}
+              variant="danger"
+            >
               Start for Free
             </Button>
           </Link>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import Button from "../layout/Button";
 
 export default function SearchTrack() {
   const [query, setQuery] = useState("");
@@ -29,12 +30,8 @@ export default function SearchTrack() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button
-          className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-all"
-          onClick={searchTrack}
-        >
-          Search
-        </button>
+
+        <Button onClick={searchTrack}>Search</Button>
       </div>
 
       {/* Search Results */}
