@@ -20,9 +20,9 @@ const CardGrid = ({
       {items.map((item) => (
         <div
           key={item.id}
-          onClick={() => handleItemClick(item.id)}
+          onClick={() => handleItemClick(item)}
           className={`group p-4 border rounded-lg cursor-pointer transition-transform transform ${
-            selectedId === item.id
+            selectedId?.id === item.id
               ? "border-blue-500 scale-105"
               : "border-gray-200"
           } hover:border-blue-500 hover:scale-105`}

@@ -2,18 +2,39 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import Button from "../layout/Button";
 
-export default function SearchTrack() {
+export default function SearchTrack({
+  onSelectSong,
+  selectedSongs,
+  onClearSelection,
+}) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
 
   const searchTrack = async () => {
     const res = await fetch(`/api/search?q=${query}`);
     const data = await res.json();
-
-    console.log({ data });
-
     setResults(data.tracks.items);
+  };
+
+  const isSelected = (track) => {
+    return selectedSongs.some((selectedSong) => selectedSong.id === track.id);
+  };
+
+  const handleTrackClick = (track) => {
+    // If already selected, deselect it
+    if (isSelected(track)) {
+      onSelectSong(
+        selectedSongs.filter((selected) => selected.id !== track.id)
+      );
+    } else {
+      // Otherwise, select it
+      if (selectedSongs.length < 5) {
+        // onSelectSong([track]);
+        onSelectSong([...selectedSongs, track]);
+      }
+    }
   };
 
   return (
@@ -29,13 +50,18 @@ export default function SearchTrack() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button
-          className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-all"
-          onClick={searchTrack}
-        >
-          Search
-        </button>
+
+        <Button onClick={searchTrack}>Search</Button>
       </div>
+
+      {/* Clear Selection Button */}
+      {selectedSongs?.length > 0 && (
+        <div className="mt-4">
+          <Button onClick={onClearSelection} variant="secondary">
+            Clear Selection
+          </Button>
+        </div>
+      )}
 
       {/* Search Results */}
       <div className="mt-6">
@@ -44,7 +70,10 @@ export default function SearchTrack() {
             {results.map((track) => (
               <div
                 key={track.id}
-                className="group p-4 border rounded-lg cursor-pointer transition-transform transform hover:border-blue-500 hover:scale-105"
+                onClick={() => handleTrackClick(track)}
+                className={`group p-4 border rounded-lg cursor-pointer transition-transform transform hover:border-blue-500 hover:scale-105 ${
+                  isSelected(track) ? "border-blue-500 bg-blue-50" : ""
+                }`}
               >
                 <div className="relative w-full h-48 mb-4">
                   <Image

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
@@ -6,7 +5,7 @@ const Button = ({
   children,
   onClick,
   type = "button",
-  variant = "primary",
+  variant = "danger",
   size = "medium",
   isLoading = false,
   disabled = false,

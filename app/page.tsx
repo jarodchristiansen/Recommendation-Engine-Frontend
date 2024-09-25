@@ -1,20 +1,18 @@
 "use client"; // This makes the component a Client Component
 import Link from "next/link";
 
-import AudioHeroImage from "../images/audioboard-hero-2.jpg";
-
-import LesserKnownArtists from "../images/lesser-known-artists.jpg";
-import IndieArtists from "../images/indie-musicians.jpg";
-import BanjoMusician from "../images/banjo.jpeg";
+import AudioHeroImage from "../public/images/audioboard-hero-2.jpg";
+import BanjoMusician from "../public/images/banjo.jpeg";
+import DashboardImage from "../public/images/dashboard.png";
 
 import Image from "next/image";
 
-import collaborativeIcon from "../images/icons/collaborative.svg";
-import contentBasedIcon from "../images/icons/contentBased.svg";
-import cosineSimilarityIcon from "../images/icons/chart.svg";
-import nmfIcon from "../images/icons/matrix.svg";
-import lessPopularIcon from "../images/icons/discoverArtists.svg";
-import customizeIcon from "../images/icons/customize.svg";
+import collaborativeIcon from "../public/images/icons/collaborative.svg";
+import contentBasedIcon from "../public/images/icons/contentBased.svg";
+import cosineSimilarityIcon from "../public/images/icons/chart.svg";
+import nmfIcon from "../public/images/icons/matrix.svg";
+import lessPopularIcon from "../public/images/icons/discoverArtists.svg";
+import customizeIcon from "../public/images/icons/customize.svg";
 
 import "./index.css";
 import Button from "@/components/layout/Button";
@@ -61,7 +59,7 @@ export default function Home() {
           <Link href="/auth">
             <Button
               onClick={() => console.log("Button clicked")}
-              variant="primary"
+              variant="danger"
             >
               Create Your Playlist
             </Button>
@@ -195,31 +193,37 @@ export default function Home() {
       </section>
 
       {/* Control Dashboard Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            Fine-Tune Your Recommendations
-          </h2>
-          <p className="text-lg text-center mb-6">
-            You are in control. Adjust the weight of different factors that
-            matter to you, like reducing the influence of popularity or focusing
-            more on specific genres.
-          </p>
-          <div className="text-center">
-            {/* Replace with a preview image */}
-            <img
-              src="/images/dashboard-preview.png"
-              alt="Dashboard Preview"
-              className="mx-auto rounded-lg shadow-lg"
-            />
+      <section className="py-20 bg-gray-50 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
+          <div className="lg:w-1/2 relative z-10 md:px-8">
+            <h2 className="text-4xl font-extrabold text-gray-900 mb-4">
+              Fine-Tune Your Recommendations
+            </h2>
+            <p className="text-lg text-gray-600 mb-6">
+              You are in control. Adjust the weight of different factors that
+              matter to you, like reducing the influence of popularity or
+              focusing more on specific genres.
+            </p>
             <Link href="/dashboard">
-              <Button onClick={() => console.log("Button clicked")}>
-                {" "}
-                Explore Dashboard
-              </Button>
+              <Button variant="danger">Explore Dashboard</Button>
             </Link>
           </div>
+
+          <div className="lg:w-1/2 mt-8 lg:mt-0 relative">
+            <div className="relative group">
+              <Image
+                src={DashboardImage}
+                alt="Dashboard Preview"
+                className="rounded-lg shadow-lg transform transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl"
+                width={800}
+                height={500}
+              />
+            </div>
+          </div>
         </div>
+
+        {/* Add diagonal divider for smooth section transition */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-gray-50 to-white" />
       </section>
 
       <section className="py-20 bg-white">
@@ -242,20 +246,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      {/* <section className="py-20 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Discover Your Sound?
-          </h2>
-          <Link href="/auth">
-            <button className="bg-blue-500 text-white px-8 py-4 rounded-full hover:bg-blue-600 transition-all">
-              Sign Up Now
-            </button>
-          </Link>
-        </div>
-      </section> */}
-
       <section className="py-20 bg-black text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to Find Your Sound?</h2>
@@ -264,7 +254,10 @@ export default function Home() {
             Fan
           </p>
           <Link href="/auth">
-            <Button onClick={() => console.log("Button clicked")}>
+            <Button
+              onClick={() => console.log("Button clicked")}
+              variant="danger"
+            >
               Start for Free
             </Button>
           </Link>

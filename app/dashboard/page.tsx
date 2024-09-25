@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import RecentlyPlayedTracks from "@/components/search/RecentlyPlayedTracks";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 import Link from "next/link";
 import SearchTrack from "@/components/search/SearchTrack";
+import Button from "@/components/layout/Button";
+import useRequireAuth from "../utils/useRequireAuth";
 
 type SectionProps = {
   title: string;
@@ -15,7 +16,7 @@ type SectionProps = {
 };
 
 export default function Dashboard() {
-  const { data: session } = useSession();
+  const session = useRequireAuth();
 
   const [showRecentlyPlayed, setShowRecentlyPlayed] = useState(false);
   const [showTopTracks, setShowTopTracks] = useState(false);
@@ -162,12 +163,18 @@ const Section = ({ title, toggle, setToggle, children }: SectionProps) => (
   <section className="mb-12">
     <div className="flex items-center justify-between">
       <h2 className="text-2xl font-bold">{title}</h2>
-      <button
+      <Button onClick={() => setToggle(!toggle)}>
+        {" "}
+        {toggle ? "Hide" : "Show"}
+      </Button>
+
+      {/* <button
         onClick={() => setToggle(!toggle)}
         className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-all"
       >
+        {" "}
         {toggle ? "Hide" : "Show"}
-      </button>
+      </button> */}
     </div>
     {toggle && <div className="mt-6">{children}</div>}
   </section>
