@@ -1,5 +1,5 @@
 .bg-banner {
-  background-image: url('../images/banjo.jpeg'); /* Adjust the path */
+  background-image: url('../public/images/banjo.jpeg'); /* Adjust the path */
   background-size: cover;
   background-position: center;
 
@@ -8,7 +8,7 @@
 
 .audio-hero {
   /* background-image: url('../images/audioboard-hero-2.jpg'); */
-  background-image: url('../images/mic-hero.jpg'); /* Adjust the path */
+  background-image: url('../public/images/mic-hero.jpg'); /* Adjust the path */
 
   background-size: contain;
   background-position: center;
