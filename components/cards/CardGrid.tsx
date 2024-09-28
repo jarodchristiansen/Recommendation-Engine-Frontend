@@ -17,7 +17,7 @@ const CardGrid = ({
 }: CardGridProps) => {
   // Checks if an item is already selected
   const isSelected = (track) => {
-    return selectedSongs.some((selectedSong) => selectedSong.id === track.id);
+    return selectedSongs?.some((selectedSong) => selectedSong.id === track.id);
   };
 
   return (

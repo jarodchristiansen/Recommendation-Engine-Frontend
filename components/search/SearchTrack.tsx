@@ -19,18 +19,18 @@ export default function SearchTrack({
   };
 
   const isSelected = (track) => {
-    return selectedSongs.some((selectedSong) => selectedSong.id === track.id);
+    return selectedSongs?.some((selectedSong) => selectedSong.id === track.id);
   };
 
   const handleTrackClick = (track) => {
     // If already selected, deselect it
     if (isSelected(track)) {
       onSelectSong(
-        selectedSongs.filter((selected) => selected.id !== track.id)
+        selectedSongs?.filter((selected) => selected.id !== track.id)
       );
     } else {
       // Otherwise, select it
-      if (selectedSongs.length < 3) {
+      if (selectedSongs?.length < 3) {
         // onSelectSong([track]);
         onSelectSong([...selectedSongs, track]);
       }
