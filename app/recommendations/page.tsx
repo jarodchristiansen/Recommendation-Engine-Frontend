@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import SearchTrack from "@/components/search/SearchTrack";
-import CategorySelection from "@/components/recommendations/CategorySelection";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 import { useSession } from "next-auth/react";
 
@@ -11,6 +10,7 @@ const RecommendationsPage = () => {
 
   const { data: session } = useSession();
 
+  // @ts-ignore: Working on defining types
   const handleSongSelect = (songs) => {
     setSelectedSongs(songs);
   };

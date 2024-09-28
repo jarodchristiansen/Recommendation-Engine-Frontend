@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { useState } from "react";
 
 type CardGridProps = {
+  //@ts-ignore any
   items: any[];
   handleItemClick: (id: string) => void;
   selectedSongs: [] | null;

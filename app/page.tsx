@@ -250,8 +250,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to Find Your Sound?</h2>
           <p className="mb-6">
-            "I found my favorite new artist in less than 10 minutes!" - Music
-            Fan
+            I found my favorite new artist in less than 10 minutes! - Music Fan
           </p>
           <Link href="/auth">
             <Button

@@ -4,9 +4,9 @@ import configuration from "../../cache-configuration";
 let redisInstance: Redis | null = null;
 
 function getRedisConfiguration(): {
-  port: any;
-  host: any;
-  password: any;
+  port: string | undefined;
+  host: string | undefined;
+  password: string | undefined;
 } {
   return configuration.redis;
 }

@@ -22,7 +22,7 @@ export default function Dashboard() {
   const [showTopTracks, setShowTopTracks] = useState(false);
   const [showTopArtists, setShowTopArtists] = useState(false);
   const [showSavedTracks, setShowSavedTracks] = useState(false);
-  const [showFollowedArtists, setShowFollowedArtists] = useState(false);
+
   const [showAudioFeatures, setShowAudioFeatures] = useState(false);
 
   console.log({ session });
