@@ -4,7 +4,7 @@ import { useState } from "react";
 type CardGridProps = {
   items: any[];
   handleItemClick: (id: string) => void;
-  selectedId: string | null;
+  selectedSongs: [] | null;
   type: string;
 };
 
@@ -12,9 +12,14 @@ type CardGridProps = {
 const CardGrid = ({
   items,
   handleItemClick,
-  selectedId,
+  selectedSongs,
   type,
 }: CardGridProps) => {
+  // Checks if an item is already selected
+  const isSelected = (track) => {
+    return selectedSongs.some((selectedSong) => selectedSong.id === track.id);
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {items.map((item) => (
@@ -22,9 +27,7 @@ const CardGrid = ({
           key={item.id}
           onClick={() => handleItemClick(item)}
           className={`group p-4 border rounded-lg cursor-pointer transition-transform transform ${
-            selectedId?.id === item.id
-              ? "border-blue-500 scale-105"
-              : "border-gray-200"
+            isSelected(item) ? "border-blue-500 scale-105" : "border-gray-200"
           } hover:border-blue-500 hover:scale-105`}
         >
           <div className="relative w-full h-48 mb-4">
