@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 type CardGridProps = {
-  // eslint-disable-next-line no-explicit-any
   items: any[];
   handleItemClick: (id: string) => void;
   selectedSongs: [] | null;
@@ -16,7 +15,6 @@ const CardGrid = ({
   type,
 }: CardGridProps) => {
   // Checks if an item is already selected
-  // eslint-disable-next-line no-explicit-any
   const isSelected = (track: any) => {
     return selectedSongs?.some((selectedSong) => selectedSong?.id === track.id);
   };

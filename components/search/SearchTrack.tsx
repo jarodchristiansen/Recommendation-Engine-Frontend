@@ -10,7 +10,6 @@ export default function SearchTrack({
   onClearSelection,
 }) {
   const [query, setQuery] = useState("");
-  // eslint-disable-next-line no-explicit-any
   const [results, setResults] = useState<any[]>([]);
 
   const searchTrack = async () => {

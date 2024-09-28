@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const RecentlyPlayedTracks = () => {
-  // eslint-disable-next-line no-explicit-any
   const [results, setResults] = useState<any[]>([]);
   const [selectedTrack, setSelectedTrack] = useState<string | null>(null);
 
@@ -51,7 +50,6 @@ const RecentlyPlayedTracks = () => {
               </h4>
               <p className="text-sm text-gray-600">
                 {track.track.artists
-                  // eslint-disable-next-line no-explicit-any
                   .map((artist: any) => artist.name)
                   .join(", ")}
               </p>
