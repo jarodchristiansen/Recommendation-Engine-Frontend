@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  //   const { searchParams } = new URL(request.url);
 
   const token = await getToken({ req: request });
 

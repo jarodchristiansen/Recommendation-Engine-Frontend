@@ -10,6 +10,7 @@ export default function SearchTrack({
   onClearSelection,
 }) {
   const [query, setQuery] = useState("");
+  // eslint-disable-next-line no-explicit-any
   const [results, setResults] = useState<any[]>([]);
 
   const searchTrack = async () => {
@@ -88,6 +89,7 @@ export default function SearchTrack({
                   {track.name}
                 </h4>
                 <p className="text-sm text-gray-600">
+                  {/* {eslint-disable-next-line no-explicit-any} */}
                   {track.artists.map((artist: any) => artist.name).join(", ")}
                 </p>
               </div>

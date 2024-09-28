@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 
 export async function GET(request: NextRequest) {
   //   const token = request.headers.get("Authorization")?.split(" ")[1];
-  const { searchParams } = new URL(request.url);
+  //   const { searchParams } = new URL(request.url);
   const token = await getToken({ req: request });
 
   if (!token) {

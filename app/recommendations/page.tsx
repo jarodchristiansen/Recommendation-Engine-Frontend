@@ -10,8 +10,8 @@ const RecommendationsPage = () => {
 
   const { data: session } = useSession();
 
-  // @ts-ignore: Working on defining types
-  const handleSongSelect = (songs) => {
+  // eslint-disable-next-line no-explicit-any
+  const handleSongSelect = (songs: any) => {
     setSelectedSongs(songs);
   };
 

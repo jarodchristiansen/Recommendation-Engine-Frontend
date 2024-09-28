@@ -14,7 +14,7 @@ const AuthPage = () => {
 
       <div className="mt-4">
         <p className="text-sm text-gray-600">
-          Don't have an account? Signing in via Spotify will automatically
+          Don&apos;t have an account? Signing in via Spotify will automatically
           create one.
         </p>
       </div>

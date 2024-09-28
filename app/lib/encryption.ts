@@ -1,9 +1,9 @@
-import crypto from "crypto";
+// import crypto from "crypto";
 
-// functions to encrypt and decrypt the access token
-const algorithm = "aes-256-cbc";
-const key = crypto.randomBytes(32);
-const iv = crypto.randomBytes(16);
+// // functions to encrypt and decrypt the access token
+// const algorithm = "aes-256-cbc";
+// const key = crypto.randomBytes(32);
+// const iv = crypto.randomBytes(16);
 
 // export function encrypt(text: string) {
 //   const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);

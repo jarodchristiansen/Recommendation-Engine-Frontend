@@ -4,7 +4,9 @@ import CardGrid from "@/components/cards/CardGrid";
 type DynamicDataDisplayProps = {
   endpoint: string;
   type: string;
+  // eslint-disable-next-line no-explicit-any
   onSelectSong: (songs: any[]) => void;
+  // eslint-disable-next-line no-explicit-any
   selectedSongs: any[];
   onClearSelection: () => void;
 };
@@ -35,14 +37,14 @@ const DynamicDataDisplay = ({
   }, []);
 
   // Checks if an item is already selected
-  // @ts-ignore: Working on defining types
-  const isSelected = (track) => {
+  // eslint-disable-next-line no-explicit-any
+  const isSelected = (track: any) => {
     return selectedSongs?.some((selectedSong) => selectedSong.id === track.id);
   };
 
   // Handle item click: select or deselect
-  // @ts-ignore: Working on defining types
-  const handleItemClick = (track) => {
+  // eslint-disable-next-line no-explicit-any
+  const handleItemClick = (track: any) => {
     if (isSelected(track)) {
       // Deselect if already selected
       onSelectSong(
