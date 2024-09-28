@@ -30,7 +30,7 @@ export default function SearchTrack({
       );
     } else {
       // Otherwise, select it
-      if (selectedSongs.length < 5) {
+      if (selectedSongs.length < 3) {
         // onSelectSong([track]);
         onSelectSong([...selectedSongs, track]);
       }
