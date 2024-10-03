@@ -1,7 +1,15 @@
 // components/recommendations/CategorySelection.tsx
 import React from "react";
 
-const CategorySelection = ({ onSelectSong, selectedSongs }) => {
+type CategorySelectionProps = {
+  onSelectSong: (song: { name: string; artist: string }) => void;
+  selectedSongs: { name: string; artist: string }[];
+};
+
+const CategorySelection = ({
+  onSelectSong,
+  selectedSongs,
+}: CategorySelectionProps) => {
   // This would fetch and display categories like "Recently Played" or "Top Tracks"
   const categories = [
     {

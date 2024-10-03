@@ -4,11 +4,17 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "../layout/Button";
 
+type SearchTrackProps = {
+  onSelectSong?: (track: any) => void;
+  selectedSongs?: any[];
+  onClearSelection?: () => void;
+};
+
 export default function SearchTrack({
   onSelectSong,
   selectedSongs,
   onClearSelection,
-}) {
+}: SearchTrackProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
 
@@ -18,20 +24,22 @@ export default function SearchTrack({
     setResults(data.tracks.items);
   };
 
-  const isSelected = (track) => {
+  const isSelected = (track: any) => {
     return selectedSongs?.some((selectedSong) => selectedSong.id === track.id);
   };
 
-  const handleTrackClick = (track) => {
+  const handleTrackClick = (track: any) => {
     // If already selected, deselect it
-    if (isSelected(track)) {
+    if (isSelected(track) && typeof onSelectSong === "function") {
       onSelectSong(
         selectedSongs?.filter((selected) => selected.id !== track.id)
       );
     } else {
       // Otherwise, select it
-      if (selectedSongs?.length < 3) {
+      //   @ts-ignore
+      if (selectedSongs?.length < 3 && typeof onSelectSong === "function") {
         // onSelectSong([track]);
+        // @ts-ignore
         onSelectSong([...selectedSongs, track]);
       }
     }
@@ -55,6 +63,7 @@ export default function SearchTrack({
       </div>
 
       {/* Clear Selection Button */}
+      {/* @ts-ignore */}
       {selectedSongs?.length > 0 && (
         <div className="mt-4">
           <Button onClick={onClearSelection} variant="secondary">

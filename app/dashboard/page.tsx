@@ -3,6 +3,7 @@
 import { useState } from "react";
 import RecentlyPlayedTracks from "@/components/search/RecentlyPlayedTracks";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
+
 import Link from "next/link";
 import SearchTrack from "@/components/search/SearchTrack";
 import Button from "@/components/layout/Button";

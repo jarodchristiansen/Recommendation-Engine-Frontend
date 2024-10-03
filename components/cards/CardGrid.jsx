@@ -1,21 +1,9 @@
 import Image from "next/image";
 
-type CardGridProps = {
-  items: any[];
-  handleItemClick: (id: string) => void;
-  selectedSongs: [] | null;
-  type: string;
-};
-
 // Generic Card Component for displaying tracks, artists, etc.
-const CardGrid = ({
-  items,
-  handleItemClick,
-  selectedSongs,
-  type,
-}: CardGridProps) => {
+const CardGrid = ({ items, handleItemClick, selectedSongs, type }) => {
   // Checks if an item is already selected
-  const isSelected = (track: any) => {
+  const isSelected = (track) => {
     return selectedSongs?.some((selectedSong) => selectedSong?.id === track.id);
   };
 

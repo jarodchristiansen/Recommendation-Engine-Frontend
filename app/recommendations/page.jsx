@@ -3,14 +3,15 @@
 import { useState } from "react";
 import SearchTrack from "@/components/search/SearchTrack";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
+
 import { useSession } from "next-auth/react";
 
 const RecommendationsPage = () => {
-  const [selectedSongs, setSelectedSongs] = useState<any[]>([]); // Track selected songs
+  const [selectedSongs, setSelectedSongs] = useState([]); // Track selected songs
 
   const { data: session } = useSession();
 
-  const handleSongSelect = (songs: any) => {
+  const handleSongSelect = (songs) => {
     setSelectedSongs(songs);
   };
 

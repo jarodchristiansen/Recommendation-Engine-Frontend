@@ -1,21 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import CardGrid from "@/components/cards/CardGrid";
 
-type DynamicDataDisplayProps = {
-  endpoint: string;
-  type: string;
-  onSelectSong: (songs: any[]) => void;
-  selectedSongs: any[];
-  onClearSelection: () => void;
-};
-
 const DynamicDataDisplay = ({
   endpoint,
   type,
-  onSelectSong,
-  selectedSongs,
-  onClearSelection,
-}: DynamicDataDisplayProps) => {
+  onSelectSong = null,
+  selectedSongs = null,
+  onClearSelection = null,
+}) => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -35,12 +27,12 @@ const DynamicDataDisplay = ({
   }, []);
 
   // Checks if an item is already selected
-  const isSelected = (track: any) => {
+  const isSelected = (track) => {
     return selectedSongs?.some((selectedSong) => selectedSong.id === track.id);
   };
 
   // Handle item click: select or deselect
-  const handleItemClick = (track: any) => {
+  const handleItemClick = (track) => {
     if (isSelected(track)) {
       // Deselect if already selected
       onSelectSong(
