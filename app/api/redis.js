@@ -1,13 +1,9 @@
-import Redis, { RedisOptions } from "ioredis";
+import Redis from "ioredis";
 import configuration from "../../cache-configuration";
 
-let redisInstance: Redis | null = null;
+let redisInstance = null;
 
-function getRedisConfiguration(): {
-  port: string | undefined;
-  host: string | undefined;
-  password: string | undefined;
-} {
+function getRedisConfiguration() {
   return configuration.redis;
 }
 
@@ -23,13 +19,13 @@ export function getRedisClient() {
   console.log("NO REDIS INSTANCE", { redisInstance });
 
   const config = getRedisConfiguration();
-  const options: RedisOptions = {
+  const options = {
     host: config.host,
     lazyConnect: true,
     showFriendlyErrorStack: true,
     enableAutoPipelining: true,
     maxRetriesPerRequest: 0,
-    retryStrategy: (times: number) => {
+    retryStrategy: (times) => {
       if (times > 3) {
         throw new Error(`[Redis] Could not connect after ${times} attempts`);
       }
@@ -47,7 +43,7 @@ export function getRedisClient() {
 
   redisInstance = new Redis(options);
 
-  redisInstance.on("error", (error: unknown) => {
+  redisInstance.on("error", (error) => {
     console.warn("[Redis] Error connecting", error);
   });
 
