@@ -36,10 +36,10 @@ export default function SearchTrack({
       );
     } else {
       // Otherwise, select it
-      //   @ts-ignore
+      //   @ts-expect-error
       if (selectedSongs?.length < 3 && typeof onSelectSong === "function") {
         // onSelectSong([track]);
-        // @ts-ignore
+        // @ts-expect-error
         onSelectSong([...selectedSongs, track]);
       }
     }
@@ -63,7 +63,7 @@ export default function SearchTrack({
       </div>
 
       {/* Clear Selection Button */}
-      {/* @ts-ignore */}
+      {/* @ts-expect-error */}
       {selectedSongs?.length > 0 && (
         <div className="mt-4">
           <Button onClick={onClearSelection} variant="secondary">
