@@ -40,7 +40,7 @@ const Header = () => {
             key={id}
             className="px-4 cursor-pointer capitalize font-medium text-gray-500 hover:scale-105 hover:text-white duration-200"
           >
-            <Link href={`${baseUrl}/${link}`}>{text}</Link>
+            <Link href={`${baseUrl}${link}`}>{text}</Link>
           </li>
         ))}
       </ul>
