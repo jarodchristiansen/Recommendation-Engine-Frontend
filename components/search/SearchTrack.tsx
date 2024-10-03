@@ -36,10 +36,10 @@ export default function SearchTrack({
       );
     } else {
       // Otherwise, select it
-      //   @ts-expect-error
+      //   @ts-expect-error selectedSongs may be undefined
       if (selectedSongs?.length < 3 && typeof onSelectSong === "function") {
         // onSelectSong([track]);
-        // @ts-expect-error
+        // @ts-expect-error selectedSongs may be undefined
         onSelectSong([...selectedSongs, track]);
       }
     }
@@ -63,7 +63,7 @@ export default function SearchTrack({
       </div>
 
       {/* Clear Selection Button */}
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error selectedSongs may be undefined*/}
       {selectedSongs?.length > 0 && (
         <div className="mt-4">
           <Button onClick={onClearSelection} variant="secondary">
