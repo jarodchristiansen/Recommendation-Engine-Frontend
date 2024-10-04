@@ -3,27 +3,27 @@ import { NextResponse, NextRequest } from "next/server";
 
 import { getRedisClient } from "../redis"; // Use your Redis client from the helper file
 
-// async function getSpotifyToken() {
-//   const clientId = process.env.SPOTIFY_CLIENT_ID;
-//   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+async function getSpotifyToken() {
+  const clientId = process.env.SPOTIFY_CLIENT_ID;
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
-//   const authString = Buffer.from(`${clientId}:${clientSecret}`).toString(
-//     "base64"
-//   );
+  const authString = Buffer.from(`${clientId}:${clientSecret}`).toString(
+    "base64"
+  );
 
-//   const response = await fetch("https://accounts.spotify.com/api/token", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//       Authorization: `Basic ${authString}`,
-//     },
-//     body: "grant_type=client_credentials",
-//   });
+  const response = await fetch("https://accounts.spotify.com/api/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Basic ${authString}`,
+    },
+    body: "grant_type=client_credentials",
+  });
 
-//   const data = await response.json();
+  const data = await response.json();
 
-//   return data.access_token;
-// }
+  return data.access_token;
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -33,11 +33,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Query is required" }, { status: 400 });
   }
 
-  const token = await getToken({ req: request });
+  let token = await getToken({ req: request });
 
-  // if (!token) {
-  //   token = await getSpotifyToken(); // Get the access token dynamically
-  // }
+  if (!token) {
+    token = await getSpotifyToken(); // Get the access token dynamically
+  }
 
   const params = new URLSearchParams({ q, type: "track" });
 

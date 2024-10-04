@@ -21,6 +21,9 @@ export default function SearchTrack({
   const searchTrack = async () => {
     const res = await fetch(`/api/search?q=${query}`);
     const data = await res.json();
+
+    console.log({ data });
+
     setResults(data.tracks.items);
   };
 
