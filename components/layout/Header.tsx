@@ -6,7 +6,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 const Header = () => {
   const [nav, setNav] = useState(false);
 
-  const baseUrl = process.env.BASE_URL;
+  const baseUrl = process.env.BASE_URL || "";
 
   const links = [
     { id: 1, text: "home", link: "/" },
