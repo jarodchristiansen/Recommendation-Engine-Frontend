@@ -1,6 +1,16 @@
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
+type ButtonProps = {
+  children: React.ReactNode;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  variant?: "primary" | "secondary" | "success" | "danger" | "dark";
+  size?: "small" | "medium" | "large";
+  isLoading?: boolean;
+  disabled?: boolean;
+};
+
 const Button = ({
   children,
   onClick,
@@ -9,7 +19,7 @@ const Button = ({
   size = "medium",
   isLoading = false,
   disabled = false,
-}) => {
+}: ButtonProps) => {
   // Conditional classes for different button styles
   const buttonClasses = classNames(
     "transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500", // Base styles

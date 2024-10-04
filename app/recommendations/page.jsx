@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import SearchTrack from "@/components/search/SearchTrack";
-import CategorySelection from "@/components/recommendations/CategorySelection";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
+
 import { useSession } from "next-auth/react";
 
 const RecommendationsPage = () => {

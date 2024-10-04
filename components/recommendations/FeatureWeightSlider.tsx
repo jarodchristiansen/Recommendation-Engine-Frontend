@@ -1,7 +1,7 @@
 // components/recommendations/FeatureWeightSlider.tsx
 import React from "react";
 
-const FeatureWeightSlider = ({ weights, onWeightChange }) => {
+const FeatureWeightSlider = ({ weights, onWeightChange }: any) => {
   const features = [
     "popularity",
     "danceability",

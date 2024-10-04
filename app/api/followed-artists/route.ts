@@ -1,11 +1,11 @@
 // File: app/api/recently-played/route.ts
 import { getToken } from "next-auth/jwt";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+export async function GET(request: NextRequest) {
+  //   const { searchParams } = new URL(request.url);
 
-  const token = await getToken({ req: request as any });
+  const token = await getToken({ req: request });
 
   if (!token) {
     return NextResponse.json({ error: "No access token" }, { status: 401 });

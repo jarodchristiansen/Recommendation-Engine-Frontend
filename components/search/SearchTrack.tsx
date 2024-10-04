@@ -4,34 +4,45 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "../layout/Button";
 
+type SearchTrackProps = {
+  onSelectSong?: (track: any) => void;
+  selectedSongs?: any[];
+  onClearSelection?: () => void;
+};
+
 export default function SearchTrack({
   onSelectSong,
   selectedSongs,
   onClearSelection,
-}) {
+}: SearchTrackProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
 
   const searchTrack = async () => {
     const res = await fetch(`/api/search?q=${query}`);
     const data = await res.json();
+
+    console.log({ data });
+
     setResults(data.tracks.items);
   };
 
-  const isSelected = (track) => {
-    return selectedSongs.some((selectedSong) => selectedSong.id === track.id);
+  const isSelected = (track: any) => {
+    return selectedSongs?.some((selectedSong) => selectedSong.id === track.id);
   };
 
-  const handleTrackClick = (track) => {
+  const handleTrackClick = (track: any) => {
     // If already selected, deselect it
-    if (isSelected(track)) {
+    if (isSelected(track) && typeof onSelectSong === "function") {
       onSelectSong(
-        selectedSongs.filter((selected) => selected.id !== track.id)
+        selectedSongs?.filter((selected) => selected.id !== track.id)
       );
     } else {
       // Otherwise, select it
-      if (selectedSongs.length < 3) {
+      //   @ts-expect-error selectedSongs may be undefined
+      if (selectedSongs?.length < 3 && typeof onSelectSong === "function") {
         // onSelectSong([track]);
+        // @ts-expect-error selectedSongs may be undefined
         onSelectSong([...selectedSongs, track]);
       }
     }
@@ -55,6 +66,7 @@ export default function SearchTrack({
       </div>
 
       {/* Clear Selection Button */}
+      {/* @ts-expect-error selectedSongs may be undefined*/}
       {selectedSongs?.length > 0 && (
         <div className="mt-4">
           <Button onClick={onClearSelection} variant="secondary">
@@ -88,6 +100,7 @@ export default function SearchTrack({
                   {track.name}
                 </h4>
                 <p className="text-sm text-gray-600">
+                  {/* {eslint-disable-next-line no-explicit-any} */}
                   {track.artists.map((artist: any) => artist.name).join(", ")}
                 </p>
               </div>

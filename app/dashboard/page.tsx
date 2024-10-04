@@ -3,10 +3,11 @@
 import { useState } from "react";
 import RecentlyPlayedTracks from "@/components/search/RecentlyPlayedTracks";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
+
 import Link from "next/link";
 import SearchTrack from "@/components/search/SearchTrack";
 import Button from "@/components/layout/Button";
-import useRequireAuth from "../utils/useRequireAuth";
+import useRequireAuth from "../lib/useRequireAuth";
 
 type SectionProps = {
   title: string;
@@ -22,7 +23,7 @@ export default function Dashboard() {
   const [showTopTracks, setShowTopTracks] = useState(false);
   const [showTopArtists, setShowTopArtists] = useState(false);
   const [showSavedTracks, setShowSavedTracks] = useState(false);
-  const [showFollowedArtists, setShowFollowedArtists] = useState(false);
+
   const [showAudioFeatures, setShowAudioFeatures] = useState(false);
 
   console.log({ session });
@@ -90,21 +91,6 @@ export default function Dashboard() {
             />
           )}
         </Section>
-
-        {/* Followed Artists Section NEED TO UPDATE CLIENT SCOPE FOR THIS IN NEXT-AUTH */}
-        {/* <Section
-          title="Your Followed Artists"
-          toggle={showFollowedArtists}
-          setToggle={setShowFollowedArtists}
-        >
-          {showFollowedArtists && session && (
-            <DynamicDataDisplay
-              endpoint="/api/followed-artists"
-              token={session.accessToken}
-              type="artist"
-            />
-          )}
-        </Section> */}
 
         {/* Audio Features Section */}
         <Section
