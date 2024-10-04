@@ -1,6 +1,6 @@
 // File: app/api/recently-played/route.ts
 import { NextResponse, NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+// import { getToken } from "next-auth/jwt";
 
 export async function GET(request: NextRequest) {
   //   const token = request.headers.get("Authorization")?.split(" ")[1];

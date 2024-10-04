@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import SearchTrack from "@/components/search/SearchTrack";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 
@@ -25,21 +25,6 @@ const RecommendationsPage = () => {
   const handleClearSelection = () => {
     setSelectedSongs([]);
   };
-
-  // const fetchRecommendations = async () => {
-  //   // Call the API to fetch recommendations
-  //   console.log("Fetching recommendations...");
-
-  //   const res = await fetch(
-  //     `/api/recommendations?track=${selectedSongs[0].id}`
-  //   );
-
-  //   const data = await res.json();
-
-  //   if (data?.recommendations) {
-  //     setRecommendations(data.recommendations);
-  //   }
-  // };
 
   return (
     <div className="container mx-auto p-6">
