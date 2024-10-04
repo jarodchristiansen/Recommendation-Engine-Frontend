@@ -24,6 +24,7 @@ const CardGrid = ({ items, handleItemClick, selectedSongs, type }) => {
               objectFit="cover"
               className="rounded-lg"
               alt={`${item.name} ${type}`}
+              unoptimized={true} // Disable optimization for this image
             />
           </div>
           <h4 className="text-lg font-bold text-gray-900">{item.name}</h4>
