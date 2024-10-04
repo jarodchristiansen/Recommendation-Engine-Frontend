@@ -2,9 +2,10 @@
   "images": {
     "sizes": [256, 640, 1080, 2048, 3840],
     "localPatterns": [{
-      "pathname": "^/assets/.*$",
+      "pathname": "^/public/.*$",
       "search": ""
     }],
+    "domains": ["i.scdn.co"],
    "remotePatterns": [
       {
         "protocol": "https",
@@ -12,11 +13,6 @@
         "port": "",
         "pathname": "/image/*"
       }
-    ],
-    "minimumCacheTTL": 60,
-    "formats": ["image/webp"],
-    "dangerouslyAllowSVG": false,
-    "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
-    "contentDispositionType": "inline"
+    ]
   }
 }

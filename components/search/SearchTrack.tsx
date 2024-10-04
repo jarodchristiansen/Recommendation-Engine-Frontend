@@ -94,6 +94,7 @@ export default function SearchTrack({
                     objectFit="cover"
                     className="rounded-lg"
                     alt={`${track.name} album cover`}
+                    unoptimized={true} // Disable optimization for this image
                   />
                 </div>
                 <h4 className="text-lg font-bold text-gray-900">
