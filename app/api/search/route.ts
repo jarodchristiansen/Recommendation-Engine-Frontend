@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
   const params = new URLSearchParams({ q, type: "track" });
 
   const redisClient = getRedisClient();
-  const cacheKey = `search:${q}`; // Create a Redis key based on the query
+  const cacheKey = `search:${q.toUpperCase()}`; // Create a Redis key based on the query
 
   // // Try to get the cached result first
   const cachedData = await redisClient.get(cacheKey);

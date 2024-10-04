@@ -1,23 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import SearchTrack from "@/components/search/SearchTrack";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 
 import { useSession } from "next-auth/react";
+import Button from "@/components/layout/Button";
 
 const RecommendationsPage = () => {
   const [selectedSongs, setSelectedSongs] = useState([]); // Track selected songs
+  const [showRecButton, setShowRecButton] = useState(false);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   const { data: session } = useSession();
 
   const handleSongSelect = (songs) => {
     setSelectedSongs(songs);
+
+    if (selectedSongs.length == 0) {
+      setShowRecButton(true);
+    }
   };
 
   const handleClearSelection = () => {
     setSelectedSongs([]);
   };
+
+  // const fetchRecommendations = async () => {
+  //   // Call the API to fetch recommendations
+  //   console.log("Fetching recommendations...");
+
+  //   const res = await fetch(
+  //     `/api/recommendations?track=${selectedSongs[0].id}`
+  //   );
+
+  //   const data = await res.json();
+
+  //   if (data?.recommendations) {
+  //     setRecommendations(data.recommendations);
+  //   }
+  // };
 
   return (
     <div className="container mx-auto p-6">
@@ -50,7 +72,7 @@ const RecommendationsPage = () => {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Your Top Tracks</h2>
           <DynamicDataDisplay
-            endpoint="/api/top/tracks"
+            endpoint="/api/top/tracks/"
             type="track"
             onSelectSong={handleSongSelect}
             selectedSongs={selectedSongs}
@@ -72,6 +94,19 @@ const RecommendationsPage = () => {
           ))}
         </ul>
       </div>
+
+      {showRecButton && (
+        <Button onClick={() => setShowRecommendations(true)}>
+          Build Recommendations
+        </Button>
+      )}
+
+      {showRecommendations && (
+        <DynamicDataDisplay
+          endpoint={`/api/recommendations?track=${selectedSongs[0].id}`}
+          type="recommendations"
+        />
+      )}
     </div>
   );
 };

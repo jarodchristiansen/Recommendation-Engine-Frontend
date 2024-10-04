@@ -49,11 +49,19 @@ const DynamicDataDisplay = ({
 
     return data.map((item) => {
       switch (type) {
+        case "recommendations":
+          return {
+            id: item.track_id,
+            name: item.track_name,
+            subtext: item.artist_name,
+            image: item?.album?.images[0]?.url,
+          };
+
         case "track":
           return {
             id: item?.id,
             name: item?.name,
-            subtext: item?.artists.map((artist) => artist.name).join(", "),
+            subtext: item?.artists?.map((artist) => artist.name).join(", "),
             image: item?.album?.images[0]?.url,
           };
         case "saved-track":
@@ -78,32 +86,7 @@ const DynamicDataDisplay = ({
     });
   }, [data, handleItemClick]);
 
-  // // Map data fields to match the CardGrid expectations
-  // const mappedItems = data?.map((item) => {
-  //   if (type === "track") {
-  //     return {
-  //       id: item?.id,
-  //       name: item?.name,
-  //       subtext: item?.artists.map((artist) => artist.name).join(", "),
-  //       image: item?.album?.images[0]?.url,
-  //     };
-  //   } else if (type === "saved-track") {
-  //     return {
-  //       id: item?.track?.id,
-  //       name: item?.track?.name,
-  //       subtext: item?.track?.artists.map((artist) => artist.name).join(", "),
-  //       image: item?.track?.album?.images[0]?.url,
-  //     };
-  //   } else if (type === "artist") {
-  //     return {
-  //       id: item.id,
-  //       name: item.name,
-  //       subtext: "Artist",
-  //       image: item.images[0]?.url,
-  //     };
-  //   }
-  //   return {};
-  // });
+  console.log({ mappedItems, data });
 
   return (
     <div className="mt-4 p-6 bg-white shadow-md rounded-lg">
