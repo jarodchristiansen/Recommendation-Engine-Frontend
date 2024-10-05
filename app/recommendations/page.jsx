@@ -5,18 +5,26 @@ import SearchTrack from "@/components/search/SearchTrack";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 
 import { useSession } from "next-auth/react";
+import Button from "@/components/layout/Button";
 
 const RecommendationsPage = () => {
   const [selectedSongs, setSelectedSongs] = useState([]); // Track selected songs
+  const [showRecButton, setShowRecButton] = useState(false);
+  const [showRecommendations, setShowRecommendations] = useState(false);
 
   const { data: session } = useSession();
 
   const handleSongSelect = (songs) => {
     setSelectedSongs(songs);
+
+    if (selectedSongs.length == 0) {
+      setShowRecButton(true);
+    }
   };
 
   const handleClearSelection = () => {
     setSelectedSongs([]);
+    setShowRecButton(false);
   };
 
   return (
@@ -50,7 +58,7 @@ const RecommendationsPage = () => {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Your Top Tracks</h2>
           <DynamicDataDisplay
-            endpoint="/api/top/tracks"
+            endpoint="/api/top/tracks/"
             type="track"
             onSelectSong={handleSongSelect}
             selectedSongs={selectedSongs}
@@ -65,13 +73,25 @@ const RecommendationsPage = () => {
         <ul>
           {selectedSongs.map((song, index) => (
             <li key={index}>
-              {console.log({ song })}
               {song.name} by {song.subtext || song.artists[0]?.name} - Id:{" "}
               {song?.id}
             </li>
           ))}
         </ul>
       </div>
+
+      {showRecButton && (
+        <Button onClick={() => setShowRecommendations(true)}>
+          Build Recommendations
+        </Button>
+      )}
+
+      {showRecommendations && (
+        <DynamicDataDisplay
+          endpoint={`/api/recommendations?track=${selectedSongs[0]?.id}`}
+          type="recommendations"
+        />
+      )}
     </div>
   );
 };
