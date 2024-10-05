@@ -72,7 +72,6 @@ const RecommendationsPage = () => {
         <ul>
           {selectedSongs.map((song, index) => (
             <li key={index}>
-              {console.log({ song })}
               {song.name} by {song.subtext || song.artists[0]?.name} - Id:{" "}
               {song?.id}
             </li>
