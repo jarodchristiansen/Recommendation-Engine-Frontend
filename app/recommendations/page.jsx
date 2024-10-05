@@ -24,6 +24,7 @@ const RecommendationsPage = () => {
 
   const handleClearSelection = () => {
     setSelectedSongs([]);
+    setShowRecButton(false);
   };
 
   return (
@@ -87,7 +88,7 @@ const RecommendationsPage = () => {
 
       {showRecommendations && (
         <DynamicDataDisplay
-          endpoint={`/api/recommendations?track=${selectedSongs[0].id}`}
+          endpoint={`/api/recommendations?track=${selectedSongs[0]?.id}`}
           type="recommendations"
         />
       )}
