@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchTrack from "@/components/search/SearchTrack";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 
@@ -16,16 +16,20 @@ const RecommendationsPage = () => {
 
   const handleSongSelect = (songs) => {
     setSelectedSongs(songs);
-
-    if (selectedSongs.length == 0) {
-      setShowRecButton(true);
-    }
   };
 
   const handleClearSelection = () => {
     setSelectedSongs([]);
-    setShowRecButton(false);
   };
+
+  useEffect(() => {
+    if (selectedSongs?.length >= 1) {
+      setShowRecButton(true);
+    } else {
+      setShowRecButton(false);
+      setShowRecommendations(false);
+    }
+  }, [selectedSongs]);
 
   return (
     <div className="container mx-auto p-6">
@@ -75,6 +79,16 @@ const RecommendationsPage = () => {
             <li key={index}>
               {song.name} by {song.subtext || song.artists[0]?.name} - Id:{" "}
               {song?.id}
+              <Button
+                size="small"
+                onClick={() =>
+                  setSelectedSongs(
+                    selectedSongs.filter((track) => track.id != song.id)
+                  )
+                }
+              >
+                X
+              </Button>
             </li>
           ))}
         </ul>
@@ -86,7 +100,7 @@ const RecommendationsPage = () => {
         </Button>
       )}
 
-      {showRecommendations && (
+      {showRecommendations && selectedSongs?.length > 0 && (
         <DynamicDataDisplay
           endpoint={`/api/recommendations?track=${selectedSongs[0]?.id}`}
           type="recommendations"

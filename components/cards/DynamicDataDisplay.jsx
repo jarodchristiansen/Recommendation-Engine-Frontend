@@ -9,6 +9,7 @@ const DynamicDataDisplay = ({
   onClearSelection = null,
 }) => {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -17,6 +18,7 @@ const DynamicDataDisplay = ({
       setData(result.items || result); // Adjust if response is structured differently
     } catch (error) {
       console.error("Error fetching data:", error);
+      setError(error);
     }
   };
 
@@ -38,7 +40,7 @@ const DynamicDataDisplay = ({
       onSelectSong(
         selectedSongs.filter((selected) => selected.id !== track.id)
       );
-    } else if (selectedSongs.length < 3) {
+    } else if (selectedSongs?.length < 3) {
       // Select a track
       onSelectSong([...selectedSongs, track]);
     }
@@ -102,7 +104,7 @@ const DynamicDataDisplay = ({
         </div>
       )}
 
-      {data.length > 0 ? (
+      {data.length > 0 && !error && (
         <CardGrid
           items={mappedItems}
           handleItemClick={handleItemClick}
@@ -110,8 +112,16 @@ const DynamicDataDisplay = ({
           // selectedId={selectedItem}
           type={type}
         />
-      ) : (
-        <p>Loading...</p>
+      )}
+
+      {error && (
+        <div className="text-center text-red-500">
+          Error fetching data. Please try again later.
+        </div>
+      )}
+
+      {!data.length && !error && (
+        <div className="text-center text-gray-500">Loading...</div>
       )}
     </div>
   );
