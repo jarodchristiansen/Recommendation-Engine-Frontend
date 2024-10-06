@@ -23,7 +23,7 @@ const RecommendationsPage = () => {
   };
 
   useEffect(() => {
-    if (selectedSongs.length >= 1) {
+    if (selectedSongs?.length >= 1) {
       setShowRecButton(true);
     } else {
       setShowRecButton(false);

@@ -40,7 +40,7 @@ const DynamicDataDisplay = ({
       onSelectSong(
         selectedSongs.filter((selected) => selected.id !== track.id)
       );
-    } else if (selectedSongs.length < 3) {
+    } else if (selectedSongs?.length < 3) {
       // Select a track
       onSelectSong([...selectedSongs, track]);
     }
