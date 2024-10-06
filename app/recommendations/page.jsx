@@ -58,7 +58,7 @@ const RecommendationsPage = () => {
       </section> */}
 
       {/* Dynamic Data Display for Top Tracks */}
-      {/* {session && (
+      {session && (
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Your Top Tracks</h2>
           <DynamicDataDisplay
@@ -69,7 +69,7 @@ const RecommendationsPage = () => {
             onClearSelection={handleClearSelection}
           />
         </section>
-      )} */}
+      )}
 
       {/* Show selected songs */}
       <div>
