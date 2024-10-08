@@ -36,8 +36,8 @@ const RecommendationsPage = () => {
         Discover New Music
       </h1>
       <p className="text-center text-gray-500 mb-8">
-        Select a few of your favorite songs and let us recommend tracks you'll
-        love!
+        Select a few of your favorite songs and let us recommend tracks
+        you&apos;ll love!
       </p>
 
       {/* Search for a Song */}

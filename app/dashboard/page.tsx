@@ -26,8 +26,6 @@ export default function Dashboard() {
 
   const [showAudioFeatures, setShowAudioFeatures] = useState(false);
 
-  console.log({ session });
-
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section */}
@@ -162,6 +160,6 @@ const Section = ({ title, toggle, setToggle, children }: SectionProps) => (
         {toggle ? "Hide" : "Show"}
       </button> */}
     </div>
-    {toggle && <div className="mt-6">{children}</div>}
+    {toggle ? <div className="mt-6">{children}</div> : null}
   </section>
 );
