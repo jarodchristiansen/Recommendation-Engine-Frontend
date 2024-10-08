@@ -124,7 +124,7 @@ const DynamicDataDisplay = ({
         <div className="flex flex-col items-center text-center text-gray-500">
           <FaRobot className="animate-bounce text-5xl text-blue-500 mb-2" />
           <span className="text-xl font-semibold mb-2">
-            Hold tight, we're crunching some numbers
+            Hold tight, we&apos;re crunching some numbers
           </span>
           <p className="text-sm">
             This may take up to 60 seconds, but it’ll be worth the wait!

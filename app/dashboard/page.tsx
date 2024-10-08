@@ -148,18 +148,9 @@ const Section = ({ title, toggle, setToggle, children }: SectionProps) => (
     <div className="flex items-center justify-between">
       <h2 className="text-2xl font-bold">{title}</h2>
       <Button onClick={() => setToggle(!toggle)}>
-        {" "}
         {toggle ? "Hide" : "Show"}
       </Button>
-
-      {/* <button
-        onClick={() => setToggle(!toggle)}
-        className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-all"
-      >
-        {" "}
-        {toggle ? "Hide" : "Show"}
-      </button> */}
     </div>
-    {toggle ? <div className="mt-6">{children}</div> : null}
+    {toggle && <div className="mt-6">{children}</div>}
   </section>
 );
