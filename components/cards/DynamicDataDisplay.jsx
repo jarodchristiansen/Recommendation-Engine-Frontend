@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import CardGrid from "@/components/cards/CardGrid";
+import { FaRobot } from "react-icons/fa"; // Import a robot icon for the loading state
 
 const DynamicDataDisplay = ({
   endpoint,
@@ -88,8 +89,6 @@ const DynamicDataDisplay = ({
     });
   }, [data, handleItemClick]);
 
-  console.log({ mappedItems, data });
-
   return (
     <div className="mt-4 p-6 bg-white shadow-md rounded-lg">
       {/* Clear Selection Button */}
@@ -116,12 +115,21 @@ const DynamicDataDisplay = ({
 
       {error && (
         <div className="text-center text-red-500">
-          Error fetching data. Please try again later.
+          Error fetching data. Please try again later. | {error?.message}
         </div>
       )}
 
+      {/* Loading Animation */}
       {!data.length && !error && (
-        <div className="text-center text-gray-500">Loading...</div>
+        <div className="flex flex-col items-center text-center text-gray-500">
+          <FaRobot className="animate-bounce text-5xl text-blue-500 mb-2" />
+          <span className="text-xl font-semibold mb-2">
+            Hold tight, we're crunching some numbers
+          </span>
+          <p className="text-sm">
+            This may take up to 60 seconds, but it’ll be worth the wait!
+          </p>
+        </div>
       )}
     </div>
   );

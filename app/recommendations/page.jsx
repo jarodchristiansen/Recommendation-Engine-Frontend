@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import SearchTrack from "@/components/search/SearchTrack";
 import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
-
 import { useSession } from "next-auth/react";
 import Button from "@/components/layout/Button";
 
 const RecommendationsPage = () => {
-  const [selectedSongs, setSelectedSongs] = useState([]); // Track selected songs
+  const [selectedSongs, setSelectedSongs] = useState([]);
   const [showRecButton, setShowRecButton] = useState(false);
   const [showRecommendations, setShowRecommendations] = useState(false);
 
@@ -33,11 +32,16 @@ const RecommendationsPage = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold mb-8">Generate Recommendations</h1>
+      <h1 className="text-4xl font-bold mb-4 text-center text-gray-800">
+        Discover New Music
+      </h1>
+      <p className="text-center text-gray-500 mb-8">
+        Select a few of your favorite songs and let us recommend tracks you'll
+        love!
+      </p>
 
       {/* Search for a Song */}
       <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Search for a Song</h2>
         <SearchTrack
           onSelectSong={handleSongSelect}
           selectedSongs={selectedSongs}
@@ -45,22 +49,16 @@ const RecommendationsPage = () => {
         />
       </section>
 
-      {/* Select from Categories
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">
-          Choose from Your Library
-        </h2>
-        <CategorySelection
-          onSelectSong={handleSongSelect}
-          selectedSongs={selectedSongs}
-          onClearSelection={handleClearSelection}
-        />
-      </section> */}
-
       {/* Dynamic Data Display for Top Tracks */}
       {session && (
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Your Top Tracks</h2>
+          <h2 className="text-2xl font-semibold mb-2 text-gray-700">
+            Your Top Tracks
+          </h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Select from your most-played songs to get personalized
+            recommendations.
+          </p>
           <DynamicDataDisplay
             endpoint="/api/top/tracks/"
             type="track"
@@ -72,39 +70,55 @@ const RecommendationsPage = () => {
       )}
 
       {/* Show selected songs */}
-      <div>
-        <h3>Selected Songs ({selectedSongs.length}/3):</h3>
-        <ul>
+      <div className="bg-gray-100 p-4 rounded-md shadow-sm mb-6">
+        <h3 className="text-xl font-medium mb-2 text-gray-800">
+          Selected Songs ({selectedSongs.length}/3):
+        </h3>
+        <ul className="space-y-2">
           {selectedSongs.map((song, index) => (
-            <li key={index}>
-              {song.name} by {song.subtext || song.artists[0]?.name} - Id:{" "}
-              {song?.id}
+            <li key={index} className="flex justify-between items-center">
+              <span className="text-gray-700">
+                {song.name} by {song.subtext || song.artists[0]?.name}
+              </span>
               <Button
                 size="small"
                 onClick={() =>
                   setSelectedSongs(
-                    selectedSongs.filter((track) => track.id != song.id)
+                    selectedSongs.filter((track) => track.id !== song.id)
                   )
                 }
+                className="text-red-500 hover:text-red-700"
               >
-                X
+                Remove
               </Button>
             </li>
           ))}
         </ul>
       </div>
 
+      {/* Build Recommendations Button */}
       {showRecButton && (
-        <Button onClick={() => setShowRecommendations(true)}>
-          Build Recommendations
-        </Button>
+        <div className="text-center mb-6">
+          <Button
+            onClick={() => setShowRecommendations(true)}
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full transition duration-200 ease-in-out"
+          >
+            Build Recommendations
+          </Button>
+        </div>
       )}
 
+      {/* Display Recommendations */}
       {showRecommendations && selectedSongs?.length > 0 && (
-        <DynamicDataDisplay
-          endpoint={`/api/recommendations?track=${selectedSongs[0]?.id}`}
-          type="recommendations"
-        />
+        <section>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-700">
+            Your Recommendations
+          </h2>
+          <DynamicDataDisplay
+            endpoint={`/api/recommendations?track=${selectedSongs[0]?.id}`}
+            type="recommendations"
+          />
+        </section>
       )}
     </div>
   );

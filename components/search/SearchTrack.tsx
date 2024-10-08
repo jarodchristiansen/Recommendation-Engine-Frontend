@@ -50,7 +50,13 @@ export default function SearchTrack({
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg">
-      <h3 className="text-2xl font-bold mb-6">Search for a Track</h3>
+      <h2 className="text-2xl font-semibold mb-2 text-gray-700">
+        Search for a Song
+      </h2>
+      <p className="text-sm text-gray-500 mb-4">
+        Use the search bar to find songs you like, or select from your top
+        tracks below.
+      </p>
 
       {/* Search Input */}
       <div className="flex items-center space-x-4">

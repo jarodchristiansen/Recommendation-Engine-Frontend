@@ -11,7 +11,8 @@
   background-image: url('../public/images/mic-hero.jpg'); /* Adjust the path */
 
   background-size: contain;
-  background-position: center;
+  background-position: cover;
   background-attachment: fixed;
+  background-repeat: no-repeat;
 
 }
