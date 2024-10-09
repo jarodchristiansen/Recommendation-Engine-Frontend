@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const recType = searchParams.get("recType") || "cosine-similarity";
 
   const redisClient = getRedisClient();
-  const cacheKey = `track:${track}-recType:${rec}`; // Create a Redis key based on the query
+  const cacheKey = `track:${track}-recType:${recType}`; // Create a Redis key based on the query
 
   // // Try to get the cached result first
   const cachedData = await redisClient.get(cacheKey);
@@ -30,6 +30,8 @@ export async function GET(request: NextRequest) {
   });
 
   const data = await res.json();
+
+  console.log({ data });
 
   if (data?.recommendations) {
     // Store the data in Redis and set it to expire after 1 hour (3600 seconds)

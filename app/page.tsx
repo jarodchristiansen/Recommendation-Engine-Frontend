@@ -50,7 +50,11 @@ export default function Home() {
           </p>
           <Button
             onClick={() => {
-              session ? router.push("/recommendations") : router.push("/auth");
+              if (session) {
+                router.push("/recommendations");
+              } else {
+                router.push("/auth");
+              }
             }}
             variant="danger"
           >
