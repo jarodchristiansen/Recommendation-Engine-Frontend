@@ -1,11 +1,10 @@
 "use client"; // This makes the component a Client Component
 import Link from "next/link";
+import Image from "next/image";
 
 import AudioHeroImage from "../public/images/audioboard-hero-2.jpg";
 import BanjoMusician from "../public/images/banjo.jpeg";
 import DashboardImage from "../public/images/dashboard.png";
-
-import Image from "next/image";
 
 import collaborativeIcon from "../public/images/icons/collaborative.svg";
 import contentBasedIcon from "../public/images/icons/contentBased.svg";
@@ -17,17 +16,8 @@ import customizeIcon from "../public/images/icons/customize.svg";
 import "./index.css";
 import Button from "@/components/layout/Button";
 
-type TestimonialProps = {
-  quote: string;
-  name: string;
-  avatar: string;
-};
-
-type FeatureProps = {
-  title: string;
-  description: string;
-  icon?: string;
-};
+import FeatureSection from "@/components/layout/FeatureSection";
+import Testimonial from "@/components/cards/Testimonial";
 
 export default function Home() {
   return (
@@ -41,11 +31,8 @@ export default function Home() {
             backgroundPosition: "center",
           }}
         >
-          {/* <div className="absolute inset-0 bg-gradient-to-t from-black/100 to-transparent"></div>{" "} */}
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/75 to-transparent"></div>
-
           {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/75 to-transparent"></div>
         </div>
 
         <div className="relative text-center z-10">
@@ -56,14 +43,12 @@ export default function Home() {
             Discover new tracks and hidden gems with AI-powered recommendations
             made just for you.
           </p>
-          <Link href="/auth">
-            <Button
-              onClick={() => console.log("Button clicked")}
-              variant="danger"
-            >
-              Create Your Playlist
-            </Button>
-          </Link>
+          <Button
+            onClick={() => console.log("Button clicked")}
+            variant="danger"
+          >
+            Create Your Playlist
+          </Button>
         </div>
       </section>
 
@@ -72,32 +57,32 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12">Key Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <Feature
+            <FeatureSection
               title="Collaborative Filtering"
               description="Utilizing user interactions and behavior to generate your ideal playlist."
               icon={collaborativeIcon}
             />
-            <Feature
+            <FeatureSection
               title="Content-Based Filtering"
               description="Analyzing song attributes like genre, tempo, and mood to match your preferences."
               icon={contentBasedIcon}
             />
-            <Feature
+            <FeatureSection
               title="Cosine Similarity"
               description="Identifying tracks that align with your taste based on vectorized song features."
               icon={cosineSimilarityIcon}
             />
-            <Feature
+            <FeatureSection
               title="NMF Models"
               description="Matrix factorization to reveal hidden patterns in music tastes."
               icon={nmfIcon}
             />
-            <Feature
+            <FeatureSection
               title="Less Popular Artist Highlighted"
               description="Discover hidden gems, not just the same mainstream hits."
               icon={lessPopularIcon}
             />
-            <Feature
+            <FeatureSection
               title="Customizable Filters"
               description="Fine-tune your recommendations with adjustable weights for factors like popularity, genre, and tempo."
               icon={customizeIcon}
@@ -105,29 +90,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Value Proposition Section */}
-      {/* <section className="py-20 bg-gradient-to-b from-black to-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6 text-white">
-            Highlighting Emerging Artists
-          </h2>
-          <p className="text-lg max-w-2xl mx-auto mb-8 text-gray-300">
-            Tired of hearing the same tracks on repeat? Our platform goes beyond
-            mainstream recommendations, bringing attention to incredible yet
-            underrepresented artists. Dive deep into music discovery!
-          </p>
-          <div className="relative mx-auto max-w-lg">
-            <Image
-              src={BanjoMusician}
-              height={200}
-              width={500}
-              className="mx-auto h-18 w-18"
-              alt={"artists"}
-            />
-          </div>
-        </div>
-      </section> */}
 
       <section
         className="py-44 bg-gradient-to-b from-black to-gray-900 text-white relative bg-banner"
@@ -150,30 +112,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* <section className="pt-12 bg-black text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold pb-6">
-            Highlighting Emerging Artists
-          </h2>
-          <p className="text-lg max-w-2xl mx-auto pb-16 text-gray-300">
-            Tired of hearing the same tracks on repeat? Our platform goes beyond
-            mainstream recommendations, bringing attention to incredible yet
-            underrepresented artists. Dive deep into music discovery!
-          </p>
-        </div>
-        <div>
-          <Image
-            src={BanjoMusician}
-            height={500}
-            width={1920}
-            className="w-full h-60 object-cover"
-            alt="emerging artists"
-          />
-        </div>
-      </section> */}
-
       {/* Music Visualization Section */}
-      <section className="py-20 bg-gray-50">
+      {/* <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12">
             Music Visualization
@@ -190,7 +130,7 @@ export default function Home() {
             />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Control Dashboard Section */}
       <section className="py-20 bg-gray-50 relative overflow-hidden">
@@ -242,6 +182,11 @@ export default function Home() {
               name="Jane Smith"
               avatar="/images/user-avatar-2.jpg"
             />
+            <Testimonial
+              quote="The customization options are amazing. I finally get the recommendations I care about."
+              name="Jane Smith"
+              avatar="/images/user-avatar-2.jpg"
+            />
           </div>
         </div>
       </section>
@@ -265,36 +210,3 @@ export default function Home() {
     </div>
   );
 }
-
-const Testimonial = ({ quote, name, avatar }: TestimonialProps) => {
-  return (
-    <div className="text-center p-6 bg-gray-100 rounded-lg shadow-md">
-      <img
-        src={avatar}
-        alt={`${name} avatar`}
-        className="mx-auto h-16 w-16 rounded-full mb-4"
-      />
-      <p className="italic mb-4">{quote}</p>
-      <h4 className="font-bold">{name}</h4>
-    </div>
-  );
-};
-
-const Feature = ({ title, description, icon = "" }: FeatureProps) => {
-  return (
-    <div className="text-center bg-gray-100 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-      {/* Add an icon here */}
-      <div className="mb-4">
-        <Image
-          src={icon}
-          alt={`${title} icon`}
-          width={50}
-          height={50}
-          className="mx-auto h-18 w-18"
-        />
-      </div>
-      <h3 className="text-2xl font-bold mb-4">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-    </div>
-  );
-};

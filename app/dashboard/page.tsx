@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 "use client";
 
 import { useState } from "react";
@@ -25,8 +27,6 @@ export default function Dashboard() {
   const [showSavedTracks, setShowSavedTracks] = useState(false);
 
   const [showAudioFeatures, setShowAudioFeatures] = useState(false);
-
-  console.log({ session });
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -150,17 +150,8 @@ const Section = ({ title, toggle, setToggle, children }: SectionProps) => (
     <div className="flex items-center justify-between">
       <h2 className="text-2xl font-bold">{title}</h2>
       <Button onClick={() => setToggle(!toggle)}>
-        {" "}
         {toggle ? "Hide" : "Show"}
       </Button>
-
-      {/* <button
-        onClick={() => setToggle(!toggle)}
-        className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-all"
-      >
-        {" "}
-        {toggle ? "Hide" : "Show"}
-      </button> */}
     </div>
     {toggle && <div className="mt-6">{children}</div>}
   </section>

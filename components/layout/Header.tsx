@@ -1,7 +1,8 @@
-// import { link } from "fs";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import logoImage from "../../public/images/logo.png";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
@@ -10,9 +11,9 @@ const Header = () => {
 
   const links = [
     { id: 1, text: "home", link: "/" },
-    { id: 2, text: "about", link: "/about" },
-    { id: 3, text: "dashboard", link: "/dashboard" },
-    { id: 4, text: "recommendations", link: "/recommendations" },
+    { id: 2, text: "dashboard", link: "/dashboard" },
+    { id: 3, text: "recommendations", link: "/recommendations" },
+    { id: 4, text: "about", link: "/about" },
     { id: 5, text: "contact", link: "/contact" },
     { id: 6, text: "Sign In/Up", link: "/auth" },
   ];
@@ -24,29 +25,30 @@ const Header = () => {
         <h1 className="text-5xl ml-2">
           <a
             className="underline hover:decoration-black"
-            href="#"
-            target="_blank"
+            href="/"
             rel="noreferrer"
           >
-            Logo
+            <Image src={logoImage} height={50} width={50} alt="logo image" />
           </a>
         </h1>
       </div>
 
       {/* Links - visible on medium+ screens */}
       <ul className="hidden md:flex">
-        {links.map(({ id, text, link }) => {
-          console.log({ baseUrl, link });
+        {links.map(({ id, text, link }, index) => {
           return (
             <li
               key={id}
-              className="px-4 cursor-pointer capitalize font-medium text-gray-500 hover:scale-105 hover:text-white duration-200"
+              className={`px-4 cursor-pointer capitalize font-medium hover:scale-105 hover:text-white duration-200 ${
+                index === links.length - 1 ? "font-extrabold" : "text-gray-400"
+              }`}
             >
               <Link href={`${baseUrl}${link}`}>{text}</Link>
             </li>
           );
         })}
       </ul>
+
       {/* Hamburger Menu - visible on small screens */}
       <div
         onClick={() => setNav(!nav)}
@@ -54,11 +56,16 @@ const Header = () => {
       >
         {nav ? <FaTimes size={30} /> : <FaBars size={30} />}
       </div>
-      {/* Mobile Menu */}
-      {nav && (
-        <ul className="flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500">
+
+      {/* Mobile Menu with transition */}
+      <div
+        className={`${
+          nav ? "translate-x-0" : "translate-x-full"
+        } fixed top-0 right-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500 transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-center items-center`}
+      >
+        <ul className="flex flex-col justify-center items-center">
           {links.map(({ id, link, text }) => (
-            <li key={id} className="px-4 capitalize py-6 text-4xl">
+            <li key={id} className={`px-4 capitalize py-6 text-4xl`}>
               <Link
                 onClick={() => setNav(!nav)}
                 href={`${baseUrl || "https://spotrec.vercel.app/"}/${link}`}
@@ -68,7 +75,7 @@ const Header = () => {
             </li>
           ))}
         </ul>
-      )}
+      </div>
     </div>
   );
 };

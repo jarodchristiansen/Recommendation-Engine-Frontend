@@ -1,23 +1,14 @@
 // File: app/api/recently-played/route.ts
 import { NextResponse, NextRequest } from "next/server";
 import { getRedisClient } from "../redis";
-// import { getToken } from "next-auth/jwt";
 
 export async function GET(request: NextRequest) {
-  //   const token = request.headers.get("Authorization")?.split(" ")[1];
-  //   const { searchParams } = new URL(request.url);
-
-  //   const token = await getToken({ req: request });
-
-  //   if (!token) {
-  //     return NextResponse.json({ error: "No access token" }, { status: 401 });
-  //   }
-
   const { searchParams } = new URL(request.url);
   const track = searchParams.get("track");
+  const recType = searchParams.get("recType") || "cosine-similarity";
 
   const redisClient = getRedisClient();
-  const cacheKey = `track:${track}`; // Create a Redis key based on the query
+  const cacheKey = `track:${track}-recType:${recType}`; // Create a Redis key based on the query
 
   // // Try to get the cached result first
   const cachedData = await redisClient.get(cacheKey);
@@ -30,7 +21,7 @@ export async function GET(request: NextRequest) {
   const recServiceToken = process.env.REC_SERVICE_TOKEN;
   const url = process.env.REC_SERVICE_URL || "http://localhost:8000";
 
-  const endUrl = `${url}/recommendations/cosine-similarity/${track}?token=${recServiceToken}`;
+  const endUrl = `${url}/recommendations/${recType}/${track}?token=${recServiceToken}`;
 
   const res = await fetch(endUrl, {
     headers: {
@@ -39,6 +30,8 @@ export async function GET(request: NextRequest) {
   });
 
   const data = await res.json();
+
+  console.log({ data });
 
   if (data?.recommendations) {
     // Store the data in Redis and set it to expire after 1 hour (3600 seconds)
