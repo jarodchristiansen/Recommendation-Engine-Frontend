@@ -16,15 +16,10 @@ import customizeIcon from "../public/images/icons/customize.svg";
 import "./index.css";
 import Button from "@/components/layout/Button";
 
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import FeatureSection from "@/components/layout/FeatureSection";
 import Testimonial from "@/components/cards/Testimonial";
 
 export default function Home() {
-  const router = useRouter();
-  const { data: session } = useSession();
-
   return (
     <div className="bg-gray-100">
       <section className="relative bg-black text-white h-screen flex items-center justify-center audio-hero">
