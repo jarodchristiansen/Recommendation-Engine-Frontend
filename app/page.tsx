@@ -49,13 +49,7 @@ export default function Home() {
             made just for you.
           </p>
           <Button
-            onClick={() => {
-              if (session) {
-                router.push("/recommendations");
-              } else {
-                router.push("/auth");
-              }
-            }}
+            onClick={() => console.log("Button clicked")}
             variant="danger"
           >
             Create Your Playlist
