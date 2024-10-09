@@ -47,14 +47,14 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Recently Played Section
+        {/* Recently Played Section */}
         <Section
           title="Recently Played Tracks"
           toggle={showRecentlyPlayed}
           setToggle={setShowRecentlyPlayed}
         >
           {showRecentlyPlayed && session && <RecentlyPlayedTracks />}
-        </Section> */}
+        </Section>
 
         {/* Top Tracks Section */}
         <Section
