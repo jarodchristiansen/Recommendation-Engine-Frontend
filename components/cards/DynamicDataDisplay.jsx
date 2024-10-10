@@ -1,6 +1,9 @@
-import { useState, useEffect, useMemo } from "react";
 import CardGrid from "@/components/cards/CardGrid";
-import { FaRobot } from "react-icons/fa"; // Import a robot icon for the loading state
+import RecommendCardGrid from "@/components/cards/RecommendCardGrid";
+import { useEffect, useMemo, useState } from "react";
+import { FaRobot } from "react-icons/fa";
+
+// Import a robot icon for the loading state
 
 const DynamicDataDisplay = ({
   endpoint,
@@ -12,15 +15,24 @@ const DynamicDataDisplay = ({
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
+  const [targetFeatures, setTargetFeatures] = useState(null);
+
+  const isRecommendationsType = type === "recommendations";
+
   const fetchData = async () => {
-    try {
-      const res = await fetch(`${endpoint}`);
-      const result = await res.json();
-      setData(result.items || result); // Adjust if response is structured differently
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setError(error);
+    const res = await fetch(`${endpoint}`);
+    const result = await res.json();
+
+    console.log({ result });
+
+    if (!result?.error) {
+      setData(result?.items || result?.recommendations || result); // Adjust if response is structured differently
+      setTargetFeatures(result?.target_features);
+
+      return;
     }
+
+    setError(result.error);
   };
 
   useEffect(() => {
@@ -28,6 +40,8 @@ const DynamicDataDisplay = ({
       fetchData();
     }
   }, []);
+
+  console.log({ targetFeatures });
 
   // Checks if an item is already selected
   const isSelected = (track) => {
@@ -48,7 +62,7 @@ const DynamicDataDisplay = ({
   };
 
   const mappedItems = useMemo(() => {
-    if (!data.length) return [];
+    if (!data?.length) return [];
 
     return data.map((item) => {
       switch (type) {
@@ -58,6 +72,7 @@ const DynamicDataDisplay = ({
             name: item.track_name,
             subtext: item.artist_name,
             image: item?.album?.images[0]?.url,
+            feature_difference: item.feature_difference,
           };
 
         case "track":
@@ -103,7 +118,7 @@ const DynamicDataDisplay = ({
         </div>
       )}
 
-      {data.length > 0 && !error && (
+      {data.length > 0 && !error && !isRecommendationsType && (
         <CardGrid
           items={mappedItems}
           handleItemClick={handleItemClick}
@@ -113,10 +128,19 @@ const DynamicDataDisplay = ({
         />
       )}
 
+      {data.length > 0 && !error && isRecommendationsType && (
+        <RecommendCardGrid
+          items={mappedItems}
+          handleItemClick={handleItemClick}
+          selectedSongs={selectedSongs}
+          targetFeatures={targetFeatures}
+          // selectedId={selectedItem}
+          type={type}
+        />
+      )}
+
       {error && (
-        <div className="text-center text-red-500">
-          Error fetching data. Please try again later. | {error?.message}
-        </div>
+        <div className="text-center text-red-500 text-2xl">{error}</div>
       )}
 
       {/* Loading Animation */}

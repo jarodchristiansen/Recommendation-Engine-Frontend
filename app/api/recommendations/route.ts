@@ -1,5 +1,6 @@
 // File: app/api/recently-played/route.ts
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+
 import { getRedisClient } from "../redis";
 
 export async function GET(request: NextRequest) {
@@ -33,15 +34,25 @@ export async function GET(request: NextRequest) {
 
   console.log({ data });
 
-  if (data?.recommendations) {
+  const response = {
+    recommendations: data?.recommendations,
+    target_features: data?.target_features,
+  };
+
+  if (response?.recommendations) {
     // Store the data in Redis and set it to expire after 1 hour (3600 seconds)
     await redisClient.set(
       cacheKey,
-      JSON.stringify(data?.recommendations),
+      JSON.stringify(response),
       "EX",
       3600 * 24 * 30
     );
+  } else {
+    return NextResponse.json(
+      { error: "Server encountered an error, please try again later" },
+      { status: 429 }
+    );
   }
 
-  return NextResponse.json(data?.recommendations, { status: 200 });
+  return NextResponse.json(response, { status: 200 });
 }
