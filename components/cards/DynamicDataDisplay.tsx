@@ -1,33 +1,46 @@
+// import {
+//   RecommendedTrackType,
+//   SearchTrackType,
+//   SelectedArrayType,
+// } from "@/app/types/track";
 import CardGrid from "@/components/cards/CardGrid";
 import RecommendCardGrid from "@/components/cards/RecommendCardGrid";
 import { useEffect, useMemo, useState } from "react";
 import { FaRobot } from "react-icons/fa";
 
-// Import a robot icon for the loading state
+type DynamicDataDisplayProps = {
+  endpoint: string;
+  type: string;
+  onSelectSong?: (track: any) => void;
+  selectedSongs: any;
+  onClearSelection?: () => void;
+};
 
 const DynamicDataDisplay = ({
   endpoint,
   type,
-  onSelectSong = null,
-  selectedSongs = null,
-  onClearSelection = null,
-}) => {
+  onSelectSong,
+  selectedSongs,
+  onClearSelection,
+}: DynamicDataDisplayProps) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  const [targetFeatures, setTargetFeatures] = useState(null);
+  // const [targetFeatures, setTargetFeatures] = useState(null);
 
   const isRecommendationsType = type === "recommendations";
+
+  // type TrackType = RecommendedTrackType | SearchTrackType;
+
+  const onSelectDefined = typeof onSelectSong !== "undefined";
 
   const fetchData = async () => {
     const res = await fetch(`${endpoint}`);
     const result = await res.json();
 
-    console.log({ result });
-
     if (!result?.error) {
       setData(result?.items || result?.recommendations || result); // Adjust if response is structured differently
-      setTargetFeatures(result?.target_features);
+      // setTargetFeatures(result?.target_features);
 
       return;
     }
@@ -41,30 +54,33 @@ const DynamicDataDisplay = ({
     }
   }, []);
 
-  console.log({ targetFeatures });
-
   // Checks if an item is already selected
-  const isSelected = (track) => {
-    return selectedSongs?.some((selectedSong) => selectedSong.id === track.id);
+  const isSelected = (track: any) => {
+    return selectedSongs?.some(
+      (selectedSong: any) => selectedSong.id === track.id
+    );
   };
 
-  // Handle item click: select or deselect
-  const handleItemClick = (track) => {
-    if (isSelected(track)) {
+  const handleItemClick = (track: any) => {
+    if (isSelected(track) && onSelectDefined) {
       // Deselect if already selected
-      onSelectSong(
-        selectedSongs.filter((selected) => selected.id !== track.id)
+      const filteredSongs = selectedSongs.filter(
+        (selected: any) => selected.id !== track.id
       );
-    } else if (selectedSongs?.length < 3) {
+      onSelectSong(filteredSongs);
+    } else if (selectedSongs.length < 3 && onSelectDefined) {
       // Select a track
-      onSelectSong([...selectedSongs, track]);
+      const newSelection = [...selectedSongs, track];
+      onSelectSong(newSelection);
     }
   };
 
   const mappedItems = useMemo(() => {
     if (!data?.length) return [];
 
-    return data.map((item) => {
+    // Frontend does some heavy lifting for 2 datasets being merged
+    // needs further refining on types
+    return data.map((item: any) => {
       switch (type) {
         case "recommendations":
           return {
@@ -79,7 +95,9 @@ const DynamicDataDisplay = ({
           return {
             id: item?.id,
             name: item?.name,
-            subtext: item?.artists?.map((artist) => artist.name).join(", "),
+            subtext: item?.artists
+              ?.map((artist: any) => artist.name)
+              .join(", "),
             image: item?.album?.images[0]?.url,
           };
         case "saved-track":
@@ -87,7 +105,7 @@ const DynamicDataDisplay = ({
             id: item?.track?.id,
             name: item?.track?.name,
             subtext: item?.track?.artists
-              .map((artist) => artist.name)
+              .map((artist: any) => artist.name)
               .join(", "),
             image: item?.track?.album?.images[0]?.url,
           };
@@ -107,7 +125,7 @@ const DynamicDataDisplay = ({
   return (
     <div className="mt-4 p-6 bg-white shadow-md rounded-lg">
       {/* Clear Selection Button */}
-      {selectedSongs?.length > 0 && (
+      {selectedSongs && selectedSongs?.length > 0 && (
         <div className="mb-4">
           <button
             onClick={onClearSelection}
@@ -133,7 +151,7 @@ const DynamicDataDisplay = ({
           items={mappedItems}
           handleItemClick={handleItemClick}
           selectedSongs={selectedSongs}
-          targetFeatures={targetFeatures}
+          // targetFeatures={targetFeatures}
           // selectedId={selectedItem}
           type={type}
         />

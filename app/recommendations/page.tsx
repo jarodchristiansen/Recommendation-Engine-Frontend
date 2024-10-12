@@ -6,14 +6,18 @@ import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 import { useSession } from "next-auth/react";
 import Button from "@/components/layout/Button";
 
+import { SearchTrackType } from "../types/track";
+
 const RecommendationsPage = () => {
-  const [selectedSongs, setSelectedSongs] = useState([]);
+  type SongsType = SearchTrackType[];
+
+  const [selectedSongs, setSelectedSongs] = useState<SongsType>([]);
   const [showRecButton, setShowRecButton] = useState(false);
   const [showRecommendations, setShowRecommendations] = useState(false);
 
   const { data: session } = useSession();
 
-  const handleSongSelect = (songs) => {
+  const handleSongSelect = (songs: SongsType) => {
     setSelectedSongs(songs);
   };
 
@@ -78,7 +82,7 @@ const RecommendationsPage = () => {
           {selectedSongs.map((song, index) => (
             <li key={index} className="flex justify-between items-center">
               <span className="text-gray-700">
-                {song.name} by {song.subtext || song.artists[0]?.name}
+                {song.name} by {song?.subtext || song.artists[0]?.name}
               </span>
               <Button
                 size="small"
@@ -87,7 +91,6 @@ const RecommendationsPage = () => {
                     selectedSongs.filter((track) => track.id !== song.id)
                   )
                 }
-                className="text-red-500 hover:text-red-700"
               >
                 Remove
               </Button>
@@ -99,10 +102,7 @@ const RecommendationsPage = () => {
       {/* Build Recommendations Button */}
       {showRecButton && (
         <div className="text-center mb-6">
-          <Button
-            onClick={() => setShowRecommendations(true)}
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full transition duration-200 ease-in-out"
-          >
+          <Button onClick={() => setShowRecommendations(true)}>
             Build Recommendations
           </Button>
         </div>
@@ -117,6 +117,7 @@ const RecommendationsPage = () => {
           <DynamicDataDisplay
             endpoint={`/api/recommendations?track=${selectedSongs[0]?.id}`}
             type="recommendations"
+            selectedSongs={[]}
           />
         </section>
       )}

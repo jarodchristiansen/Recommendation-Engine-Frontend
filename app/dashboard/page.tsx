@@ -63,7 +63,11 @@ export default function Dashboard() {
           setToggle={setShowTopTracks}
         >
           {showTopTracks && session && (
-            <DynamicDataDisplay endpoint="/api/top/tracks" type="track" />
+            <DynamicDataDisplay
+              endpoint="/api/top/tracks"
+              type="track"
+              selectedSongs={[]}
+            />
           )}
         </Section>
 
@@ -74,7 +78,11 @@ export default function Dashboard() {
           setToggle={setShowTopArtists}
         >
           {showTopArtists && session && (
-            <DynamicDataDisplay endpoint="/api/top/artists" type="artist" />
+            <DynamicDataDisplay
+              endpoint="/api/top/artists"
+              type="artist"
+              selectedSongs={[]}
+            />
           )}
         </Section>
 
@@ -88,6 +96,7 @@ export default function Dashboard() {
             <DynamicDataDisplay
               endpoint="/api/saved-tracks"
               type="saved-track"
+              selectedSongs={[]}
             />
           )}
         </Section>
@@ -99,7 +108,11 @@ export default function Dashboard() {
           setToggle={setShowAudioFeatures}
         >
           {showAudioFeatures && session && (
-            <DynamicDataDisplay endpoint="/api/audio-features" type="track" />
+            <DynamicDataDisplay
+              endpoint="/api/audio-features"
+              type="track"
+              selectedSongs={[]}
+            />
           )}
         </Section>
 
