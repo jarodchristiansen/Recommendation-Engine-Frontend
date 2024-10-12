@@ -65,6 +65,7 @@ const DynamicDataDisplay = ({
   const handleItemClick = (track: TrackType) => {
     if (isSelected(track) && onSelectDefined && selectedSongs) {
       // Deselect if already selected
+      // ts-ignore - union of search and recommended track types
       onSelectSong(
         selectedSongs?.filter((selected) => selected.id !== track.id)
       );
