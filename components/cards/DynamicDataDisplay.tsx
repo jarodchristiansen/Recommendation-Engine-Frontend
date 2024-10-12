@@ -1,8 +1,8 @@
-import {
-  RecommendedTrackType,
-  SearchTrackType,
-  SelectedArrayType,
-} from "@/app/types/track";
+// import {
+//   RecommendedTrackType,
+//   SearchTrackType,
+//   SelectedArrayType,
+// } from "@/app/types/track";
 import CardGrid from "@/components/cards/CardGrid";
 import RecommendCardGrid from "@/components/cards/RecommendCardGrid";
 import { useEffect, useMemo, useState } from "react";
@@ -12,7 +12,7 @@ type DynamicDataDisplayProps = {
   endpoint: string;
   type: string;
   onSelectSong?: (track: any) => void;
-  selectedSongs: SelectedArrayType;
+  selectedSongs: any;
   onClearSelection?: () => void;
 };
 
@@ -30,7 +30,7 @@ const DynamicDataDisplay = ({
 
   const isRecommendationsType = type === "recommendations";
 
-  type TrackType = RecommendedTrackType | SearchTrackType;
+  // type TrackType = RecommendedTrackType | SearchTrackType;
 
   const onSelectDefined = typeof onSelectSong !== "undefined";
 
@@ -55,9 +55,9 @@ const DynamicDataDisplay = ({
   }, []);
 
   // Checks if an item is already selected
-  const isSelected = (track: TrackType) => {
+  const isSelected = (track: any) => {
     return selectedSongs?.some(
-      (selectedSong: TrackType) => selectedSong.id === track.id
+      (selectedSong: any) => selectedSong.id === track.id
     );
   };
 
