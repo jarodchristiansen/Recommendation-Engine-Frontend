@@ -7,6 +7,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "next/core-web-vitals", // For Next.js specific linting rules
+    "plugin:prettier/recommended",
   ],
   parserOptions: {
     ecmaVersion: 2020,
@@ -16,6 +17,7 @@ module.exports = {
     },
   },
   rules: {
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-unused-vars": ["error"],
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/anchor-is-valid": "off", // Next.js handles this with its Link component

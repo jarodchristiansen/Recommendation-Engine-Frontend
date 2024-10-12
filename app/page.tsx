@@ -112,26 +112,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Music Visualization Section */}
-      {/* <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">
-            Music Visualization
-          </h2>
-          <div className="text-center">
-            <p className="text-lg mb-6">
-              Enjoy rich visualizations while listening to track samples. Each
-              track generates unique, real-time waveforms and spectrums.
-            </p>
-            <img
-              src="/images/waveform-example.png"
-              alt="Music Visualization Example"
-              className="mx-auto rounded-lg shadow-lg"
-            />
-          </div>
-        </div>
-      </section> */}
-
       {/* Control Dashboard Section */}
       <section className="py-20 bg-gray-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
