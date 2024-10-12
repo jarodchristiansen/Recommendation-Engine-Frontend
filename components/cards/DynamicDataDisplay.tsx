@@ -63,7 +63,7 @@ const DynamicDataDisplay = ({
 
   // Handle item click: select or deselect
   const handleItemClick = (track: TrackType) => {
-    if (isSelected(track) && onSelectDefined) {
+    if (isSelected(track) && onSelectDefined && selectedSongs) {
       // Deselect if already selected
       onSelectSong(
         selectedSongs?.filter((selected) => selected.id !== track.id)
