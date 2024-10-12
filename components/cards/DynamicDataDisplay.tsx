@@ -61,11 +61,11 @@ const DynamicDataDisplay = ({
     );
   };
 
-  const handleItemClick = (track: TrackType) => {
+  const handleItemClick = (track: any) => {
     if (isSelected(track) && onSelectDefined) {
       // Deselect if already selected
       const filteredSongs = selectedSongs.filter(
-        (selected: TrackType) => selected.id !== track.id
+        (selected: any) => selected.id !== track.id
       );
       onSelectSong(filteredSongs);
     } else if (selectedSongs.length < 3 && onSelectDefined) {
