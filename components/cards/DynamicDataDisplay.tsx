@@ -61,17 +61,17 @@ const DynamicDataDisplay = ({
     );
   };
 
-  // Handle item click: select or deselect
   const handleItemClick = (track: TrackType) => {
-    if (isSelected(track) && onSelectDefined && selectedSongs) {
+    if (isSelected(track) && onSelectDefined) {
       // Deselect if already selected
-      // ts-ignore - union of search and recommended track types
-      onSelectSong(
-        selectedSongs?.filter((selected) => selected.id !== track.id)
+      const filteredSongs = selectedSongs.filter(
+        (selected: TrackType) => selected.id !== track.id
       );
-    } else if (selectedSongs && selectedSongs?.length < 3 && onSelectDefined) {
+      onSelectSong(filteredSongs);
+    } else if (selectedSongs.length < 3 && onSelectDefined) {
       // Select a track
-      onSelectSong([...selectedSongs, track]);
+      const newSelection = [...selectedSongs, track];
+      onSelectSong(newSelection);
     }
   };
 
