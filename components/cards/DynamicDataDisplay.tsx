@@ -26,11 +26,7 @@ const DynamicDataDisplay = ({
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
-  // const [targetFeatures, setTargetFeatures] = useState(null);
-
   const isRecommendationsType = type === "recommendations";
-
-  // type TrackType = RecommendedTrackType | SearchTrackType;
 
   const onSelectDefined = typeof onSelectSong !== "undefined";
 
@@ -40,7 +36,6 @@ const DynamicDataDisplay = ({
 
     if (!result?.error) {
       setData(result?.items || result?.recommendations || result); // Adjust if response is structured differently
-      // setTargetFeatures(result?.target_features);
 
       return;
     }
@@ -87,7 +82,7 @@ const DynamicDataDisplay = ({
             id: item.track_id,
             name: item.track_name,
             subtext: item.artist_name,
-            image: item?.album?.images[0]?.url,
+            image: item?.image_url,
             feature_difference: item.feature_difference,
           };
 
