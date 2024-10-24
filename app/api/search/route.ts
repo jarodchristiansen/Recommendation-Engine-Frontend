@@ -48,7 +48,6 @@ export async function GET(request: NextRequest) {
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
-    console.log(`Cache hit for query: ${q}`);
     return NextResponse.json(JSON.parse(cachedData)); // Return the cached result
   }
 

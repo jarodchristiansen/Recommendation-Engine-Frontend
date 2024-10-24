@@ -1,6 +1,6 @@
 "use client"; // This makes the component a Client Component
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useState } from "react";
 import Button from "../layout/Button";
 
@@ -21,8 +21,6 @@ export default function SearchTrack({
   const searchTrack = async () => {
     const res = await fetch(`/api/search?q=${query}`);
     const data = await res.json();
-
-    console.log({ data });
 
     setResults(data.tracks.items);
   };

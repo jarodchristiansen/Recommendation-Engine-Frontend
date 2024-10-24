@@ -1,6 +1,6 @@
 "use client"; // This makes the component a Client Component
 import Link from "next/link";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import AudioHeroImage from "../public/images/audioboard-hero-2.jpg";
 import BanjoMusician from "../public/images/banjo.jpeg";

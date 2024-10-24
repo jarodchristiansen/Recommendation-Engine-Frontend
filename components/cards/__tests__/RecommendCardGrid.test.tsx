@@ -1,18 +1,26 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import CardGrid from "../CardGrid";
+import RecommendCardGrid from "../RecommendCardGrid";
 
 import { mockTracks } from "../../mocks/tracks";
 
 // import "@testing-library/jest-dom/extend-expect"; // for extended matchers
 
-describe("CardGrid", () => {
+describe("RecommendCardGrid", () => {
   const handleItemClick = jest.fn(); // Mock function for handling clicks
   const selectedSongs = [mockTracks[0]]; // Pre-select the first song
 
+  beforeAll(() => {
+    global.ResizeObserver = class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    };
+  });
+
   it("renders the items correctly", () => {
     render(
-      <CardGrid
+      <RecommendCardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
         selectedSongs={[]}
@@ -28,7 +36,7 @@ describe("CardGrid", () => {
 
   it("applies selected class when a song is selected", () => {
     render(
-      <CardGrid
+      <RecommendCardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
         selectedSongs={selectedSongs}
@@ -43,7 +51,7 @@ describe("CardGrid", () => {
 
   it("calls handleItemClick when an item is clicked", () => {
     render(
-      <CardGrid
+      <RecommendCardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
         selectedSongs={[]}
@@ -61,7 +69,7 @@ describe("CardGrid", () => {
 
   it("renders correctly with no items", () => {
     render(
-      <CardGrid
+      <RecommendCardGrid
         items={[]}
         handleItemClick={handleItemClick}
         selectedSongs={[]}
