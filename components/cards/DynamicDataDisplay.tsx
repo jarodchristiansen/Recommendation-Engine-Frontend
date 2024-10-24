@@ -1,8 +1,3 @@
-// import {
-//   RecommendedTrackType,
-//   SearchTrackType,
-//   SelectedArrayType,
-// } from "@/app/types/track";
 import CardGrid from "@/components/cards/CardGrid";
 import RecommendCardGrid from "@/components/cards/RecommendCardGrid";
 import { useEffect, useMemo, useState } from "react";

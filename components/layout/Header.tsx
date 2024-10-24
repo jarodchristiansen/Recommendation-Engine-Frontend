@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+
 import logoImage from "../../public/images/logo.png";
 
 const Header = () => {
@@ -13,8 +14,8 @@ const Header = () => {
     { id: 1, text: "home", link: "/" },
     { id: 2, text: "dashboard", link: "/dashboard" },
     { id: 3, text: "recommendations", link: "/recommendations" },
-    { id: 4, text: "about", link: "/about" },
-    { id: 5, text: "contact", link: "/contact" },
+    // { id: 4, text: "about", link: "/about" },
+    // { id: 5, text: "contact", link: "/contact" },
     { id: 6, text: "Sign In/Up", link: "/auth" },
   ];
 
