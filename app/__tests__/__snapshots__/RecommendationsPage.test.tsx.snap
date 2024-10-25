@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecommendationsPagee matches the snapshot of the RecommendationsPage 1`] = `
+<div>
+  <div
+    class="container mx-auto p-6"
+  >
+    <h1
+      class="text-4xl font-bold mb-4 text-center text-gray-800"
+    >
+      Discover New Music
+    </h1>
+    <p
+      class="text-center text-gray-500 mb-8"
+    >
+      Select a few of your favorite songs and let us recommend tracks you'll love!
+    </p>
+    <section
+      class="mb-8"
+    >
+      <div
+        class="p-6 bg-white shadow-md rounded-lg"
+      >
+        <h2
+          class="text-2xl font-semibold mb-2 text-gray-700"
+        >
+          Search for a Song
+        </h2>
+        <p
+          class="text-sm text-gray-500 mb-4"
+        >
+          Use the search bar to find songs you like, or select from your top tracks below.
+        </p>
+        <div
+          class="flex items-center space-x-4"
+        >
+          <input
+            class="border border-gray-300 rounded-md p-2 w-full focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            placeholder="Enter track name..."
+            type="text"
+            value=""
+          />
+          <button
+            class="transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-red-500 hover:bg-red-600 text-white px-6 py-3 text-md"
+            type="button"
+          >
+            Search
+          </button>
+        </div>
+        <div
+          class="mt-6"
+        >
+          <p
+            class="text-gray-600"
+          >
+            No tracks found. Please try another search.
+          </p>
+        </div>
+      </div>
+    </section>
+    <div
+      class="bg-gray-100 p-4 rounded-md shadow-sm mb-6"
+    >
+      <h3
+        class="text-xl font-medium mb-2 text-gray-800"
+      >
+        Selected Songs (
+        0
+        /3):
+      </h3>
+      <ul
+        class="space-y-2"
+      />
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer Component matches the snapshot of the Footer 1`] = `
+<div>
+  <footer
+    class="bg-black text-white py-8"
+  >
+    <div
+      class="container mx-auto "
+    >
+      <div
+        class="flex flex-col items-center justify-center text-center gap-6 md:flex-row md:gap-8 border-b border-gray-700 pb-4 mb-4"
+      >
+        <a
+          href="/"
+        >
+          <span
+            class="text-gray-400 hover:text-white px-3 py-2 capitalize transition duration-300 ease-in-out"
+          >
+            home
+          </span>
+        </a>
+        <a
+          href="/dashboard"
+        >
+          <span
+            class="text-gray-400 hover:text-white px-3 py-2 capitalize transition duration-300 ease-in-out"
+          >
+            dashboard
+          </span>
+        </a>
+        <a
+          href="/recommendations"
+        >
+          <span
+            class="text-gray-400 hover:text-white px-3 py-2 capitalize transition duration-300 ease-in-out"
+          >
+            recommendations
+          </span>
+        </a>
+        <a
+          href="/auth"
+        >
+          <span
+            class="text-gray-400 hover:text-white px-3 py-2 capitalize transition duration-300 ease-in-out"
+          >
+            Sign In/Up
+          </span>
+        </a>
+      </div>
+      <div
+        class="text-center text-gray-400"
+      >
+        <p>
+          © 
+          2024
+           All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+`;

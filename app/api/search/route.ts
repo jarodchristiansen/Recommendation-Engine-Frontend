@@ -48,7 +48,6 @@ export async function GET(request: NextRequest) {
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
-    console.log(`Cache hit for query: ${q}`);
     return NextResponse.json(JSON.parse(cachedData)); // Return the cached result
   }
 
@@ -62,6 +61,8 @@ export async function GET(request: NextRequest) {
       }
     );
     const data = await response.json();
+
+    // TODO: Handle the case when the token is expired/errors so they dont get cached
 
     // Store the data in Redis and set it to expire after 1 hour (3600 seconds)
     await redisClient.set(cacheKey, JSON.stringify(data), "EX", 3600 * 24 * 30);

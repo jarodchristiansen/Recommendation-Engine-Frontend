@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Component matches the snapshot of the Header 1`] = `
+<div>
+  <div
+    class="flex justify-between items-center w-full h-20 px-4 text-white bg-black fixed top-0 z-50"
+    data-testid="banner"
+  >
+    <div>
+      <h1
+        class="text-5xl ml-2"
+      >
+        <a
+          class="underline hover:decoration-black"
+          href="/"
+          rel="noreferrer"
+        >
+          <span
+            style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+          >
+            <span
+              style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+            >
+              <img
+                alt=""
+                aria-hidden="true"
+                src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2750%27%20height=%2750%27/%3e"
+                style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+              />
+            </span>
+            <img
+              alt="logo image"
+              data-nimg="intrinsic"
+              decoding="async"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+            />
+            <noscript />
+          </span>
+        </a>
+      </h1>
+    </div>
+    <ul
+      class="hidden md:flex"
+    >
+      <li
+        class="px-4 cursor-pointer capitalize font-medium hover:scale-105 hover:text-white duration-200 text-gray-400"
+      >
+        <a
+          href="/"
+        >
+          home
+        </a>
+      </li>
+      <li
+        class="px-4 cursor-pointer capitalize font-medium hover:scale-105 hover:text-white duration-200 text-gray-400"
+      >
+        <a
+          href="/dashboard"
+        >
+          dashboard
+        </a>
+      </li>
+      <li
+        class="px-4 cursor-pointer capitalize font-medium hover:scale-105 hover:text-white duration-200 text-gray-400"
+      >
+        <a
+          href="/recommendations"
+        >
+          recommendations
+        </a>
+      </li>
+      <li
+        class="px-4 cursor-pointer capitalize font-medium hover:scale-105 hover:text-white duration-200 font-extrabold"
+      >
+        <a
+          href="/auth"
+        >
+          Sign In/Up
+        </a>
+      </li>
+    </ul>
+    <div
+      class="cursor-pointer pr-4 z-10 text-gray-500 md:hidden"
+      role="button"
+      tabindex="0"
+    >
+      <svg
+        fill="currentColor"
+        height="30"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 448 512"
+        width="30"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+        />
+      </svg>
+    </div>
+    <div
+      class="translate-x-full fixed top-0 right-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500 transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-center items-center"
+    >
+      <ul
+        class="flex flex-col justify-center items-center"
+      >
+        <li
+          class="px-4 capitalize py-6 text-4xl"
+        >
+          <a
+            href="https://spotrec.vercel.app///"
+          >
+            home
+          </a>
+        </li>
+        <li
+          class="px-4 capitalize py-6 text-4xl"
+        >
+          <a
+            href="https://spotrec.vercel.app///dashboard"
+          >
+            dashboard
+          </a>
+        </li>
+        <li
+          class="px-4 capitalize py-6 text-4xl"
+        >
+          <a
+            href="https://spotrec.vercel.app///recommendations"
+          >
+            recommendations
+          </a>
+        </li>
+        <li
+          class="px-4 capitalize py-6 text-4xl"
+        >
+          <a
+            href="https://spotrec.vercel.app///auth"
+          >
+            Sign In/Up
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

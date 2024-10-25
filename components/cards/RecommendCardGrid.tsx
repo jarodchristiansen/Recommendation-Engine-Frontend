@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import {
   PolarAngleAxis,
   PolarGrid,
@@ -24,8 +24,6 @@ const RecommendCardGrid = ({
 
   // Function to create data for the radar chart from feature differences
   const createRadarData = (item: RecommendedTrackType) => {
-    console.log({ item });
-
     const featureDifference: { [key: string]: number } =
       item.feature_difference || {};
     return Object.keys(featureDifference).map((feature) => {
@@ -49,9 +47,9 @@ const RecommendCardGrid = ({
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {items.map((item: RecommendedTrackType) => (
+      {items.map((item: RecommendedTrackType, index) => (
         <div
-          key={item.id}
+          key={item.id || `${item.name}-${index}`}
           onClick={() => handleItemClick(item)}
           className={`group p-4 border rounded-lg cursor-pointer transition-transform transform ${
             isSelected(item) ? "border-blue-500 scale-105" : "border-gray-200"
@@ -60,7 +58,7 @@ const RecommendCardGrid = ({
           <div className="relative w-full h-48 mb-4">
             {item?.image && (
               <Image
-                src={item?.image}
+                src={item.image}
                 layout="fill"
                 objectFit="cover"
                 className="rounded-lg"

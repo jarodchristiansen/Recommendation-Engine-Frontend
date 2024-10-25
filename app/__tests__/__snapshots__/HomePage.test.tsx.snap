@@ -1,0 +1,495 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home matches the snapshot of the HomePage 1`] = `
+<div>
+  <div
+    class="bg-gray-100"
+  >
+    <section
+      class="relative bg-black text-white h-screen flex items-center justify-center audio-hero"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center"
+        style="background-size: cover; background-position: center;"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/75 to-transparent"
+        />
+      </div>
+      <div
+        class="relative text-center z-10"
+      >
+        <h1
+          class="text-5xl font-bold px-3 drop-shadow-lg"
+        >
+          Your Personalized Soundtrack Awaits
+        </h1>
+        <p
+          class="text-lg max-w-xl mx-auto py-8 pb-12 px-8 md:px-0 text-gray-200"
+        >
+          Discover new tracks and hidden gems with AI-powered recommendations made just for you.
+        </p>
+        <button
+          class="transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-red-500 hover:bg-red-600 text-white px-6 py-3 text-md"
+          type="button"
+        >
+          Create Your Playlist
+        </button>
+      </div>
+    </section>
+    <section
+      class="py-20 bg-white"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        <h2
+          class="text-4xl font-bold text-center mb-12"
+        >
+          Key Features
+        </h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-12"
+        >
+          <div
+            class="text-center bg-gray-100 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="mb-4"
+            >
+              <span
+                style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+              >
+                <span
+                  style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                >
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2750%27%20height=%2750%27/%3e"
+                    style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                  />
+                </span>
+                <img
+                  alt="Collaborative Filtering icon"
+                  class="mx-auto h-18 w-18"
+                  data-nimg="intrinsic"
+                  decoding="async"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                />
+                <noscript />
+              </span>
+            </div>
+            <h3
+              class="text-2xl font-bold mb-4"
+            >
+              Collaborative Filtering
+            </h3>
+            <p
+              class="text-gray-600"
+            >
+              Utilizing user interactions and behavior to generate your ideal playlist.
+            </p>
+          </div>
+          <div
+            class="text-center bg-gray-100 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="mb-4"
+            >
+              <span
+                style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+              >
+                <span
+                  style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                >
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2750%27%20height=%2750%27/%3e"
+                    style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                  />
+                </span>
+                <img
+                  alt="Content-Based Filtering icon"
+                  class="mx-auto h-18 w-18"
+                  data-nimg="intrinsic"
+                  decoding="async"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                />
+                <noscript />
+              </span>
+            </div>
+            <h3
+              class="text-2xl font-bold mb-4"
+            >
+              Content-Based Filtering
+            </h3>
+            <p
+              class="text-gray-600"
+            >
+              Analyzing song attributes like genre, tempo, and mood to match your preferences.
+            </p>
+          </div>
+          <div
+            class="text-center bg-gray-100 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="mb-4"
+            >
+              <span
+                style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+              >
+                <span
+                  style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                >
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2750%27%20height=%2750%27/%3e"
+                    style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                  />
+                </span>
+                <img
+                  alt="Cosine Similarity icon"
+                  class="mx-auto h-18 w-18"
+                  data-nimg="intrinsic"
+                  decoding="async"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                />
+                <noscript />
+              </span>
+            </div>
+            <h3
+              class="text-2xl font-bold mb-4"
+            >
+              Cosine Similarity
+            </h3>
+            <p
+              class="text-gray-600"
+            >
+              Identifying tracks that align with your taste based on vectorized song features.
+            </p>
+          </div>
+          <div
+            class="text-center bg-gray-100 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="mb-4"
+            >
+              <span
+                style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+              >
+                <span
+                  style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                >
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2750%27%20height=%2750%27/%3e"
+                    style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                  />
+                </span>
+                <img
+                  alt="NMF Models icon"
+                  class="mx-auto h-18 w-18"
+                  data-nimg="intrinsic"
+                  decoding="async"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                />
+                <noscript />
+              </span>
+            </div>
+            <h3
+              class="text-2xl font-bold mb-4"
+            >
+              NMF Models
+            </h3>
+            <p
+              class="text-gray-600"
+            >
+              Matrix factorization to reveal hidden patterns in music tastes.
+            </p>
+          </div>
+          <div
+            class="text-center bg-gray-100 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="mb-4"
+            >
+              <span
+                style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+              >
+                <span
+                  style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                >
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2750%27%20height=%2750%27/%3e"
+                    style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                  />
+                </span>
+                <img
+                  alt="Less Popular Artist Highlighted icon"
+                  class="mx-auto h-18 w-18"
+                  data-nimg="intrinsic"
+                  decoding="async"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                />
+                <noscript />
+              </span>
+            </div>
+            <h3
+              class="text-2xl font-bold mb-4"
+            >
+              Less Popular Artist Highlighted
+            </h3>
+            <p
+              class="text-gray-600"
+            >
+              Discover hidden gems, not just the same mainstream hits.
+            </p>
+          </div>
+          <div
+            class="text-center bg-gray-100 p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="mb-4"
+            >
+              <span
+                style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+              >
+                <span
+                  style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+                >
+                  <img
+                    alt=""
+                    aria-hidden="true"
+                    src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%2750%27%20height=%2750%27/%3e"
+                    style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                  />
+                </span>
+                <img
+                  alt="Customizable Filters icon"
+                  class="mx-auto h-18 w-18"
+                  data-nimg="intrinsic"
+                  decoding="async"
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+                />
+                <noscript />
+              </span>
+            </div>
+            <h3
+              class="text-2xl font-bold mb-4"
+            >
+              Customizable Filters
+            </h3>
+            <p
+              class="text-gray-600"
+            >
+              Fine-tune your recommendations with adjustable weights for factors like popularity, genre, and tempo.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="py-44 bg-gradient-to-b from-black to-gray-900 text-white relative bg-banner"
+      style="background-size: cover; background-position: center;"
+    >
+      <div
+        class="absolute inset-0 bg-black bg-opacity-60"
+      />
+      <div
+        class="relative z-10 max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 text-center bg-black bg-opacity-25"
+      >
+        <h2
+          class="text-4xl font-bold mb-6"
+        >
+          Highlighting Emerging Artists
+        </h2>
+        <p
+          class="text-lg max-w-2xl mx-auto mb-8 text-gray-300"
+        >
+          Tired of hearing the same tracks on repeat? Our platform goes beyond mainstream recommendations, bringing attention to incredible yet underrepresented artists. Dive deep into music discovery!
+        </p>
+      </div>
+    </section>
+    <section
+      class="py-20 bg-gray-50 relative overflow-hidden"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between"
+      >
+        <div
+          class="lg:w-1/2 relative z-10 md:px-8"
+        >
+          <h2
+            class="text-4xl font-extrabold text-gray-900 mb-4"
+          >
+            Fine-Tune Your Recommendations
+          </h2>
+          <p
+            class="text-lg text-gray-600 mb-6"
+          >
+            You are in control. Adjust the weight of different factors that matter to you, like reducing the influence of popularity or focusing more on specific genres.
+          </p>
+          <a
+            href="/dashboard"
+          >
+            <button
+              class="transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-red-500 hover:bg-red-600 text-white px-6 py-3 text-md"
+              type="button"
+            >
+              Explore Dashboard
+            </button>
+          </a>
+        </div>
+        <div
+          class="lg:w-1/2 mt-8 lg:mt-0 relative"
+        >
+          <div
+            class="relative group"
+          >
+            <span
+              style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+            >
+              <span
+                style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+              >
+                <img
+                  alt=""
+                  aria-hidden="true"
+                  src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27800%27%20height=%27500%27/%3e"
+                  style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+                />
+              </span>
+              <img
+                alt="Dashboard Preview"
+                class="rounded-lg shadow-lg transform transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl"
+                data-nimg="intrinsic"
+                decoding="async"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+              />
+              <noscript />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-gray-50 to-white"
+      />
+    </section>
+    <section
+      class="py-20 bg-white"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
+        <h2
+          class="text-4xl font-bold text-center mb-12"
+        >
+          What Our Users Are Saying
+        </h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <div
+            class="text-center p-6 bg-gray-100 rounded-lg shadow-md"
+          >
+            <img
+              alt="John Doe avatar"
+              class="mx-auto h-16 w-16 rounded-full mb-4"
+              src="/images/user-avatar-1.jpg"
+            />
+            <p
+              class="italic mb-4"
+            >
+              This platform completely changed the way I discover music. I love finding hidden gems!
+            </p>
+            <h4
+              class="font-bold"
+            >
+              John Doe
+            </h4>
+          </div>
+          <div
+            class="text-center p-6 bg-gray-100 rounded-lg shadow-md"
+          >
+            <img
+              alt="Jane Smith avatar"
+              class="mx-auto h-16 w-16 rounded-full mb-4"
+              src="/images/user-avatar-2.jpg"
+            />
+            <p
+              class="italic mb-4"
+            >
+              The customization options are amazing. I finally get the recommendations I care about.
+            </p>
+            <h4
+              class="font-bold"
+            >
+              Jane Smith
+            </h4>
+          </div>
+          <div
+            class="text-center p-6 bg-gray-100 rounded-lg shadow-md"
+          >
+            <img
+              alt="Alice Johnson avatar"
+              class="mx-auto h-16 w-16 rounded-full mb-4"
+              src="/images/user-avatar-2.jpg"
+            />
+            <p
+              class="italic mb-4"
+            >
+              I have discovered a ton of new artists I never would have found otherwise. Highly recommend!
+            </p>
+            <h4
+              class="font-bold"
+            >
+              Alice Johnson
+            </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="py-20 bg-black text-white"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+      >
+        <h2
+          class="text-4xl font-bold mb-6"
+        >
+          Ready to Find Your Sound?
+        </h2>
+        <p
+          class="mb-6"
+        >
+          I found my favorite new artist in less than 10 minutes! - Music Fan
+        </p>
+        <a
+          href="/auth"
+        >
+          <button
+            class="transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-red-500 hover:bg-red-600 text-white px-6 py-3 text-md"
+            type="button"
+          >
+            Start for Free
+          </button>
+        </a>
+      </div>
+    </section>
+  </div>
+</div>
+`;

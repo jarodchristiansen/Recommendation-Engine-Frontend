@@ -4,8 +4,6 @@ export const asyncCheckRedisAndReturnValue = async (q) => {
   const redisClient = getRedisClient();
   const cacheKey = `search:${q}`; // Create a Redis key based on the query
 
-  console.log({ cacheKey });
-
   // // Try to get the cached result first
   const cachedData = await redisClient.get(cacheKey);
 

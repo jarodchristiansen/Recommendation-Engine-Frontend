@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
   const cachedData = await redisClient.get(cacheKey);
 
   if (cachedData) {
-    console.log(`Cache hit for track: ${track}`);
     return NextResponse.json(JSON.parse(cachedData)); // Return the cached result
   }
 
@@ -31,8 +30,6 @@ export async function GET(request: NextRequest) {
   });
 
   const data = await res.json();
-
-  console.log({ data });
 
   const response = {
     recommendations: data?.recommendations,

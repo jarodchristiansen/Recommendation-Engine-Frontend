@@ -1,5 +1,5 @@
 import { CardGridProps } from "@/app/types/commonProps";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 // Generic Card Component for displaying tracks, artists, etc.
 const CardGrid = ({

@@ -8,15 +8,9 @@ import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 
 import Link from "next/link";
 import SearchTrack from "@/components/search/SearchTrack";
-import Button from "@/components/layout/Button";
-import useRequireAuth from "../lib/useRequireAuth";
+import Section from "@/components/layout/Section";
 
-type SectionProps = {
-  title: string;
-  toggle: boolean;
-  setToggle: (toggle: boolean) => void;
-  children: React.ReactNode;
-};
+import useRequireAuth from "../lib/useRequireAuth";
 
 export default function Dashboard() {
   const session = useRequireAuth();
@@ -156,16 +150,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-/* Reusable Section Component */
-const Section = ({ title, toggle, setToggle, children }: SectionProps) => (
-  <section className="mb-12">
-    <div className="flex items-center justify-between">
-      <h2 className="text-2xl font-bold">{title}</h2>
-      <Button onClick={() => setToggle(!toggle)}>
-        {toggle ? "Hide" : "Show"}
-      </Button>
-    </div>
-    {toggle && <div className="mt-6">{children}</div>}
-  </section>
-);

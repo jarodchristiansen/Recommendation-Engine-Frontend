@@ -1,17 +1,17 @@
-// File: app/layout.tsx
-"use client"; // Add this to make this component a Client Component
+"use client"; // This makes the component a Client Component
 
 import localFont from "next/font/local";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Header from "@/components/layout/Header";
-// import "tailwindcss/tailwind.css";
+import Footer from "@/components/layout/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -26,11 +26,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased pt-20`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col py-4`}
       >
         <SessionProvider>
+          {/* The main container uses flex-grow to push footer to the bottom if content is shorter */}
           <Header />
-          {children}
+          <main className="flex-grow">{children}</main>
+          <Footer />
         </SessionProvider>
       </body>
     </html>

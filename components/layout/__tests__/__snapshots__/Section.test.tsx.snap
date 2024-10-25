@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer Component matches the snapshot of the Footer 1`] = `
+<div>
+  <section
+    class="mb-12"
+  >
+    <div
+      class="flex items-center justify-between"
+    >
+      <h2
+        class="text-2xl font-bold"
+      >
+        Test Section
+      </h2>
+      <button
+        class="transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-red-500 hover:bg-red-600 text-white px-6 py-3 text-md"
+        type="button"
+      >
+        Hide
+      </button>
+    </div>
+    <div
+      class="mt-6"
+    >
+      <p>
+        Test Children
+      </p>
+    </div>
+  </section>
+</div>
+`;
