@@ -1,15 +1,8 @@
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import Footer from "@/components/layout/Footer"; // Adjust path as necessary
+import { render } from "@testing-library/react";
 import Section from "../Section";
 
 describe("Footer Component", () => {
-  //   beforeEach(() => {
-  //     render(<Footer />);
-  //   });
-
-  // snapshhot test
-
   const props = {
     title: "Test Section",
     toggle: true,
