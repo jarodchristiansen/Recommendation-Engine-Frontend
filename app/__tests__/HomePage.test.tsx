@@ -1,5 +1,5 @@
 // app/__tests__/Home-page.test.tsx
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Home from "../page"; // Import the Home component
 import "@testing-library/jest-dom"; // For additional matchers
 import { useRouter } from "next/router";
