@@ -6,6 +6,14 @@ import { SessionProvider } from "next-auth/react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Acme Dashboard",
+  description: "The official Next.js Course Dashboard, built with App Router.",
+  metadataBase: new URL("https://next-learn-dashboard.vercel.sh"),
+};
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

@@ -1,0 +1,4 @@
+# public/robots.txt
+User-agent: *
+Disallow: /api/ # disallow API endpoints from indexing
+Allow: /

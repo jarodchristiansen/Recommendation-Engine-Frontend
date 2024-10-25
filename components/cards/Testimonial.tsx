@@ -10,7 +10,7 @@ const Testimonial = ({ quote, name, avatar }: TestimonialProps) => {
       <img
         src={avatar}
         alt={`${name} avatar`}
-        className="mx-auto h-16 w-16 rounded-full mb-4"
+        className="mx-auto h-24 w-24 rounded-full mb-4"
       />
       <p className="italic mb-4">{quote}</p>
       <h4 className="font-bold">{name}</h4>

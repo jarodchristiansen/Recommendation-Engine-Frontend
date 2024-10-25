@@ -4,9 +4,20 @@ import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 import logoImage from "../../public/images/logo.png";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
+
+  const router = useRouter();
+
+  // TODO: Move to centralized location for prefetching client side routes
+  useEffect(() => {
+    router.prefetch("/recommendations");
+    router.prefetch("/auth");
+    router.prefetch("/dashboard");
+  }, []);
 
   const baseUrl = process.env.BASE_URL || "";
 

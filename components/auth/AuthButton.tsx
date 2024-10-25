@@ -8,9 +8,12 @@ export default function AuthButton() {
 
   if (session) {
     return (
-      <div>
+      <div className="flex flex-col items center gap-6">
         <p>Signed in as {session.user?.email}</p>
-        <button onClick={() => signOut()} className="bg-red-500 text-white p-2">
+        <button
+          onClick={() => signOut()}
+          className="bg-red-500 text-white p-2 max-w-xs self-center font-bold rounded-md"
+        >
           Sign out
         </button>
       </div>
@@ -20,7 +23,7 @@ export default function AuthButton() {
   return (
     <button
       onClick={() => signIn("spotify")}
-      className="bg-green-500 text-white p-2"
+      className="bg-green-500 text-white p-2 max-w-sm font-bold rounded-md"
     >
       Sign in with Spotify
     </button>
