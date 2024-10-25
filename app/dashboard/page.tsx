@@ -158,7 +158,12 @@ export default function Dashboard() {
 }
 
 /* Reusable Section Component */
-const Section = ({ title, toggle, setToggle, children }: SectionProps) => (
+export const Section = ({
+  title,
+  toggle,
+  setToggle,
+  children,
+}: SectionProps) => (
   <section className="mb-12">
     <div className="flex items-center justify-between">
       <h2 className="text-2xl font-bold">{title}</h2>

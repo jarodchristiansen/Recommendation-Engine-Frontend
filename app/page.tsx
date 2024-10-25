@@ -163,8 +163,8 @@ export default function Home() {
               avatar="/images/user-avatar-2.jpg"
             />
             <Testimonial
-              quote="The customization options are amazing. I finally get the recommendations I care about."
-              name="Jane Smith"
+              quote="I have discovered a ton of new artists I never would have found otherwise. Highly recommend!"
+              name="Alice Johnson"
               avatar="/images/user-avatar-2.jpg"
             />
           </div>

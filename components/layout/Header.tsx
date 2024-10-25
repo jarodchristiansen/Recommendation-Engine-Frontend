@@ -20,7 +20,10 @@ const Header = () => {
   ];
 
   return (
-    <div className="flex justify-between items-center w-full h-20 px-4 text-white bg-black fixed top-0 z-50">
+    <div
+      className="flex justify-between items-center w-full h-20 px-4 text-white bg-black fixed top-0 z-50"
+      data-testid="banner"
+    >
       {/* Logo Section */}
       <div>
         <h1 className="text-5xl ml-2">
@@ -54,6 +57,8 @@ const Header = () => {
       <div
         onClick={() => setNav(!nav)}
         className="cursor-pointer pr-4 z-10 text-gray-500 md:hidden"
+        role="button"
+        tabIndex={0}
       >
         {nav ? <FaTimes size={30} /> : <FaBars size={30} />}
       </div>

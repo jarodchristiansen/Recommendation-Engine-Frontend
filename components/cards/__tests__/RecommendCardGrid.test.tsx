@@ -18,8 +18,8 @@ describe("RecommendCardGrid", () => {
     };
   });
 
-  it("renders the items correctly", () => {
-    render(
+  it("matches the snapshot of the RecommendCardGrid", () => {
+    const { container } = render(
       <RecommendCardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
@@ -28,10 +28,8 @@ describe("RecommendCardGrid", () => {
       />
     );
 
-    // Check if the items are rendered
-    expect(screen.getByText("Song One")).toBeInTheDocument();
-    expect(screen.getByText("Song Two")).toBeInTheDocument();
-    expect(screen.getByText("Song Three")).toBeInTheDocument();
+    // Create a snapshot of the rendered RecommendCardGrid
+    expect(container).toMatchSnapshot();
   });
 
   it("applies selected class when a song is selected", () => {

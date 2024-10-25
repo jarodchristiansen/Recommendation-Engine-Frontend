@@ -10,6 +10,13 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: "babel",
   testEnvironment: "jsdom",
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "./components/**{js,jsx,ts,tsx}", // Adjust this pattern to match your project structure
+    "./app/**/page.{js,jsx,ts,tsx}", // Adjust this pattern to match your project structure
+    "!./**/*.d.ts", // Exclude type declaration files (for TypeScript projects)
+    "!./*.ts", // Exclude specific files if needed
+  ],
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };

@@ -4,8 +4,6 @@ import CardGrid from "../CardGrid";
 
 import { mockTracks } from "../../mocks/tracks";
 
-// import "@testing-library/jest-dom/extend-expect"; // for extended matchers
-
 describe("CardGrid", () => {
   const handleItemClick = jest.fn(); // Mock function for handling clicks
   const selectedSongs = [mockTracks[0]]; // Pre-select the first song
@@ -24,6 +22,21 @@ describe("CardGrid", () => {
     expect(screen.getByText("Song One")).toBeInTheDocument();
     expect(screen.getByText("Song Two")).toBeInTheDocument();
     expect(screen.getByText("Song Three")).toBeInTheDocument();
+  });
+
+  // snapshot test
+  it("matches the snapshot of the CardGrid", () => {
+    const { container } = render(
+      <CardGrid
+        items={mockTracks}
+        handleItemClick={handleItemClick}
+        selectedSongs={[]}
+        type="track"
+      />
+    );
+
+    // Create a snapshot of the rendered CardGrid
+    expect(container).toMatchSnapshot();
   });
 
   it("applies selected class when a song is selected", () => {
