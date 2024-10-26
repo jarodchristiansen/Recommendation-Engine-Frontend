@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-// import AudioHeroImage from "../public/images/audioboard-hero-2.jpg";
 import AudioHeroImage from "../../public/images/audioboard-hero-2.jpg";
 import Button from "../layout/Button";
 

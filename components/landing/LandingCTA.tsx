@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Button from "../layout/Button";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import DashboardImage from "../../public/images/dashboard.png";
 import Testimonial from "../cards/Testimonial";
 import Link from "next/link";

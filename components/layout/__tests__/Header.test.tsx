@@ -2,6 +2,18 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Header from "@/components/layout/Header";
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+  })),
+  useSearchParams: jest.fn(() => ({
+    // get: jest.fn(),
+  })),
+  usePathname: jest.fn(),
+}));
+
 describe("Header Component", () => {
   beforeEach(() => {
     render(<Header />);
