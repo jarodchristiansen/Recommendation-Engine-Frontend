@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import CardGrid from "../CardGrid";
 
-import { mockTracks } from "../../mocks/tracks";
+import { mockTracks } from "../../../__mocks__/tracks";
 
 describe("CardGrid", () => {
   const handleItemClick = jest.fn(); // Mock function for handling clicks
