@@ -20,7 +20,7 @@ const FeatureSection = ({ title, description, icon = "" }: FeatureProps) => {
         />
       </div>
       <h3 className="text-2xl font-bold mb-4">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+      <p className="text-gray-600 font-medium">{description}</p>
     </div>
   );
 };

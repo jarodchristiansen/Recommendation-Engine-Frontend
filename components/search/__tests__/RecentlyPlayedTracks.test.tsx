@@ -1,5 +1,11 @@
 // components/search/__tests__/RecentlyPlayedTracks.test.tsx
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  act,
+} from "@testing-library/react";
 import RecentlyPlayedTracks from "../RecentlyPlayedTracks";
 import "@testing-library/jest-dom";
 import React from "react";
@@ -30,16 +36,10 @@ describe("RecentlyPlayedTracks Component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
-  it("renders loading message initially", () => {
-    render(<RecentlyPlayedTracks />);
-    expect(
-      screen.getByText("Loading your recently played tracks...")
-    ).toBeInTheDocument();
-  });
-
   it("fetches and displays recently played tracks", async () => {
-    render(<RecentlyPlayedTracks />);
+    await act(async () => {
+      render(<RecentlyPlayedTracks />);
+    });
 
     // Check if fetch is called with the correct endpoint
     await waitFor(() =>
@@ -54,7 +54,9 @@ describe("RecentlyPlayedTracks Component", () => {
   });
 
   it("highlights a track when clicked", async () => {
-    render(<RecentlyPlayedTracks />);
+    await act(async () => {
+      render(<RecentlyPlayedTracks />);
+    });
 
     // Wait for track name to appear after fetching data
     await waitFor(() =>

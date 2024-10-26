@@ -1,4 +1,4 @@
-"use client"; // This makes the component a Client Component
+"use client";
 
 import localFont from "next/font/local";
 import "./globals.css";

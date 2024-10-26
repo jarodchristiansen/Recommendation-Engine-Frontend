@@ -1,8 +1,3 @@
-// import {
-//   RecommendedTrackType,
-//   SearchTrackType,
-//   SelectedArrayType,
-// } from "@/app/types/track";
 import CardGrid from "@/components/cards/CardGrid";
 import RecommendCardGrid from "@/components/cards/RecommendCardGrid";
 import { useEffect, useMemo, useState } from "react";
@@ -109,7 +104,7 @@ const DynamicDataDisplay = ({
             id: item.id,
             name: item.name,
             subtext: "Artist",
-            image: item.images[0]?.url,
+            // image: item?.images[0]?.url,
           };
         default:
           return {};

@@ -2,21 +2,11 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import RecommendCardGrid from "../RecommendCardGrid";
 
-import { mockTracks } from "../../mocks/tracks";
-
-// import "@testing-library/jest-dom/extend-expect"; // for extended matchers
+import { mockTracks } from "../../../__mocks__/tracks";
 
 describe("RecommendCardGrid", () => {
   const handleItemClick = jest.fn(); // Mock function for handling clicks
   const selectedSongs = [mockTracks[0]]; // Pre-select the first song
-
-  beforeAll(() => {
-    global.ResizeObserver = class {
-      observe() {}
-      unobserve() {}
-      disconnect() {}
-    };
-  });
 
   it("matches the snapshot of the RecommendCardGrid", () => {
     const { container } = render(

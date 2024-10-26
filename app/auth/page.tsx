@@ -1,21 +1,28 @@
+"use client";
+
 // pages/auth.tsx
 import AuthButton from "@/components/auth/AuthButton";
 
 const AuthPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-6">Welcome to Music Recommender</h1>
-      <p className="text-lg text-gray-700 mb-8">
-        Sign in to get personalized recommendations.
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-gray-800 via-black to-gray-900 text-gray-100 p-6 gap-4">
+      <h1 className="text-5xl font-bold mb-6 tracking-wider text-center">
+        Get in Tune with SpotRec
+      </h1>
+      <p className="text-lg text-gray-400 mb-8 text-center max-w-md">
+        Unlock personalized recommendations based on your favorite artists,
+        albums, and listening habits.
       </p>
 
-      {/* Spotify Auth Button */}
-      <AuthButton />
+      <div>
+        {/* Spotify Auth Button */}
+        <AuthButton />
+      </div>
 
-      <div className="mt-4">
-        <p className="text-sm text-gray-600">
-          Don&apos;t have an account? Signing in via Spotify will automatically
-          create one.
+      <div className="mt-4 max-w-md text-center">
+        <p className="text-sm text-gray-500 font-bold">
+          No Spotify account? No worries! Signing in will guide you through a
+          quick setup.
         </p>
       </div>
     </div>

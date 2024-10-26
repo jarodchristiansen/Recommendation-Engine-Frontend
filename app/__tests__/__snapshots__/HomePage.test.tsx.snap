@@ -87,7 +87,7 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
               Collaborative Filtering
             </h3>
             <p
-              class="text-gray-600"
+              class="text-gray-600 font-medium"
             >
               Utilizing user interactions and behavior to generate your ideal playlist.
             </p>
@@ -128,9 +128,9 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
               Content-Based Filtering
             </h3>
             <p
-              class="text-gray-600"
+              class="text-gray-600 font-medium"
             >
-              Analyzing song attributes like genre, tempo, and mood to match your preferences.
+              Analyzing song attributes like genre, tempo, and mood to match your preferences based on your input
             </p>
           </div>
           <div
@@ -153,7 +153,7 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
                   />
                 </span>
                 <img
-                  alt="Cosine Similarity icon"
+                  alt="Calculating Similarity icon"
                   class="mx-auto h-18 w-18"
                   data-nimg="intrinsic"
                   decoding="async"
@@ -166,12 +166,12 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
             <h3
               class="text-2xl font-bold mb-4"
             >
-              Cosine Similarity
+              Calculating Similarity
             </h3>
             <p
-              class="text-gray-600"
+              class="text-gray-600 font-medium"
             >
-              Identifying tracks that align with your taste based on vectorized song features.
+              Finding tracks similar to your favorites by plotting them in an n-dimensional space.
             </p>
           </div>
           <div
@@ -194,7 +194,7 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
                   />
                 </span>
                 <img
-                  alt="NMF Models icon"
+                  alt="Machine Learning icon"
                   class="mx-auto h-18 w-18"
                   data-nimg="intrinsic"
                   decoding="async"
@@ -207,12 +207,12 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
             <h3
               class="text-2xl font-bold mb-4"
             >
-              NMF Models
+              Machine Learning
             </h3>
             <p
-              class="text-gray-600"
+              class="text-gray-600 font-medium"
             >
-              Matrix factorization to reveal hidden patterns in music tastes.
+              Using advanced algorithms like NMF to generate recommendations based on your listening habits.
             </p>
           </div>
           <div
@@ -235,7 +235,7 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
                   />
                 </span>
                 <img
-                  alt="Less Popular Artist Highlighted icon"
+                  alt="Less Popular Artists Are Highlighted icon"
                   class="mx-auto h-18 w-18"
                   data-nimg="intrinsic"
                   decoding="async"
@@ -248,10 +248,10 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
             <h3
               class="text-2xl font-bold mb-4"
             >
-              Less Popular Artist Highlighted
+              Less Popular Artists Are Highlighted
             </h3>
             <p
-              class="text-gray-600"
+              class="text-gray-600 font-medium"
             >
               Discover hidden gems, not just the same mainstream hits.
             </p>
@@ -292,7 +292,7 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
               Customizable Filters
             </h3>
             <p
-              class="text-gray-600"
+              class="text-gray-600 font-medium"
             >
               Fine-tune your recommendations with adjustable weights for factors like popularity, genre, and tempo.
             </p>
@@ -341,16 +341,12 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
           >
             You are in control. Adjust the weight of different factors that matter to you, like reducing the influence of popularity or focusing more on specific genres.
           </p>
-          <a
-            href="/dashboard"
+          <button
+            class="transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-red-500 hover:bg-red-600 text-white px-6 py-3 text-md"
+            type="button"
           >
-            <button
-              class="transition-transform transform hover:scale-105 shadow-lg rounded-full font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 bg-red-500 hover:bg-red-600 text-white px-6 py-3 text-md"
-              type="button"
-            >
-              Explore Dashboard
-            </button>
-          </a>
+            Explore Dashboard
+          </button>
         </div>
         <div
           class="lg:w-1/2 mt-8 lg:mt-0 relative"
@@ -406,38 +402,38 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
             class="text-center p-6 bg-gray-100 rounded-lg shadow-md"
           >
             <img
-              alt="John Doe avatar"
-              class="mx-auto h-16 w-16 rounded-full mb-4"
-              src="/images/user-avatar-1.jpg"
+              alt="Gavin Sampson avatar"
+              class="mx-auto h-24 w-24 rounded-full mb-4"
+              src="/images/avatar6.jpg"
             />
             <p
               class="italic mb-4"
             >
-              This platform completely changed the way I discover music. I love finding hidden gems!
+              I love finding new artists, but have a pretty particular taste. This app has been great
             </p>
             <h4
               class="font-bold"
             >
-              John Doe
+              Gavin Sampson
             </h4>
           </div>
           <div
             class="text-center p-6 bg-gray-100 rounded-lg shadow-md"
           >
             <img
-              alt="Jane Smith avatar"
-              class="mx-auto h-16 w-16 rounded-full mb-4"
-              src="/images/user-avatar-2.jpg"
+              alt="Sandra Groves avatar"
+              class="mx-auto h-24 w-24 rounded-full mb-4"
+              src="/images/avatar.jpg"
             />
             <p
               class="italic mb-4"
             >
-              The customization options are amazing. I finally get the recommendations I care about.
+              The customization options are amazing. I finally get the recommendations I care about, instead of just what is popular right now
             </p>
             <h4
               class="font-bold"
             >
-              Jane Smith
+              Sandra Groves
             </h4>
           </div>
           <div
@@ -445,8 +441,8 @@ exports[`Home matches the snapshot of the HomePage 1`] = `
           >
             <img
               alt="Alice Johnson avatar"
-              class="mx-auto h-16 w-16 rounded-full mb-4"
-              src="/images/user-avatar-2.jpg"
+              class="mx-auto h-24 w-24 rounded-full mb-4"
+              src="/images/avatar2.jpg"
             />
             <p
               class="italic mb-4"
