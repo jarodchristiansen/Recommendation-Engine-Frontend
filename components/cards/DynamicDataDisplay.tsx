@@ -9,6 +9,7 @@ type DynamicDataDisplayProps = {
   onSelectSong?: (track: any) => void;
   selectedSongs: any;
   onClearSelection?: () => void;
+  setRecommendedTracks?: (tracks: any) => void;
 };
 
 const DynamicDataDisplay = ({
@@ -17,6 +18,7 @@ const DynamicDataDisplay = ({
   onSelectSong,
   selectedSongs,
   onClearSelection,
+  setRecommendedTracks,
 }: DynamicDataDisplayProps) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -31,6 +33,14 @@ const DynamicDataDisplay = ({
 
     if (!result?.error) {
       setData(result?.items || result?.recommendations || result); // Adjust if response is structured differently
+
+      if (setRecommendedTracks) {
+        console.log({ result });
+
+        setRecommendedTracks(
+          result?.items || result?.recommendations || result
+        );
+      }
 
       return;
     }
