@@ -8,13 +8,6 @@ import Button from "@/components/layout/Button";
 
 import { SearchTrackType } from "../types/track";
 
-import type { Metadata } from "next";
-import MetaData from "../seo/MetaData";
-
-export const metadata: Metadata = {
-  title: "Invoices | Acme Dashboard",
-};
-
 const RecommendationsPage = () => {
   type SongsType = SearchTrackType[];
 
