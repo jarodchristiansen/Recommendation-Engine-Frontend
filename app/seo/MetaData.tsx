@@ -1,7 +1,6 @@
 // app/components/Meta.tsx
 import Head from "next/head";
 import { MetaDataTable } from "../seo/staticMetaContent";
-import { Metadata } from "next";
 
 type MetaDataType = {
   title: string;
