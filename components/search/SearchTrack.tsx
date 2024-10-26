@@ -66,7 +66,7 @@ export default function SearchTrack({
           onChange={(e) => setQuery(e.target.value)}
         />
 
-        <Button onClick={searchTrack}>Search</Button>
+        <Button onClick={() => searchTrack()}>Search</Button>
       </div>
 
       {/* Clear Selection Button */}
