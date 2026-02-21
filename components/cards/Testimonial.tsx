@@ -6,7 +6,7 @@ type TestimonialProps = {
 
 const Testimonial = ({ quote, name, avatar }: TestimonialProps) => {
   return (
-    <div className="text-center p-6 bg-gray-100 rounded-lg shadow-md">
+    <div className="text-center p-6 bg-surface rounded-lg shadow-md">
       <img
         src={avatar}
         alt={`${name} avatar`}

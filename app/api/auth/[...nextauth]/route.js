@@ -1,55 +1,20 @@
-// // File: app/api/auth/[...nextauth]/route.ts
-// import NextAuth from "next-auth";
-// import SpotifyProvider from "next-auth/providers/spotify";
+// DEPRECATED: Spotify OAuth removed for migration to Open Library (books).
+// See MIGRATION_AND_ARCHITECTURE.md and MIGRATION_CHECKPOINT.md (in recommendation-server).
+//
+// REPLACEMENT PLAN:
+// - Auth may become optional, or switch to another provider (e.g. email, GitHub) if user accounts are needed.
+// - For a book-only portfolio app, anonymous use may be sufficient; remove auth or keep a no-op session.
+// Current: NextAuth with no providers so sign-in is effectively disabled; session will be null.
 
-// export const authOptions = {
-//   providers: [
-//     SpotifyProvider({
-//       clientId: process.env.SPOTIFY_CLIENT_ID,
-//       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-//       authorization:
-//         "https://accounts.spotify.com/authorize?scope=user-read-email,playlist-read-private,playlist-modify-private,user-read-recently-played,user-top-read,user-library-read",
-//     }),
-//   ],
-//   callbacks: {
-//     async jwt({ token, account }) {
-//       if (account) {
-//         token.accessToken = account.access_token;
-//       }
-//       return token;
-//     },
-//     async session({ session }) {
-//       return session;
-//     },
-//   },
-//   secret: process.env.NEXTAUTH_SECRET,
-//   session: {
-//     strategy: "jwt",
-//     maxAge: 3600 * 4, // 4 hour session duration
-//   },
-// };
-
-// const handler = NextAuth(authOptions);
-// export { handler as GET, handler as POST };
-
-// app/api/auth/[...nextauth]/route.js
 import NextAuth from "next-auth";
-import SpotifyProvider from "next-auth/providers/spotify";
 
 const handler = NextAuth({
   providers: [
-    SpotifyProvider({
-      clientId: process.env.SPOTIFY_CLIENT_ID,
-      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      authorization:
-        "https://accounts.spotify.com/authorize?scope=user-read-email,playlist-read-private,playlist-modify-private,user-read-recently-played,user-top-read,user-library-read",
-    }),
+    // Spotify provider removed. Add Open Library–compatible auth when required.
   ],
   callbacks: {
     async jwt({ token, account }) {
-      if (account) {
-        token.accessToken = account.access_token;
-      }
+      if (account) token.accessToken = account.access_token;
       return token;
     },
     async session({ session }) {

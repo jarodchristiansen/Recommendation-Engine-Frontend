@@ -1,74 +1,106 @@
-import { getToken } from "next-auth/jwt";
+// Book search via Open Library. Replaces Spotify search. See MIGRATION_CHECKPOINT.md.
+// GET https://openlibrary.org/search.json?q=… (params: q, limit, page, fields). Cached in Redis.
+
 import { NextResponse, NextRequest } from "next/server";
+import { getRedisClient } from "../redis";
 
-import { getRedisClient } from "../redis"; // Use your Redis client from the helper file
+const OPEN_LIBRARY_SEARCH = "https://openlibrary.org/search.json";
+const CACHE_TTL_SEC = 3600 * 24; // 24 hours
+const DEFAULT_LIMIT = 20;
+const FIELDS =
+  "key,title,author_name,first_publish_year,cover_i,edition_count,subject,ratings_average,ratings_count";
 
-async function getSpotifyToken() {
-  const clientId = process.env.SPOTIFY_CLIENT_ID;
-  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+function buildCoverUrl(cover_i: number | undefined): string | undefined {
+  if (cover_i == null || cover_i < 0) return undefined;
+  return `https://covers.openlibrary.org/b/id/${cover_i}-M.jpg`;
+}
 
-  const authString = Buffer.from(`${clientId}:${clientSecret}`).toString(
-    "base64"
-  );
-
-  const response = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${authString}`,
-    },
-    body: "grant_type=client_credentials",
-  });
-
-  const data = await response.json();
-
-  return data.access_token;
+function normalizeWorkId(key: string): string {
+  const m = key.match(/OL\d+W/i);
+  return m ? m[0].toUpperCase() : key;
 }
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
+  const limit = Math.min(
+    Number(searchParams.get("limit")) || DEFAULT_LIMIT,
+    50,
+  );
+  const page = Math.max(1, Number(searchParams.get("page")) || 1);
 
-  if (!q) {
+  if (!q || !q.trim()) {
     return NextResponse.json({ error: "Query is required" }, { status: 400 });
   }
 
-  let token = await getToken({ req: request });
+  const cacheKey = `booksearch:${q.trim().toLowerCase()}:${limit}:${page}`;
 
-  if (!token) {
-    token = await getSpotifyToken(); // Get the access token dynamically
+  // Try cache with short timeout so missing/unreachable Redis doesn't hang the request
+  let cached: string | null = null;
+  try {
+    const redisClient = getRedisClient();
+    cached = await Promise.race([
+      redisClient.get(cacheKey),
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), 3000)),
+    ]);
+  } catch (_) {
+    // Redis unavailable or slow — proceed without cache
+  }
+  if (cached) {
+    return NextResponse.json(JSON.parse(cached));
   }
 
-  const params = new URLSearchParams({ q, type: "track" });
-
-  const redisClient = getRedisClient();
-  const cacheKey = `search:${q.toUpperCase()}`; // Create a Redis key based on the query
-
-  // // Try to get the cached result first
-  const cachedData = await redisClient.get(cacheKey);
-
-  if (cachedData) {
-    return NextResponse.json(JSON.parse(cachedData)); // Return the cached result
-  }
+  const params = new URLSearchParams({
+    q: q.trim(),
+    limit: String(limit),
+    page: String(page),
+    fields: FIELDS,
+  });
 
   try {
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?${params}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token?.accessToken || token}`, // Use the token in search request
-        },
-      }
+    const res = await fetch(`${OPEN_LIBRARY_SEARCH}?${params}`, {
+      headers: {
+        "User-Agent":
+          process.env.OPEN_LIBRARY_USER_AGENT || "RecommendationApp/1.0",
+      },
+    });
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: "Open Library search failed", docs: [] },
+        { status: 502 },
+      );
+    }
+    const data = await res.json();
+    const docs = (data.docs || []).map((d: Record<string, unknown>) => {
+      const key = (d.key as string) || "";
+      const cover_i = d.cover_i as number | undefined;
+      return {
+        ...d,
+        work_id: normalizeWorkId(key),
+        cover_url: buildCoverUrl(cover_i),
+        author_name: d.author_name,
+      };
+    });
+    const out = {
+      num_found: data.num_found ?? data.numFound ?? 0,
+      start: data.start ?? 0,
+      docs,
+    };
+    // Cache in background; don't block or fail the response if Redis is down
+    try {
+      const redisClient = getRedisClient();
+      await Promise.race([
+        redisClient.set(cacheKey, JSON.stringify(out), "EX", CACHE_TTL_SEC),
+        new Promise<void>((resolve) => setTimeout(() => resolve(), 2000)),
+      ]);
+    } catch (_) {
+      // ignore
+    }
+    return NextResponse.json(out);
+  } catch (err) {
+    return NextResponse.json(
+      { error: "Search failed", docs: [] },
+      { status: 500 },
     );
-    const data = await response.json();
-
-    // TODO: Handle the case when the token is expired/errors so they dont get cached
-
-    // Store the data in Redis and set it to expire after 1 hour (3600 seconds)
-    await redisClient.set(cacheKey, JSON.stringify(data), "EX", 3600 * 24 * 30);
-
-    return NextResponse.json(data, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
   }
 }

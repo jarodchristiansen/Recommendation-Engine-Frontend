@@ -1,57 +1,35 @@
-// app/recommendations/page.tsx
+// Legacy SEO content (App Router uses export metadata in each page).
+// Used by MetaData.tsx if rendered; kept aligned with Book Rec product.
+
 export const recommendationsPageMetaData = {
-  title: "Music Recommender - Recommendations",
+  title: "Discover your next read | Book Rec",
   description:
-    "Get personalized music recommendations based on your favorite tracks.",
-  keywords: ["music recommendations", "Spotify", "personalized music"],
+    "Pick a book you love and get similar book recommendations based on subjects, authors, and metadata. See why each book was chosen.",
+  keywords: ["book recommendations", "Open Library", "recommendation engine", "books"],
   openGraph: {
     type: "website",
-    site_name: "Music Recommender",
+    site_name: "Book Rec",
   },
 };
 
-// app/layout.tsx
 export const globalMetaData = {
-  title: {
-    default: "Music Recommender",
-    template: "%s | Music Recommender",
-  },
+  title: "Book Rec | Book Recommendation Engine",
   description:
-    "Discover personalized music recommendations tailored to your taste.",
+    "Discover books similar to the ones you love. Get personalized book recommendations powered by Open Library.",
   keywords: [
-    "music recommendations",
-    "Spotify",
+    "book recommendations",
+    "Open Library",
     "recommendation engine",
-    "music app",
+    "books",
   ],
   openGraph: {
     type: "website",
-    siteName: "Music Recommender",
+    siteName: "Book Rec",
   },
   twitter: {
     card: "summary_large_image",
     creator: "@yourtwitterhandle",
   },
-
-  // title: {
-  //   default: "Your App",
-
-  //   template: "%s | Your App",
-  // },
-
-  // description: "This is a description of your app.",
-
-  // keywords: ["app", "music", "recommendation"],
-
-  // openGraph: {
-  //   type: "website",
-  //   siteName: "Your App",
-  // },
-
-  // twitter: {
-  //   card: "summary_large_image",
-  //   creator: "@yourapp",
-  // }
 };
 
 export const MetaDataTable = {

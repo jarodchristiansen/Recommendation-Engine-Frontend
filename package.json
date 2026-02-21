@@ -1,5 +1,5 @@
 {
-  "name": "spotify-recommender",
+  "name": "book-recommender",
   "version": "0.1.0",
   "private": true,
   "scripts": {

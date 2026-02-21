@@ -31,8 +31,6 @@ const MetaData = ({ path }: MetaDataProps) => {
 
   const { title, description, keywords, openGraph, twitter } = metadata;
 
-  console.log({ title, description, keywords, openGraph });
-
   return (
     <Head>
       <title>{title}</title>

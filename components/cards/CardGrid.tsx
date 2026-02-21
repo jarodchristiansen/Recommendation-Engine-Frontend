@@ -1,16 +1,18 @@
 import { CardGridProps } from "@/app/types/commonProps";
 import Image from "next/legacy/image";
 
-// Generic Card Component for displaying tracks, artists, etc.
+/**
+ * Legacy generic card grid (from music recommender). Not used in the book flow;
+ * RecommendCardGrid is used instead. Kept for tests and possible future reuse.
+ */
 const CardGrid = ({
   items,
   handleItemClick,
   selectedSongs,
   type,
 }: CardGridProps) => {
-  // Checks if an item is already selected
-  const isSelected = (track: any) => {
-    return selectedSongs?.some((selectedSong) => selectedSong?.id === track.id);
+  const isSelected = (item: { id?: string }) => {
+    return selectedSongs?.some((selected) => selected?.id === item.id);
   };
 
   return (

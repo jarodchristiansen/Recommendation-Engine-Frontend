@@ -2,26 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Spacing scale: vertical rhythm 4/6/8/12/16/20/24 — section padding py-16–py-24, between sections mb-12–mb-16, between blocks mb-6–mb-8, grid gaps gap-6–gap-8 */
+
+/* Type scale (use with font-*): display (hero), h1–h3 (headings), body (default copy), small (secondary), caption (labels). Default body line-height: leading-relaxed (1.625). */
+
+/* Book-first design tokens: calm, focused, trustworthy reading experience */
+:root {
+  --color-primary: 30 41 59;       /* slate-800: deep navy for headers/primary actions */
+  --color-primary-foreground: 248 250 252;
+  --color-secondary: 241 245 249;  /* slate-100: warm neutrals */
+  --color-surface: 250 250 249;     /* stone-50: paper-adjacent background */
+  --color-accent: 20 184 166;       /* teal-500: muted teal for CTAs and highlights */
+  --color-accent-hover: 13 148 136;
+  --color-muted: 100 116 139;       /* slate-400 for secondary text */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer components {
+  .loader {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-} */
+}

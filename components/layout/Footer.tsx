@@ -13,22 +13,24 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-black text-white py-8">
-      <div className="container mx-auto ">
-        {/* Main Navigation Links */}
-        <div className="flex flex-col items-center justify-center text-center gap-6 md:flex-row md:gap-8 border-b border-gray-700 pb-4 mb-4">
+    <footer className="bg-primary text-white py-12">
+      <div className="container mx-auto">
+        <nav aria-label="Footer" className="flex flex-col items-center justify-center text-center gap-6 md:flex-row md:gap-8 border-b border-slate-600 pb-6 mb-6">
           {links.map(({ id, text, link }) => (
-            <Link href={link} key={id}>
-              <span className="text-gray-400 hover:text-white px-3 py-2 capitalize transition duration-300 ease-in-out">
-                {text}
-              </span>
+            <Link
+              href={link}
+              key={id}
+              className="outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded text-slate-300 hover:text-white px-3 py-2 capitalize transition duration-300 ease-in-out min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
+            >
+              {text}
             </Link>
           ))}
-        </div>
+        </nav>
 
-        {/* Copyright Info */}
-        <div className="text-center text-gray-400">
-          <p>&copy; {currentYear} All rights reserved.</p>
+        <div className="text-center text-slate-400">
+          <p className="font-semibold text-primary-foreground mb-1">Book Rec</p>
+          <p className="text-small">Discover your next read.</p>
+          <p className="mt-4">&copy; {currentYear} Book Rec. All rights reserved.</p>
         </div>
       </div>
     </footer>

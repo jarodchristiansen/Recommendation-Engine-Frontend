@@ -1,61 +1,57 @@
 import Image from "next/legacy/image";
-import {
-  PolarAngleAxis,
-  PolarGrid,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
-  ResponsiveContainer,
-} from "recharts";
-import { RecommendedTrackType } from "@/app/types/track";
 import { CardGridProps } from "@/app/types/commonProps";
+import type { RecommendationCardItem } from "@/app/types/book";
 
-// Generic Card Component for displaying tracks, artists, etc.
+/** Map backend feature keys to human-readable "why similar" phrases for readers. */
+const FEATURE_LABELS: Record<string, string> = {
+  author_count: "Similar depth of authorship",
+  subject_count: "Similar themes",
+  cover_count: "Well-established title",
+  first_publish_year: "Similar era",
+  ratings_average: "Similar reception",
+};
+
+function getWhySimilarText(featureDifference: Record<string, number> | undefined): string {
+  if (!featureDifference || typeof featureDifference !== "object") {
+    return "Similar in theme and scope.";
+  }
+  const phrases = Object.keys(featureDifference)
+    .filter((key) => FEATURE_LABELS[key] && key !== "cover_count")
+    .slice(0, 3)
+    .map((key) => FEATURE_LABELS[key]);
+  if (phrases.length === 0) return "Similar in theme and scope.";
+  return phrases.join(", ") + ".";
+}
+
 const RecommendCardGrid = ({
   items,
   handleItemClick,
-  selectedSongs,
+  selectedItems,
   type,
 }: CardGridProps) => {
-  // Checks if an item is already selected
-  const isSelected = (track: RecommendedTrackType) => {
-    return selectedSongs?.some((selectedSong) => selectedSong?.id === track.id);
+  const isSelected = (item: RecommendationCardItem) => {
+    return selectedItems?.some((s: unknown) => (s as { id?: string })?.id === item.id);
   };
-
-  // Function to create data for the radar chart from feature differences
-  const createRadarData = (item: RecommendedTrackType) => {
-    const featureDifference: { [key: string]: number } =
-      item.feature_difference || {};
-    return Object.keys(featureDifference).map((feature) => {
-      const value = Math.abs(featureDifference[feature]);
-
-      return {
-        feature,
-        value,
-      };
-    });
-  };
-
-  //   //   // Function to create data for the bar chart comparison
-  //   const createBarData = (item, targetFeatures) => {
-  //     return Object?.keys(targetFeatures).map((feature) => ({
-  //       feature,
-  //       target: targetFeatures[feature],
-  //       recommendation: item[feature],
-  //     }));
-  //   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {items.map((item: RecommendedTrackType, index) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {items.map((item: RecommendationCardItem, index) => (
         <div
           key={item.id || `${item.name}-${index}`}
+          role="button"
+          tabIndex={0}
           onClick={() => handleItemClick(item)}
-          className={`group p-4 border rounded-lg cursor-pointer transition-transform transform ${
-            isSelected(item) ? "border-blue-500 scale-105" : "border-gray-200"
-          } hover:border-blue-500 hover:scale-105`}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleItemClick(item);
+            }
+          }}
+          className={`group p-6 border rounded-lg cursor-pointer transition-transform transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
+            isSelected(item) ? "border-accent scale-[1.02]" : "border-slate-200"
+          } hover:border-accent hover:scale-[1.02] bg-white shadow-sm`}
         >
-          <div className="relative w-full h-48 mb-4">
+          <div className="relative w-full aspect-[2/3] max-h-64 mb-4">
             {item?.image && (
               <Image
                 src={item.image}
@@ -67,45 +63,19 @@ const RecommendCardGrid = ({
               />
             )}
           </div>
-          <h4 className="text-lg font-bold text-gray-900">{item.name}</h4>
-          <p className="text-sm text-gray-600">{item.subtext}</p>
+          <h4 className="text-lg font-bold text-primary">{item.name}</h4>
+          <p className="text-small text-slate-600">{item.subtext}</p>
 
-          {/* Radar Chart for Feature Differences */}
-          <div className="mt-4">
-            <h5 className="text-sm font-semibold">Feature Difference</h5>
-            <ResponsiveContainer width="100%" height={200}>
-              <RadarChart data={createRadarData(item)} outerRadius="80%">
-                <PolarGrid />
-                <PolarAngleAxis dataKey="feature" />
-                <PolarRadiusAxis />
-                <Radar
-                  name="Difference"
-                  dataKey="value"
-                  stroke="#f04949"
-                  fill="#f04949"
-                  fillOpacity={0.6}
-                />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
+          {/* Human-readable explanation instead of raw feature radar */}
+          <p className="mt-3 text-small text-slate-500 italic" aria-label="Why this book is similar">
+            {getWhySimilarText(item.feature_difference)}
+          </p>
 
-          {/* Bar Chart for Feature Comparison */}
-          {/* <div className="mt-4">
-            <h5 className="text-sm font-semibold">Feature Comparison</h5>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={createBarData(item, targetFeatures)}>
-                <XAxis dataKey="feature" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="target" fill="#82ca9d" name="Target" />
-                <Bar
-                  dataKey="recommendation"
-                  fill="#8884d8"
-                  name="Recommended"
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div> */}
+          {item.similarity_score != null && (
+            <span className="inline-block mt-2 text-caption font-medium text-slate-400">
+              {Math.round((item.similarity_score as number) * 100)}% match
+            </span>
+          )}
         </div>
       ))}
     </div>

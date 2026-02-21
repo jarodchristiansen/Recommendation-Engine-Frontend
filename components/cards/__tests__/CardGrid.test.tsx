@@ -14,7 +14,7 @@ describe("CardGrid", () => {
         items={mockTracks}
         handleItemClick={handleItemClick}
         selectedSongs={[]}
-        type="track"
+        type="book-recommendations"
       />
     );
 
@@ -31,7 +31,7 @@ describe("CardGrid", () => {
         items={mockTracks}
         handleItemClick={handleItemClick}
         selectedSongs={[]}
-        type="track"
+        type="book-recommendations"
       />
     );
 
@@ -45,7 +45,7 @@ describe("CardGrid", () => {
         items={mockTracks}
         handleItemClick={handleItemClick}
         selectedSongs={selectedSongs}
-        type="track"
+        type="book-recommendations"
       />
     );
 
@@ -60,7 +60,7 @@ describe("CardGrid", () => {
         items={mockTracks}
         handleItemClick={handleItemClick}
         selectedSongs={[]}
-        type="track"
+        type="book-recommendations"
       />
     );
 
@@ -78,7 +78,7 @@ describe("CardGrid", () => {
         items={[]}
         handleItemClick={handleItemClick}
         selectedSongs={[]}
-        type="track"
+        type="book-recommendations"
       />
     );
 
