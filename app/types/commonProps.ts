@@ -4,6 +4,7 @@ import type { RecommendationCardItem } from "./book";
 export type CardGridProps = {
   items: RecommendationCardItem[];
   handleItemClick: (item: RecommendationCardItem) => void;
-  selectedItems: RecommendationCardItem[];
+  // Keep flexible so legacy callers can pass any shape; grids will cast as needed.
+  selectedItems: unknown[];
   type: string;
 };
