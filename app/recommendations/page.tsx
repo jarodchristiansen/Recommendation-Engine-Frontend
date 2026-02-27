@@ -15,6 +15,7 @@ const RecommendationsPage = () => {
   const [selectedBooks, setSelectedBooks] = useState<SearchBookType[]>([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [recommendedBooks, setRecommendedBooks] = useState<unknown[]>([]);
+  const [fallbackUsed, setFallbackUsed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
   const handleBookSelect = (books: SearchBookType[]) => {
@@ -137,19 +138,23 @@ const RecommendationsPage = () => {
         </div>
       )}
 
-      {showRecommendations && workId && (
+      {showRecommendations && workId && selectedBooks[0] && (
         <section className="mt-16">
           <h2 className="text-3xl font-semibold mb-6 text-primary">
-            {selectedTitle ? `Books similar to ${selectedTitle}` : "Recommended books"}
+            {fallbackUsed ? "Books in a similar vein" : "Books like this one"}
           </h2>
           <p className="text-body font-normal text-slate-500 mb-6 max-w-2xl">
-            We picked these because they share similar themes and scope with your choice.
+            {fallbackUsed
+              ? "We matched by theme and subject. These titles share similar topics with your choice."
+              : "We picked these because they share similar themes and scope with your choice."}
           </p>
           <DynamicDataDisplay
-            endpoint={`/api/recommendations?work_id=${encodeURIComponent(workId)}`}
+            endpoint="/api/recommendations"
             type="book-recommendations"
+            seedBook={selectedBooks[0]}
             selectedItems={[]}
             setRecommendedItems={setRecommendedBooks}
+            setFallbackUsed={setFallbackUsed}
           />
           <div className="mt-10 flex flex-wrap gap-4 justify-center">
             <Button

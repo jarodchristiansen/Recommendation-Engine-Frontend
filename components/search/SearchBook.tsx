@@ -12,6 +12,53 @@ type SearchBookProps = {
   maxSelection?: number;
 };
 
+const BookEntry = ({
+  book,
+  handleBookClick,
+  authorDisplay,
+  isSelected
+}) => {
+  return (
+    <div
+      key={book.work_id || book.key || book.title}
+      role="button"
+      tabIndex={0}
+      onClick={() => handleBookClick(book)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleBookClick(book);
+        }
+      }}
+      className={`group p-4 border rounded-lg cursor-pointer transition-transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 hover:border-accent hover:scale-[1.02] ${isSelected(book) ? "border-accent bg-teal-50/50" : "border-slate-200"
+        }`}
+    >
+      <div className="relative w-full h-48 mb-4 bg-gray-100 rounded-lg overflow-hidden">
+        {book.cover_url || (book.cover_i != null && book.cover_i >= 0) ? (
+          <Image
+            src={book.cover_url || `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
+            alt={book.title}
+            unoptimized
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-slate-400 text-small">
+            No cover
+          </div>
+        )}
+      </div>
+      <h4 className="text-lg font-bold text-gray-900 line-clamp-2">{book.title}</h4>
+      <p className="text-sm text-gray-600">{authorDisplay(book)}</p>
+      {book.first_publish_year && (
+        <p className="text-xs text-gray-500">{book.first_publish_year}</p>
+      )}
+    </div>
+  )
+}
+
+
 export default function SearchBook({
   onSelectBook,
   selectedBooks = [],
@@ -22,6 +69,7 @@ export default function SearchBook({
   const [results, setResults] = useState<SearchBookType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showMore, setShowMore] = useState(false);
 
   const searchBooks = async () => {
     if (!query.trim()) return;
@@ -95,45 +143,33 @@ export default function SearchBook({
       <div className="mt-6">
         {results.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {results.map((book) => (
-              <div
-                key={book.work_id || book.key || book.title}
-                role="button"
-                tabIndex={0}
-                onClick={() => handleBookClick(book)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleBookClick(book);
-                  }
-                }}
-                className={`group p-4 border rounded-lg cursor-pointer transition-transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 hover:border-accent hover:scale-[1.02] ${
-                  isSelected(book) ? "border-accent bg-teal-50/50" : "border-slate-200"
-                }`}
-              >
-                <div className="relative w-full h-48 mb-4 bg-gray-100 rounded-lg overflow-hidden">
-                  {book.cover_url || (book.cover_i != null && book.cover_i >= 0) ? (
-                    <Image
-                      src={book.cover_url || `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-lg"
-                      alt={book.title}
-                      unoptimized
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-400 text-small">
-                      No cover
-                    </div>
-                  )}
-                </div>
-                <h4 className="text-lg font-bold text-gray-900 line-clamp-2">{book.title}</h4>
-                <p className="text-sm text-gray-600">{authorDisplay(book)}</p>
-                {book.first_publish_year && (
-                  <p className="text-xs text-gray-500">{book.first_publish_year}</p>
-                )}
-              </div>
+            {results.slice(0, 3).map((book) => (
+              <BookEntry book={book}
+                handleBookClick={handleBookClick}
+                authorDisplay={authorDisplay}
+                isSelected={isSelected}
+              />
+
             ))}
+
+            <button onClick={() => setShowMore(!showMore)}>Show More</button>
+
+            {showMore && (
+              <>
+                {
+                  results.slice(3, 20).map((book) => (
+                    <BookEntry book={book}
+                      handleBookClick={handleBookClick}
+                      authorDisplay={authorDisplay}
+                      isSelected={isSelected}
+                    />
+                  ))
+                }
+              </>
+            )}
+
+
+
           </div>
         ) : (
           !loading && (

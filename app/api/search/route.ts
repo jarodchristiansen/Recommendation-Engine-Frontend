@@ -5,7 +5,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getRedisClient } from "../redis";
 
 const OPEN_LIBRARY_SEARCH = "https://openlibrary.org/search.json";
-const CACHE_TTL_SEC = 3600 * 24; // 24 hours
+const CACHE_TTL_SEC = 3600 * 24 * 90; // 90 days
 const DEFAULT_LIMIT = 20;
 const FIELDS =
   "key,title,author_name,first_publish_year,cover_i,edition_count,subject,ratings_average,ratings_count";

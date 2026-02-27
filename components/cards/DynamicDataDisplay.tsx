@@ -1,35 +1,85 @@
 import RecommendCardGrid from "@/components/cards/RecommendCardGrid";
 import Button from "@/components/layout/Button";
-import { useEffect, useMemo, useState } from "react";
-import type { RecommendationCardItem } from "@/app/types/book";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type {
+  RecommendationCardItem,
+  RecommendRequestSeed,
+  SearchBookType,
+} from "@/app/types/book";
+import { getCoverUrl } from "@/app/lib/covers";
+
+/** Build recommend request body from a search-selected book (avoids Open Library fetch). */
+function buildRecommendBody(book: SearchBookType): RecommendRequestSeed {
+  const work_key = book.key?.startsWith("/works/") ? book.key : `/works/${book.work_id}`;
+  const author_name =
+    typeof book.author_name === "string"
+      ? book.author_name
+      : Array.isArray(book.author_name)
+        ? book.author_name.join(", ")
+        : "";
+  const subjects = Array.isArray(book.subject) ? book.subject.slice(0, 10) : [];
+  return {
+    work_key,
+    title: book.title ?? "",
+    author_name,
+    subjects,
+  };
+}
 
 type DynamicDataDisplayProps = {
   endpoint: string;
   type: "book-recommendations" | "recommendations";
+  /** When set, POST this seed to endpoint instead of GET. Use for book recommendations to avoid Open Library fetch. */
+  seedBook?: SearchBookType | null;
   onSelectItems?: (items: unknown[]) => void;
   selectedItems: unknown[];
   onClearSelection?: () => void;
   setRecommendedItems?: (items: unknown[]) => void;
+  /** Called with Zilliz fallback_used so parent can show "Books like this one" vs "Books in a similar vein". */
+  setFallbackUsed?: (value: boolean) => void;
 };
 
 const DynamicDataDisplay = ({
   endpoint,
   type,
+  seedBook,
   onSelectItems,
   selectedItems,
   onClearSelection,
   setRecommendedItems,
+  setFallbackUsed,
 }: DynamicDataDisplayProps) => {
   const [data, setData] = useState<unknown[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setError(null);
-    const res = await fetch(endpoint);
-    const result = await res.json();
+    const init: RequestInit = seedBook
+      ? {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(buildRecommendBody(seedBook)),
+        }
+      : {};
+    const res = await fetch(endpoint, init);
+    const result = (await res.json()) as {
+      recommendations?: unknown[];
+      items?: unknown[];
+      fallback_used?: boolean;
+      detail?: unknown;
+      error?: string;
+    };
 
     if (!res.ok) {
-      setError(result?.detail ?? result?.error ?? "Request failed");
+      const err =
+        typeof result?.error === "string"
+          ? result.error
+          : typeof result?.detail === "string"
+            ? result.detail
+            : result?.detail ?? result?.error
+              ? JSON.stringify(result.detail ?? result.error)
+              : "Request failed";
+      setError(err);
       setData([]);
       setRecommendedItems?.([]);
       return;
@@ -39,11 +89,12 @@ const DynamicDataDisplay = ({
     const list = Array.isArray(items) ? items : [];
     setData(list);
     setRecommendedItems?.(list);
-  };
+    setFallbackUsed?.(result.fallback_used ?? false);
+  }, [endpoint, seedBook, setRecommendedItems, setFallbackUsed]);
 
   useEffect(() => {
     fetchData();
-  }, [endpoint]);
+  }, [fetchData]);
 
   const isSelected = (item: { work_id?: string; id?: string }) => {
     const id = item?.work_id ?? item?.id;
@@ -71,27 +122,28 @@ const DynamicDataDisplay = ({
     if (!Array.isArray(data) || !data.length) return [];
     return data.map((raw: unknown) => {
       const item = raw as Record<string, unknown>;
-      const workId = item.work_id as string | undefined;
-      if (workId != null) {
-        return {
-          id: workId,
-          name: (item.title as string) ?? "",
-          subtext: (item.author_name as string) ?? "",
-          image: (item.cover_url as string) ?? (item.cover_i != null && Number(item.cover_i) >= 0
-            ? `https://covers.openlibrary.org/b/id/${item.cover_i}-M.jpg`
-            : undefined),
-          feature_difference: item.feature_difference as Record<string, number> | undefined,
-          similarity_score: item.similarity_score as number | undefined,
-        };
-      }
-      // Fallback for unexpected API shape (book-only app; legacy id/name/subtext preserved for compatibility)
+      const workId =
+        (item.work_id as string | undefined) ??
+        (item.work_key as string | undefined)?.replace(/^\/works\//, "");
+      const workKey = (item.work_key as string | undefined) ?? (workId ? `/works/${workId}` : undefined);
+      const coverUrl =
+        (item.cover_url as string | undefined) ??
+        getCoverUrl({
+          cover_id: item.cover_id as number | undefined,
+          cover_i: item.cover_i as number | undefined,
+          work_key: workKey,
+        }) ??
+        undefined;
+      const id = workId ?? (item.id as string) ?? "";
       return {
-        id: (item.id as string) ?? "",
-        name: (item.name as string) ?? (item.title as string) ?? "",
-        subtext: (item.subtext as string) ?? (item.author_name as string) ?? "",
-        image: (item.image as string) ?? (item.cover_url as string) ?? (item.image_url as string),
+        id,
+        name: (item.title as string) ?? (item.name as string) ?? "",
+        subtext: (item.author_name as string) ?? (item.subtext as string) ?? "",
+        image: coverUrl ?? (item.image as string),
         feature_difference: item.feature_difference as Record<string, number> | undefined,
         similarity_score: item.similarity_score as number | undefined,
+        has_rating: item.has_rating as boolean | undefined,
+        avg_rating: item.avg_rating as number | undefined,
       };
     });
   }, [data]);

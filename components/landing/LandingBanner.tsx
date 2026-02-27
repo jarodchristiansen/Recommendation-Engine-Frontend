@@ -44,18 +44,26 @@ const LandingBanner = () => {
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold px-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] [text-shadow:0_2px_20px_rgba(0,0,0,0.4)]">
           Discover your next read
         </h1>
-        <p className="text-base sm:text-lg max-w-xl mx-auto pt-6 pb-10 px-4 md:px-0 text-slate-200/95 leading-relaxed">
-          Pick a book you love and get similar recommendations based on
-          subjects, authors, and metadata.
+        <p className="text-base sm:text-lg max-w-xl mx-auto pt-6 pb-4 px-4 md:px-0 text-slate-200/95 leading-relaxed">
+          Pick a book you love and get similar recommendations—with a short
+          explanation for every suggestion. No sign-up required.
         </p>
-        <Button
-          onClick={() => router.push("/recommendations")}
-          variant="accent"
-          size="large"
-          className="shadow-xl shadow-accent/20"
-        >
-          Get book recommendations
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6 pb-10">
+          <Button
+            onClick={() => router.push("/recommendations")}
+            variant="accent"
+            size="large"
+            className="shadow-xl shadow-accent/20"
+          >
+            Get book recommendations
+          </Button>
+          <a
+            href="#how-it-works"
+            className="text-slate-300 hover:text-white font-medium transition-colors underline underline-offset-4 outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded"
+          >
+            See how it works
+          </a>
+        </div>
       </div>
     </section>
   );

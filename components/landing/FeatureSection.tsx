@@ -16,14 +16,14 @@ const FeatureContainer = () => {
           <h2 className="text-4xl font-semibold text-center mb-16">Why Book Rec</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureSection
-              title="Based on what you love"
-              description="Start with any book you like. We use it to find reads that match your taste in themes, scope, and style."
-              icon={collaborativeIcon}
-            />
-            <FeatureSection
               title="See why we recommend"
               description="Every suggestion comes with a short explanation—similar themes, era, or reception—so you can trust the fit."
               icon={contentBasedIcon}
+            />
+            <FeatureSection
+              title="Based on what you love"
+              description="Start with any book you like. We use it to find reads that match your taste in themes, scope, and style."
+              icon={collaborativeIcon}
             />
             <FeatureSection
               title="Similarity you can trust"
