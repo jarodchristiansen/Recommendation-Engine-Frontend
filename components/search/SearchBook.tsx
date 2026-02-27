@@ -143,8 +143,10 @@ export default function SearchBook({
       <div className="mt-6">
         {results.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {results.slice(0, 3).map((book) => (
-              <BookEntry book={book}
+            {results.slice(0, 3).map((book, index) => (
+              <BookEntry
+                key={book.work_id || book.key || `${book.title}-${index}`}
+                book={book}
                 handleBookClick={handleBookClick}
                 authorDisplay={authorDisplay}
                 isSelected={isSelected}
@@ -157,8 +159,10 @@ export default function SearchBook({
             {showMore && (
               <>
                 {
-                  results.slice(3, 20).map((book) => (
-                    <BookEntry book={book}
+                  results.slice(3, 20).map((book, index) => (
+                    <BookEntry
+                      key={book.work_id || book.key || `${book.title}-${index + 3}`}
+                      book={book}
                       handleBookClick={handleBookClick}
                       authorDisplay={authorDisplay}
                       isSelected={isSelected}

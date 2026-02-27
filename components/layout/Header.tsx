@@ -16,7 +16,7 @@ const Header = () => {
     router.prefetch("/recommendations");
     router.prefetch("/auth");
     router.prefetch("/dashboard");
-  }, []);
+  }, [router]);
 
   const baseUrl = process.env.BASE_URL || "";
 

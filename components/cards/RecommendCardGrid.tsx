@@ -63,10 +63,13 @@ const RecommendCardGrid = ({
           >
             <div className="relative w-full aspect-[2/3] max-h-64 mb-4 bg-slate-100 rounded-lg overflow-hidden">
               {showFallback ? (
-                <img
+                <Image
                   src={FALLBACK_COVER_PATH}
                   alt="No cover"
+                  layout="fill"
+                  objectFit="cover"
                   className="absolute inset-0 w-full h-full object-cover rounded-lg"
+                  unoptimized
                 />
               ) : (
                 <Image
