@@ -8,11 +8,13 @@ import Image from "next/legacy/image";
 const CardGrid = ({
   items,
   handleItemClick,
-  selectedSongs,
+  selectedItems,
   type,
 }: CardGridProps) => {
   const isSelected = (item: { id?: string }) => {
-    return selectedSongs?.some((selected) => selected?.id === item.id);
+    return selectedItems?.some(
+      (selected) => (selected as { id?: string })?.id === item.id,
+    );
   };
 
   return (
