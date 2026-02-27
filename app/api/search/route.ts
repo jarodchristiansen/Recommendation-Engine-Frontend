@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
       redisClient.get(cacheKey),
       new Promise<null>((resolve) => setTimeout(() => resolve(null), 3000)),
     ]);
-  } catch (_) {
+  } catch {
     // Redis unavailable or slow — proceed without cache
   }
   if (cached) {
@@ -93,11 +93,11 @@ export async function GET(request: NextRequest) {
         redisClient.set(cacheKey, JSON.stringify(out), "EX", CACHE_TTL_SEC),
         new Promise<void>((resolve) => setTimeout(() => resolve(), 2000)),
       ]);
-    } catch (_) {
+    } catch {
       // ignore
     }
     return NextResponse.json(out);
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { error: "Search failed", docs: [] },
       { status: 500 },

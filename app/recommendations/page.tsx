@@ -14,7 +14,7 @@ const RecommendationsPage = () => {
   const searchParams = useSearchParams();
   const [selectedBooks, setSelectedBooks] = useState<SearchBookType[]>([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const [recommendedBooks, setRecommendedBooks] = useState<unknown[]>([]);
+  const [, setRecommendedBooks] = useState<unknown[]>([]);
   const [fallbackUsed, setFallbackUsed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -43,7 +43,7 @@ const RecommendationsPage = () => {
     setSelectedBooks([book]);
     setCurrentStep(2);
     setShowRecommendations(true);
-  }, [searchParams]);
+  }, [searchParams, selectedBooks.length]);
 
   const workId = selectedBooks[0]?.work_id || selectedBooks[0]?.key?.replace(/^\/works\//, "");
 
@@ -51,7 +51,6 @@ const RecommendationsPage = () => {
     { step: 1, label: "Choose a book you love" },
     { step: 2, label: "See similar reads" },
   ];
-  const selectedTitle = selectedBooks[0]?.title;
 
   return (
     <PageContainer as="main" className="py-16 lg:py-20">
