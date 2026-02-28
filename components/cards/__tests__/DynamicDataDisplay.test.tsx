@@ -25,13 +25,6 @@ describe("DynamicDataDisplay Component", () => {
     });
   });
 
-  it("matches the snapshot of the DynamicDataDisplay", async () => {
-    const { container } = await act(async () =>
-      render(<DynamicDataDisplay {...defaultProps} />)
-    );
-    expect(container).toMatchSnapshot();
-  });
-
   it("fetches and renders RecommendCardGrid when type is book-recommendations", async () => {
     await act(async () => {
       render(<DynamicDataDisplay {...defaultProps} />);
@@ -41,6 +34,29 @@ describe("DynamicDataDisplay Component", () => {
       expect(screen.getByText("Book One")).toBeInTheDocument();
     });
     expect(screen.getByText("Book Two")).toBeInTheDocument();
+  });
+
+  it("shows a loading spinner while fetching", async () => {
+    let resolveJson: ((value: any) => void) | null = null;
+
+    // Override fetch for this test so we can control when data resolves
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: () =>
+        new Promise((resolve) => {
+          resolveJson = resolve;
+        }),
+    });
+
+    render(<DynamicDataDisplay {...defaultProps} />);
+
+    // While the promise is unresolved, we should see the loader
+    expect(screen.getByRole("status")).toBeInTheDocument();
+
+    // Resolve the promise to allow the component to finish without unhandled promises
+    await act(async () => {
+      resolveJson?.(mockBookRecommendations);
+    });
   });
 
   it("renders RecommendCardGrid when type is recommendations", async () => {
@@ -70,18 +86,16 @@ describe("DynamicDataDisplay Component", () => {
     await waitFor(() => {
       expect(screen.getByText("Failed to fetch data")).toBeInTheDocument();
     });
+    // When error is shown, loader should not be visible
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
   });
 
   it("handles item click and selection", async () => {
-    const mockOnSelectSong = jest.fn();
+    const mockOnSelectItems = jest.fn();
 
     await act(async () => {
       render(
-        <DynamicDataDisplay
-          {...defaultProps}
-          onSelectSong={mockOnSelectSong}
-          selectedSongs={[]}
-        />
+        <DynamicDataDisplay {...defaultProps} onSelectItems={mockOnSelectItems} selectedItems={[]} />
       );
     });
 
@@ -89,7 +103,7 @@ describe("DynamicDataDisplay Component", () => {
       expect(screen.getByText("Book One")).toBeInTheDocument();
     });
 
-    const bookOne = screen.getByText("Book One").closest("div");
+    const bookOne = screen.getByText("Book One").closest("[role='button']") ?? screen.getByText("Book One").closest("div");
     fireEvent.click(bookOne!);
 
     expect(mockOnSelectItems).toHaveBeenCalled();

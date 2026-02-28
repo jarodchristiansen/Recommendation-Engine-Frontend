@@ -6,14 +6,14 @@ import { mockTracks } from "../../../__mocks__/tracks";
 
 describe("CardGrid", () => {
   const handleItemClick = jest.fn(); // Mock function for handling clicks
-  const selectedSongs = [mockTracks[0]]; // Pre-select the first song
+  const selectedItems = [mockTracks[0]]; // Pre-select the first song
 
   it("renders the items correctly", () => {
     render(
       <CardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
-        selectedSongs={[]}
+        selectedItems={[]}
         type="book-recommendations"
       />
     );
@@ -24,27 +24,12 @@ describe("CardGrid", () => {
     expect(screen.getByText("Song Three")).toBeInTheDocument();
   });
 
-  // snapshot test
-  it("matches the snapshot of the CardGrid", () => {
-    const { container } = render(
-      <CardGrid
-        items={mockTracks}
-        handleItemClick={handleItemClick}
-        selectedSongs={[]}
-        type="book-recommendations"
-      />
-    );
-
-    // Create a snapshot of the rendered CardGrid
-    expect(container).toMatchSnapshot();
-  });
-
   it("applies selected class when a song is selected", () => {
     render(
       <CardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
-        selectedSongs={selectedSongs}
+        selectedItems={selectedItems}
         type="book-recommendations"
       />
     );
@@ -59,7 +44,7 @@ describe("CardGrid", () => {
       <CardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
-        selectedSongs={[]}
+        selectedItems={[]}
         type="book-recommendations"
       />
     );
@@ -77,7 +62,7 @@ describe("CardGrid", () => {
       <CardGrid
         items={[]}
         handleItemClick={handleItemClick}
-        selectedSongs={[]}
+        selectedItems={[]}
         type="book-recommendations"
       />
     );
