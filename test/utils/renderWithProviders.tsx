@@ -12,4 +12,3 @@ export function renderWithProviders(
 ) {
   return render(<SessionProvider session={session}>{ui}</SessionProvider>);
 }
-*** End Patch
