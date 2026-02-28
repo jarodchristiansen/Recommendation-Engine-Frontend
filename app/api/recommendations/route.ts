@@ -19,7 +19,7 @@ async function callRecommendService(body: {
   title: string;
   author_name: string;
   subjects: string[];
-}): Promise<{ recommendations: unknown[]; fallback_used: boolean }> {
+}): Promise<{ recommendations: unknown[]; fallopenback_used: boolean }> {
   const baseUrl = process.env.REC_SERVICE_URL || "http://localhost:8000";
   const token = process.env.REC_SERVICE_TOKEN;
   const url = `${baseUrl}/recommend`;
