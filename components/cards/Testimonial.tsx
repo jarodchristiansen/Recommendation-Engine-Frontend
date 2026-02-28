@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type TestimonialProps = {
   quote: string;
   name: string;
@@ -6,11 +8,14 @@ type TestimonialProps = {
 
 const Testimonial = ({ quote, name, avatar }: TestimonialProps) => {
   return (
-    <div className="text-center p-6 bg-gray-100 rounded-lg shadow-md">
-      <img
+    <div className="text-center p-6 bg-surface rounded-lg shadow-md">
+      <Image
         src={avatar}
         alt={`${name} avatar`}
-        className="mx-auto h-24 w-24 rounded-full mb-4"
+        width={96}
+        height={96}
+        className="mx-auto rounded-full mb-4"
+        unoptimized
       />
       <p className="italic mb-4">{quote}</p>
       <h4 className="font-bold">{name}</h4>

@@ -6,35 +6,24 @@ import { mockTracks } from "../../../__mocks__/tracks";
 
 describe("RecommendCardGrid", () => {
   const handleItemClick = jest.fn(); // Mock function for handling clicks
-  const selectedSongs = [mockTracks[0]]; // Pre-select the first song
+  const selectedItems = [mockTracks[0]]; // Pre-select the first item
 
-  it("matches the snapshot of the RecommendCardGrid", () => {
-    const { container } = render(
-      <RecommendCardGrid
-        items={mockTracks}
-        handleItemClick={handleItemClick}
-        selectedSongs={[]}
-        type="track"
-      />
-    );
-
-    // Create a snapshot of the rendered RecommendCardGrid
-    expect(container).toMatchSnapshot();
-  });
-
-  it("applies selected class when a song is selected", () => {
+  it("applies selected class when an item is selected", () => {
     render(
       <RecommendCardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
-        selectedSongs={selectedSongs}
-        type="track"
+        selectedItems={selectedItems}
+        type="book-recommendations"
       />
     );
 
     // Check if the selected item has the correct class applied
-    const selectedCard = screen.getByText("Song One").closest("div");
-    expect(selectedCard).toHaveClass("border-blue-500 scale-105");
+    const selectedCard =
+      screen.getByText("Song One").closest("[role='button']") ??
+      screen.getByText("Song One").closest("div");
+    expect(selectedCard).toHaveClass("border-accent");
+    expect(selectedCard).toHaveClass("scale-[1.02]");
   });
 
   it("calls handleItemClick when an item is clicked", () => {
@@ -42,8 +31,8 @@ describe("RecommendCardGrid", () => {
       <RecommendCardGrid
         items={mockTracks}
         handleItemClick={handleItemClick}
-        selectedSongs={[]}
-        type="track"
+        selectedItems={[]}
+        type="book-recommendations"
       />
     );
 
@@ -60,8 +49,8 @@ describe("RecommendCardGrid", () => {
       <RecommendCardGrid
         items={[]}
         handleItemClick={handleItemClick}
-        selectedSongs={[]}
-        type="track"
+        selectedItems={[]}
+        type="book-recommendations"
       />
     );
 

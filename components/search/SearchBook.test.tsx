@@ -1,0 +1,210 @@
+import "@testing-library/jest-dom";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import SearchBook from "./SearchBook";
+
+// Helper to mock fetch per test without relying solely on global default
+const mockFetch = (impl: () => Promise<any>) => {
+  (global.fetch as jest.Mock) = jest.fn(impl);
+};
+
+describe("SearchBook", () => {
+  const baseProps = {
+    onSelectBook: jest.fn(),
+    onClearSelection: jest.fn(),
+    selectedBooks: [] as any[],
+    maxSelection: 1,
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("does not search when query is empty", async () => {
+    const fetchSpy = jest.fn();
+    (global.fetch as unknown) = fetchSpy as unknown as typeof fetch;
+
+    render(<SearchBook {...baseProps} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /search/i }));
+
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("performs search and renders results", async () => {
+    mockFetch(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            docs: [
+              {
+                key: "/works/OL1W",
+                work_id: "OL1W",
+                title: "Book One",
+                author_name: ["Author One"],
+              },
+              {
+                key: "/works/OL2W",
+                work_id: "OL2W",
+                title: "Book Two",
+                author_name: "Author Two",
+              },
+            ],
+          }),
+      } as Response),
+    );
+
+    render(<SearchBook {...baseProps} />);
+
+    fireEvent.change(screen.getByPlaceholderText(/title or author/i), {
+      target: { value: "Tom Sawyer" },
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /search/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Book One")).toBeInTheDocument();
+    });
+    expect(screen.getByText("Book Two")).toBeInTheDocument();
+  });
+
+  it("shows an error message when API returns an error", async () => {
+    mockFetch(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            error: "Search failed on server",
+          }),
+      } as Response),
+    );
+
+    render(<SearchBook {...baseProps} />);
+
+    fireEvent.change(screen.getByPlaceholderText(/title or author/i), {
+      target: { value: "Bad Query" },
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /search/i }));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Search failed on server"),
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("renders empty state when no results and not loading", () => {
+    render(<SearchBook {...baseProps} />);
+
+    expect(
+      screen.getByText("No books found. Try another search."),
+    ).toBeInTheDocument();
+  });
+
+  it("calls onSelectBook when a result is clicked and respects maxSelection", async () => {
+    const onSelectBook = jest.fn();
+
+    mockFetch(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            docs: [
+              {
+                key: "/works/OL1W",
+                work_id: "OL1W",
+                title: "Book One",
+                author_name: ["Author One"],
+              },
+            ],
+          }),
+      } as Response),
+    );
+
+    render(
+      <SearchBook
+        {...baseProps}
+        onSelectBook={onSelectBook}
+        selectedBooks={[]}
+        maxSelection={1}
+      />,
+    );
+
+    fireEvent.change(screen.getByPlaceholderText(/title or author/i), {
+      target: { value: "Book One" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /search/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Book One")).toBeInTheDocument();
+    });
+
+    const card =
+      screen.getByText("Book One").closest("[role='button']") ??
+      screen.getByText("Book One").closest("div");
+    fireEvent.click(card!);
+
+    expect(onSelectBook).toHaveBeenCalledWith(
+      expect.arrayContaining([expect.objectContaining({ work_id: "OL1W" })]),
+    );
+  });
+
+  it("shows and triggers Clear selection button when there are selectedBooks", () => {
+    const onClearSelection = jest.fn();
+
+    render(
+      <SearchBook
+        {...baseProps}
+        onClearSelection={onClearSelection}
+        selectedBooks={[
+          {
+            key: "/works/OL1W",
+            work_id: "OL1W",
+            title: "Book One",
+            author_name: "Author One",
+          } as any,
+        ]}
+      />,
+    );
+
+    const clearButton = screen.getByRole("button", {
+      name: /clear selection/i,
+    });
+    expect(clearButton).toBeInTheDocument();
+
+    fireEvent.click(clearButton);
+    expect(onClearSelection).toHaveBeenCalled();
+  });
+
+  it("toggles additional results when Show More is clicked", async () => {
+    const docs = Array.from({ length: 5 }).map((_, i) => ({
+      key: `/works/OL${i + 1}W`,
+      work_id: `OL${i + 1}W`,
+      title: `Book ${i + 1}`,
+      author_name: `Author ${i + 1}`,
+    }));
+
+    mockFetch(() =>
+      Promise.resolve({
+        json: () =>
+          Promise.resolve({
+            docs,
+          }),
+      } as Response),
+    );
+
+    render(<SearchBook {...baseProps} />);
+
+    fireEvent.change(screen.getByPlaceholderText(/title or author/i), {
+      target: { value: "Book" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /search/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Book 1")).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /show more/i }));
+
+    expect(screen.getByText("Book 4")).toBeInTheDocument();
+    expect(screen.getByText("Book 5")).toBeInTheDocument();
+  });
+});

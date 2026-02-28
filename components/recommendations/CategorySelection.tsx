@@ -1,4 +1,7 @@
-// components/recommendations/CategorySelection.tsx
+/**
+ * Legacy component from the music recommender. Not used in the book flow.
+ * Kept for reference; book discovery uses SearchBook and recommendations flow instead.
+ */
 import React from "react";
 
 type CategorySelectionProps = {
@@ -10,7 +13,6 @@ const CategorySelection = ({
   onSelectSong,
   selectedSongs,
 }: CategorySelectionProps) => {
-  // This would fetch and display categories like "Recently Played" or "Top Tracks"
   const categories = [
     {
       name: "Top Tracks",

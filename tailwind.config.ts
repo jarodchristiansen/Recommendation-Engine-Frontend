@@ -10,7 +10,37 @@ const config: Config = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+      },
+      fontSize: {
+        display: ["3rem", { lineHeight: "1.15" }],
+        h1: ["2.25rem", { lineHeight: "1.25" }],
+        h2: ["1.875rem", { lineHeight: "1.3" }],
+        h3: ["1.5rem", { lineHeight: "1.35" }],
+        body: ["1rem", { lineHeight: "1.625" }],
+        small: ["0.875rem", { lineHeight: "1.5" }],
+        caption: ["0.75rem", { lineHeight: "1.4" }],
+      },
+      maxWidth: {
+        content: "80rem",
+      },
+      colors: {
+        /* Book-first semantic palette: calm, focused, trustworthy */
+        primary: {
+          DEFAULT: "#1e293b",   /* slate-800 */
+          foreground: "#f8fafc", /* slate-50 */
+        },
+        surface: "#fafaf9",     /* stone-50, paper-adjacent */
+        accent: {
+          DEFAULT: "#14b8a6",   /* teal-500 */
+          hover: "#0d9488",     /* teal-600 */
+        },
+        secondary: "#f1f5f9",   /* slate-100 for secondary UI */
+      },
+    },
   },
   plugins: [],
 };

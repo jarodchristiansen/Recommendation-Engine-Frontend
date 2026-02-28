@@ -1,6 +1,5 @@
 import FeatureSection from "@/components/layout/FeatureSection";
-
-import BanjoMusician from "../../public/images/banjo.jpeg";
+import PageContainer from "@/components/layout/PageContainer";
 
 import collaborativeIcon from "../../public/images/icons/collaborative.svg";
 import contentBasedIcon from "../../public/images/icons/contentBased.svg";
@@ -12,63 +11,53 @@ import customizeIcon from "../../public/images/icons/customize.svg";
 const FeatureContainer = () => {
   return (
     <>
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-12">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <section className="py-16 md:py-24 bg-white">
+        <PageContainer>
+          <h2 className="text-4xl font-semibold text-center mb-16">Why Book Rec</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureSection
-              title="Collaborative Filtering"
-              description="Utilizing user interactions and behavior to generate your ideal playlist."
-              icon={collaborativeIcon}
-            />
-            <FeatureSection
-              title="Content-Based Filtering"
-              description="Analyzing song attributes like genre, tempo, and mood to match your preferences based on your input"
+              title="See why we recommend"
+              description="Every suggestion comes with a short explanation—similar themes, era, or reception—so you can trust the fit."
               icon={contentBasedIcon}
             />
             <FeatureSection
-              title="Calculating Similarity"
-              description="Finding tracks similar to your favorites by plotting them in an n-dimensional space."
+              title="Based on what you love"
+              description="Start with any book you like. We use it to find reads that match your taste in themes, scope, and style."
+              icon={collaborativeIcon}
+            />
+            <FeatureSection
+              title="Similarity you can trust"
+              description="We compare books by subjects, authors, and metadata to surface titles that genuinely align with your pick."
               icon={cosineSimilarityIcon}
             />
             <FeatureSection
-              title="Machine Learning"
-              description="Using advanced algorithms like NMF to generate recommendations based on your listening habits."
+              title="Your reading, your pace"
+              description="No rush. Discover your next read when you’re ready; your list is here whenever you return."
               icon={nmfIcon}
             />
             <FeatureSection
-              title="Less Popular Artists Are Highlighted"
-              description="Discover hidden gems, not just the same mainstream hits."
+              title="Diverse and deep catalog"
+              description="From classics to lesser-known titles, discover a wide range of books beyond the same bestsellers."
               icon={lessPopularIcon}
             />
             <FeatureSection
-              title="Customizable Filters"
-              description="Fine-tune your recommendations with adjustable weights for factors like popularity, genre, and tempo."
+              title="Your reading list"
+              description="Save books and revisit your discoveries. Your reading list grows with you."
               icon={customizeIcon}
             />
           </div>
-        </div>
+        </PageContainer>
       </section>
 
-      <section
-        className="py-44 bg-gradient-to-b from-black to-gray-900 text-white relative bg-banner"
-        style={{
-          backgroundImage: `url(${BanjoMusician})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 text-center bg-black bg-opacity-25">
-          <h2 className="text-4xl font-bold mb-6">
-            Highlighting Emerging Artists
+      <section className="py-16 md:py-24 bg-gradient-to-b from-slate-800 to-slate-900 text-white relative">
+        <PageContainer className="relative z-10 py-8 text-center">
+          <h2 className="text-4xl font-semibold mb-6">
+            One book at a time
           </h2>
-          <p className="text-lg max-w-2xl mx-auto mb-8 text-gray-300">
-            Tired of hearing the same tracks on repeat? Our platform goes beyond
-            mainstream recommendations, bringing attention to incredible yet
-            underrepresented artists. Dive deep into music discovery!
+          <p className="text-lg font-normal max-w-2xl mx-auto mb-8 text-slate-300">
+            Your next read matters. We focus on clarity and transparency—pick a book you love, see why we suggest each title, and choose with confidence.
           </p>
-        </div>
+        </PageContainer>
       </section>
     </>
   );

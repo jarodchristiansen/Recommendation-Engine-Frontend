@@ -1,145 +1,80 @@
-# 🎵 SpotRec: Spotify-Based Recommendation Interface
+# Book Rec: Book Recommendation Interface
 
-This is the frontend for **SpotRec**, a **Next.js v13** application that provides an intuitive interface for exploring music recommendations based on Spotify tracks. It allows users to sign in using their Spotify account, search for songs, and receive personalized recommendations with explainable insights.
+This is the frontend for **Book Rec**, a **Next.js** application that helps you discover your next read. Pick a book you love and get similar recommendations based on subjects, authors, and metadata from **Open Library**, with short explanations for why each book was suggested.
 
-The app integrates **Redis** for caching, **recharts** for visualizing recommendations, and **next-auth** for Spotify authentication, ensuring a seamless and efficient user experience.
+The app uses a **book-first** design (calm, focused, trustworthy), **Redis** for caching where configured, and supports optional sign-in (coming soon) for saving your reading list across devices.
 
-## 🌟 Features
+## Features
 
-- **Spotify Authentication with Next-Auth**: Securely log in using your Spotify account to access personalized recommendations and top tracks.
-- **Track Search and Recommendation**: Search for songs or select from your top tracks to generate music recommendations based on song features.
-- **Redis Caching**: Caches song search results and recommendation responses for faster retrieval and improved user experience.
-- **Explainable Recommendations**: Uses **Recharts** to visualize why certain songs were recommended, highlighting differences in key audio features.
-- **Dynamic UI**: Built with responsive and dynamic design principles using **Tailwind CSS**, ensuring a smooth experience across devices.
-- **Deployed on Vercel**: Quick, reliable, and scalable deployment using Vercel's platform, with global edge functions for low-latency user experiences.
+- **Book search and recommendations**: Search by title or author, pick a book, and see similar reads with explainable “why similar” notes (themes, era, reception).
+- **One book at a time**: Focused flow—choose a book you like, then see recommendations. No account required for the core experience.
+- **Your reading**: Recently used books appear on your dashboard so you can find similar titles again quickly (stored locally; account-based save coming soon).
+- **Responsive UI**: Built with **Tailwind CSS** and a consistent design system for a clear experience on all devices.
+- **Deployable on Vercel**: Ready for deployment with environment variables for API and optional auth.
 
-## 🎯 Purpose & Learning Goals
+## Purpose
 
-This frontend application was developed to complement the backend recommendation engine by offering users a visually appealing interface for exploring their music tastes. The project provided an opportunity to:
+Book Rec was built to offer a simple, transparent way to discover books: start from a title you love, get suggestions that share similar themes and scope, and see why each recommendation was chosen. The project also served as a migration from an earlier Spotify-based recommender; architecture and migration notes live in the **recommendation-server** repository (`MIGRATION_AND_ARCHITECTURE.md`).
 
-1. **Deepen Knowledge of Next.js** and its modern capabilities like server components, API routes, and ISR (Incremental Static Regeneration).
-2. **Integrate Authentication Flows** with **Next-Auth**, focusing on seamless user experiences.
-3. **Improve UX through Visualization**: Using **Recharts** for recommendation explainability, ensuring users understand the factors behind each recommendation.
-4. **Optimize Performance** using **Redis** for caching data, and utilizing Vercel's capabilities for deployment, ensuring a balance between speed and cost efficiency.
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
 - **Node.js**: v16 or higher recommended.
-- **Spotify Developer Account**: Create an app on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) to get your `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET`.
-- **Redis**: Set up a Redis instance using platforms like [Upstash](https://upstash.com/) or [Redis Cloud](https://redis.com/).
+- **Backend**: The recommendation API (see **recommendation-server** repo) for search and recommendations.
+- **Redis** (optional): For caching; see recommendation-server and env docs.
 
-### Local Setup
+### Local setup
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/spotrec-frontend.git
-   cd spotrec-frontend
-   ```
-
-2. Install dependencies:
+1. Clone the repository and install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Create a `.env.local` file in the root directory with your credentials:
+2. Create a `.env.local` file with any required variables (e.g. `NEXTAUTH_URL`, `NEXTAUTH_SECRET` if using auth later; API base URL if different from default).
 
-   ```
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your_nextauth_secret
-   SPOTIFY_CLIENT_ID=your_spotify_client_id
-   SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-   REDIS_URL=your_redis_connection_string
-   ```
-
-4. Run the Next.js development server:
+3. Run the dev server:
 
    ```bash
    npm run dev
    ```
 
-5. Access the app at:
-   ```
-   http://localhost:3000
-   ```
+4. Open [http://localhost:3000](http://localhost:3000).
 
 ### Deployment
 
-Deploy the app seamlessly on **Vercel**:
+Deploy on **Vercel** (or similar) and set environment variables in the dashboard. The app uses Next.js App Router and static-friendly routes where applicable.
 
-- Click the **"Deploy to Vercel"** button below:
+## How it works
 
-  [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/your-username/spotrec-frontend)
+- **Landing**: Clear value proposition—“Discover your next read”—with a single primary path to recommendations.
+- **Recommendations flow**: Search for a book → select one → see similar books with short explanations and optional “find similar to another book” or “back to dashboard.”
+- **Dashboard**: Hub for “Discover books,” search, and “Your reading” (recent seeds). Links through to the recommendations page.
+- **Auth**: Sign-in to save your list across devices is planned; the auth page is available with a “coming soon” message. You can use all discovery features without signing in.
 
-- Ensure environment variables are configured in Vercel's dashboard.
+## Tech stack
 
-## 🧠 How It Works
+- **Next.js** (App Router)
+- **React** and **Tailwind CSS**
+- **Next-Auth** (optional; providers to be added for book app)
+- **Redis** (optional, for caching via backend/config)
 
-### 1. Spotify Integration
+## Testing and quality
 
-- Uses **Next-Auth** for secure OAuth authentication with Spotify, allowing users to log in and access their top tracks and playlists.
-- Fetches track data from the backend recommendation service and Spotify API, providing detailed song metadata.
+- **Jest** and **React Testing Library** for unit and component tests.
+- **ESLint** for linting.
 
-### 2. Redis Caching
+```bash
+npm run test
+npm run test:coverage
+npm run lint
+```
 
-- **Caching**: Caches frequently searched tracks and recommendation responses using **Redis**, reducing the number of API calls and improving response times.
-- **Data Expiry**: Cached data is set to expire periodically, ensuring fresh recommendations while maintaining a smooth user experience.
+## Architecture and migration
 
-### 3. Visualization with Recharts
+Application flows, API integration, and the migration from the previous Spotify-based recommender are documented in the **recommendation-server** repository: see `MIGRATION_AND_ARCHITECTURE.md` in that repo’s root.
 
-- Displays **spider charts** and **bar graphs** for each recommended track, comparing attributes like danceability, energy, and more.
-- **Explainability Focused**: Shows how recommended tracks differ from the selected track, offering a transparent recommendation process.
-- **Dynamic Data Display**: Uses reusable components like `DynamicDataDisplay` to ensure consistency in displaying track data and recommendations.
-
-## 🛠️ Technologies & Tools
-
-- **Next.js 13**: Modern framework for building fast and dynamic web applications.
-- **React & Tailwind CSS**: For crafting responsive and visually appealing UIs.
-- **Next-Auth**: Seamlessly integrates Spotify OAuth for user authentication.
-- **Recharts**: Renders data visualizations for recommendation explainability.
-- **Redis**: Enhances performance with efficient caching mechanisms.
-- **Vercel**: Deploys the frontend with global edge caching for low-latency experiences.
-
-## 🧪 Testing & Best Practices
-
-### Unit Testing with Jest and React Testing Library
-
-- **Jest**: Configured for testing React components and API routes.
-- **React Testing Library**: Tests component behavior and user interactions.
-- Run all tests:
-  ```bash
-  npm run test
-  ```
-- View test coverage:
-  ```bash
-  npm run test:coverage
-  ```
-
-### Linting & Formatting
-
-- **ESLint** and **Prettier** are configured to maintain code quality.
-- To run linting:
-  ```bash
-  npm run lint
-  ```
-- To format code:
-  ```bash
-  npm run format
-  ```
-
-## 📈 Future Improvements
-
-- **Enhanced NLP**: Integrate sentiment analysis of lyrics to refine recommendations based on song mood and themes.
-- **User Feedback Mechanism**: Allow users to upvote/downvote recommendations to personalize their experience further.
-- **Progressive Web App (PWA)**: Make the application installable and offline-friendly.
-
-## 🌐 Live Demo
-
-- **Frontend**: [https://spotrec.vercel.app](https://spotrec.vercel.app)
-
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

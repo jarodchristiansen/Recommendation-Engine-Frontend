@@ -7,26 +7,26 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    default: "SpotRec | Music Recommendation Engine",
-    template: "%s | Music Recommendation Engine",
+    default: "Book Rec | Book Recommendation Engine",
+    template: "%s | Book Recommendation Engine",
   },
   description:
-    "Discover personalized music recommendations tailored to your taste.",
+    "Discover books similar to the ones you love. Get personalized book recommendations powered by Open Library.",
   keywords: [
-    "music recommendations",
-    "Spotify",
+    "book recommendations",
+    "Open Library",
     "recommendation engine",
-    "music app",
+    "books",
   ],
   openGraph: {
     type: "website",
-    siteName: "Music Recommender",
+    siteName: "Book Rec",
   },
 };
 
 export default function Home() {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-surface">
       <LandingBanner />
 
       <FeatureContainer />
