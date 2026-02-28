@@ -8,6 +8,12 @@ import type {
 } from "@/app/types/book";
 import { getCoverUrl } from "@/app/lib/covers";
 
+const LOADING_MESSAGES = [
+  "Matching themes…",
+  "Checking similar eras…",
+  "Ranking by reception…",
+];
+
 /** Build recommend request body from a search-selected book (avoids Open Library fetch). */
 function buildRecommendBody(book: SearchBookType): RecommendRequestSeed {
   const work_key = book.key?.startsWith("/works/") ? book.key : `/works/${book.work_id}`;
@@ -51,6 +57,7 @@ const DynamicDataDisplay = ({
 }: DynamicDataDisplayProps) => {
   const [data, setData] = useState<unknown[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
 
   const fetchData = useCallback(async () => {
     setError(null);
@@ -95,6 +102,15 @@ const DynamicDataDisplay = ({
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // Rotate loading sub-message when in loading state (no data, no error)
+  useEffect(() => {
+    if (data.length > 0 || error) return;
+    const interval = setInterval(() => {
+      setLoadingMessageIndex((i) => (i + 1) % LOADING_MESSAGES.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [data.length, error]);
 
   const isSelected = (item: { work_id?: string; id?: string }) => {
     const id = item?.work_id ?? item?.id;
@@ -144,12 +160,14 @@ const DynamicDataDisplay = ({
         similarity_score: item.similarity_score as number | undefined,
         has_rating: item.has_rating as boolean | undefined,
         avg_rating: item.avg_rating as number | undefined,
+        description: (item.description as string)?.trim() || undefined,
+        subjects: (item.subjects as string)?.trim() || undefined,
       };
     });
   }, [data]);
 
   return (
-    <div className="mt-4 p-6 bg-white shadow-md rounded-lg">
+    <div className="mt-4 p-6 bg-white shadow-md rounded-lg border border-slate-200">
       {selectedItems && (selectedItems as unknown[]).length > 0 && onClearSelection && (
         <div className="mb-4">
           <Button variant="secondary" size="small" onClick={onClearSelection}>
@@ -170,6 +188,9 @@ const DynamicDataDisplay = ({
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-center" role="alert" aria-live="polite">
           <p className="text-base text-red-700 mb-4">{error}</p>
+          <p className="text-small text-slate-600 mb-4">
+            Having trouble? Try another book or go back to dashboard.
+          </p>
           <Button type="button" variant="accent" size="small" onClick={() => fetchData()}>
             Try again
           </Button>
@@ -187,8 +208,11 @@ const DynamicDataDisplay = ({
           <span className="text-xl font-semibold mb-2">
             Finding books that match your taste
           </span>
-          <p className="text-sm max-w-sm">
-            This can take a minute the first time. We&apos;re looking for similar reads based on themes, era, and reception.
+          <p className="text-sm max-w-sm mb-1" key={loadingMessageIndex}>
+            {LOADING_MESSAGES[loadingMessageIndex]}
+          </p>
+          <p className="text-sm max-w-sm text-slate-400">
+            This can take a minute the first time. We&apos;re looking for similar books based on themes, era, and reception.
           </p>
         </div>
       )}

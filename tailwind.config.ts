@@ -27,6 +27,15 @@ const config: Config = {
       maxWidth: {
         content: "80rem",
       },
+      keyframes: {
+        cardFadeIn: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        "card-fade-in": "cardFadeIn 0.35s ease-out both",
+      },
       colors: {
         /* Book-first semantic palette: calm, focused, trustworthy */
         primary: {

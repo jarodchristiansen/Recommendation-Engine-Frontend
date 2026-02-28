@@ -10,12 +10,21 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: "babel",
   testEnvironment: "jsdom",
+  moduleNameMapper: {
+    "^msw/node$": "<rootDir>/node_modules/msw/lib/node/index.js",
+    "^@mswjs/interceptors/ClientRequest$":
+      "<rootDir>/node_modules/@mswjs/interceptors/lib/node/interceptors/ClientRequest/index.cjs",
+  },
   collectCoverage: true,
   collectCoverageFrom: [
-    "./components/**{js,jsx,ts,tsx}", // Adjust this pattern to match your project structure
-    "./app/**/page.{js,jsx,ts,tsx}", // Adjust this pattern to match your project structure
-    "!./**/*.d.ts", // Exclude type declaration files (for TypeScript projects)
-    "!./*.ts", // Exclude specific files if needed
+    "./components/**/*.{js,jsx,ts,tsx}",
+    "./app/**/page.{js,jsx,ts,tsx}",
+    "./app/api/**/*.ts",
+    "./app/lib/**/*.ts",
+    "!./**/*.d.ts",
+    "!./**/*.test.{js,jsx,ts,tsx}",
+    "!./**/*.spec.{js,jsx,ts,tsx}",
+    "!./**/__mocks__/**",
   ],
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
