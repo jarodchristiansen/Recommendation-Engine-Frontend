@@ -6,7 +6,7 @@ The app uses a **book-first** design (calm, focused, trustworthy), **Redis** for
 
 ## Features
 
-- **Book search and recommendations**: Search by title or author, pick a book, and see similar reads with explainable “why similar” notes (themes, era, reception).
+- **Book search and recommendations**: Search by title or author, pick a book, and see similar books with explainable “why similar” notes (themes, era, reception).
 - **One book at a time**: Focused flow—choose a book you like, then see recommendations. No account required for the core experience.
 - **Your reading**: Recently used books appear on your dashboard so you can find similar titles again quickly (stored locally; account-based save coming soon).
 - **Responsive UI**: Built with **Tailwind CSS** and a consistent design system for a clear experience on all devices.

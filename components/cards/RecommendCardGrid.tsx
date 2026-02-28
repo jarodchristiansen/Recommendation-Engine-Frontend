@@ -57,9 +57,10 @@ const RecommendCardGrid = ({
                 handleItemClick(item);
               }
             }}
-            className={`group p-6 border rounded-lg cursor-pointer transition-transform transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
+            className={`group p-6 border rounded-lg cursor-pointer transition-transform transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 animate-card-fade-in ${
               isSelected(item) ? "border-accent scale-[1.02]" : "border-slate-200"
-            } hover:border-accent hover:scale-[1.02] bg-white shadow-sm`}
+            } hover:border-accent hover:scale-[1.02] bg-white shadow-md border-slate-200`}
+            style={{ animationDelay: `${index * 45}ms` }}
           >
             <div className="relative w-full aspect-[2/3] max-h-64 mb-4 bg-slate-100 rounded-lg overflow-hidden">
               {showFallback ? (
@@ -86,7 +87,25 @@ const RecommendCardGrid = ({
               )}
             </div>
           <h4 className="text-lg font-bold text-primary">{item.name}</h4>
-          <p className="text-small text-slate-600">{item.subtext}</p>
+          <p className="text-small text-slate-600 mt-1">{item.subtext}</p>
+
+          {/* Subject tags when present (comma-separated from Zilliz) */}
+          {item.subjects && (
+            <div className="flex flex-wrap gap-1.5 mt-2" aria-label="Subjects">
+              {item.subjects
+                .split(/,\s*/)
+                .filter(Boolean)
+                .slice(0, 5)
+                .map((s) => (
+                  <span
+                    key={s}
+                    className="inline-block px-2 py-0.5 text-caption rounded-md bg-slate-100 text-slate-600"
+                  >
+                    {s.trim()}
+                  </span>
+                ))}
+            </div>
+          )}
 
           {/* Zilliz: show ★ rating only when has_rating === true; never show 0 stars for unrated */}
           {item.has_rating === true && item.avg_rating != null && (
@@ -102,6 +121,13 @@ const RecommendCardGrid = ({
           <p className="mt-3 text-small text-slate-500 italic" aria-label="Why this book is similar">
             {getWhySimilarText(item.feature_difference)}
           </p>
+
+          {/* Description when present (~22% of books); line-clamp to avoid overwhelming the card */}
+          {item.description && (
+            <p className="mt-2 text-small text-slate-500 line-clamp-3" aria-label="Book description">
+              {item.description}
+            </p>
+          )}
 
           {item.similarity_score != null && (
             <span className="inline-block mt-2 text-caption font-medium text-slate-400">

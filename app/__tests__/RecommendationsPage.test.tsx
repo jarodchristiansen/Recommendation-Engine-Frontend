@@ -1,7 +1,8 @@
 import "@testing-library/jest-dom";
-import { render, screen, waitFor } from "@testing-library/react";
-import { SessionProvider } from "next-auth/react";
+import { screen, waitFor } from "@testing-library/react";
 import RecommendationsPage from "../recommendations/page";
+import { renderWithProviders } from "@/test/utils/render";
+import { install as installFetchOverlay } from "@/test/mocks/fetchOverlay";
 
 // Mock search params so we can control work_id per test
 const mockSearchParams = {
@@ -9,7 +10,6 @@ const mockSearchParams = {
 };
 
 jest.mock("next/navigation", () => ({
-  // Preserve other exports if needed
   __esModule: true,
   ...jest.requireActual("next/navigation"),
   useSearchParams: () => mockSearchParams,
@@ -22,17 +22,13 @@ jest.mock("../lib/recentSeeds", () => ({
   findSeedByWorkId: (...args: unknown[]) => mockFindSeedByWorkId(...args),
 }));
 
-const renderPage = () =>
-  render(
-    <SessionProvider>
-      <RecommendationsPage />
-    </SessionProvider>,
-  );
+const renderPage = () => renderWithProviders(<RecommendationsPage />);
 
 describe("RecommendationsPage", () => {
   beforeEach(() => {
     mockSearchParams.get.mockReturnValue(null);
     mockFindSeedByWorkId.mockReset();
+    installFetchOverlay();
   });
 
   it("renders initial state with no selected book", () => {
@@ -42,10 +38,10 @@ describe("RecommendationsPage", () => {
       screen.getByRole("heading", { name: /discover your next read/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("No book selected."),
+      screen.getByText(/pick a book above to get started/i),
     ).toBeInTheDocument();
     expect(
-      screen.queryByText("See similar books"),
+      screen.queryByRole("button", { name: /see similar books/i }),
     ).not.toBeInTheDocument();
   });
 

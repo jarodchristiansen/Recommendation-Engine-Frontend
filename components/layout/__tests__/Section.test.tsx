@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import Section from "../Section";
 
-describe("Footer Component", () => {
+describe("Section", () => {
   const props = {
     title: "Test Section",
     toggle: true,
@@ -10,10 +10,28 @@ describe("Footer Component", () => {
     children: <p>Test Children</p>,
   };
 
-  it("matches the snapshot of the Footer", () => {
-    const { container } = render(<Section {...props} />);
+  it("renders title and children when toggle is true", () => {
+    render(<Section {...props} />);
 
-    // Create a snapshot of the rendered Footer
-    expect(container).toMatchSnapshot();
+    expect(
+      screen.getByRole("heading", { name: /test section/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Test Children")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /hide/i })).toBeInTheDocument();
+  });
+
+  it("calls setToggle when button is clicked", () => {
+    render(<Section {...props} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /hide/i }));
+
+    expect(props.setToggle).toHaveBeenCalledWith(false);
+  });
+
+  it("shows Show button when toggle is false", () => {
+    render(<Section {...props} toggle={false} />);
+
+    expect(screen.getByRole("button", { name: /show/i })).toBeInTheDocument();
+    expect(screen.queryByText("Test Children")).not.toBeInTheDocument();
   });
 });

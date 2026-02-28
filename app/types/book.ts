@@ -72,4 +72,8 @@ export type RecommendationCardItem = {
   /** Zilliz: show star rating only when true; otherwise show "No ratings yet" or omit. */
   has_rating?: boolean;
   avg_rating?: number;
+  /** Optional; show only when non-empty (~22% of books have it). */
+  description?: string;
+  /** Comma-separated from Zilliz; render as tags. */
+  subjects?: string;
 };

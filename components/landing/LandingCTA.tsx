@@ -16,10 +16,10 @@ const LandingCTA = () => {
       >
         <PageContainer className="flex flex-col lg:flex-row items-center justify-between">
           <div className="lg:w-1/2 relative z-10 md:px-8">
-            <h2 className="text-4xl font-semibold text-gray-900 mb-6">
+            <h2 className="text-4xl font-semibold text-primary mb-6">
               Find similar books
             </h2>
-            <p className="text-base font-normal text-gray-600 mb-8">
+            <p className="text-base font-normal text-slate-600 mb-8">
               Search by title or author, pick a book, and see recommendations
               based on subjects and metadata. Every suggestion comes with a short
               explanation—similar themes, era, or reception—so you know why it
