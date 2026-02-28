@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import SearchBook from "./SearchBook";
-import { install as installFetchOverlay } from "@/test/mocks/fetchOverlay";
+import { install as installFetchOverlay, defaultFetch } from "@/test/mocks/fetchOverlay";
 
 describe("SearchBook", () => {
   const baseProps = {
@@ -36,7 +36,6 @@ describe("SearchBook", () => {
           });
         }
       }
-      const { defaultFetch } = require("@/test/mocks/fetchOverlay");
       return defaultFetch(url);
     });
 

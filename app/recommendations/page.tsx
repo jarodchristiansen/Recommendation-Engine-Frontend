@@ -195,7 +195,7 @@ const RecommendationsPage = () => {
         ) : (
           <div className="px-6 pb-6 pt-1 text-center sm:text-left border border-dashed border-slate-200 rounded-lg mx-6 mb-6 py-8">
             <p className="text-slate-500 text-small">
-              Pick a book above to get started—search by title or author, then select one. We'll show similar books in a moment.
+              Pick a book above to get started—search by title or author, then select one. We&apos;ll show similar books in a moment.
             </p>
           </div>
         )}
@@ -220,7 +220,7 @@ const RecommendationsPage = () => {
           >
             See similar books
           </Button>
-          <p className="text-small text-slate-500 mt-2">We'll match by themes, era, and reception.</p>
+          <p className="text-small text-slate-500 mt-2">We&apos;ll match by themes, era, and reception.</p>
         </div>
       )}
 

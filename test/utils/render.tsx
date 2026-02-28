@@ -1,9 +1,10 @@
 import { ReactElement, ReactNode } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import { SessionProvider } from "next-auth/react";
+import type { Session } from "next-auth";
 
 type CustomRenderOptions = RenderOptions & {
-  session?: unknown;
+  session?: Session | null;
 };
 
 function AllTheProviders({
@@ -11,9 +12,9 @@ function AllTheProviders({
   session = null,
 }: {
   children: ReactNode;
-  session?: unknown;
+  session?: Session | null;
 }) {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+  return <SessionProvider session={session ?? undefined}>{children}</SessionProvider>;
 }
 
 export function renderWithProviders(

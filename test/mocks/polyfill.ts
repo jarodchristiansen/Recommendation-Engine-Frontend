@@ -9,3 +9,5 @@ if (typeof (globalThis as any).Response === "undefined") {
   (globalThis as any).Headers = undici.Headers;
   (globalThis as any).fetch = undici.fetch;
 }
+
+export {};
