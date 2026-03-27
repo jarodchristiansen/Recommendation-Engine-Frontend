@@ -15,7 +15,6 @@ const RecommendationsPage = () => {
   const searchParams = useSearchParams();
   const [selectedBooks, setSelectedBooks] = useState<SearchBookType[]>([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const [, setRecommendedBooks] = useState<unknown[]>([]);
   const [fallbackUsed, setFallbackUsed] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const resultsSectionRef = useRef<HTMLElement | null>(null);
@@ -76,15 +75,13 @@ const RecommendationsPage = () => {
         Pick a book you like—we’ll show similar books in a moment. You can change it anytime.
       </p>
 
-      <div
-        className="flex justify-center mb-8 gap-4"
-        role="group"
+      <ol
+        className="flex justify-center mb-8 gap-4 list-none p-0 m-0"
         aria-label="Progress"
       >
         {steps.map((s) => (
-          <div
+          <li
             key={s.step}
-            role="group"
             aria-label={`Step ${s.step} of 2: ${s.label}`}
             aria-current={s.step === currentStep ? "step" : undefined}
             className={`text-center px-4 py-2 rounded-lg min-h-[44px] inline-flex items-center justify-center ${s.step === currentStep
@@ -93,9 +90,9 @@ const RecommendationsPage = () => {
               }`}
           >
             {s.label}
-          </div>
+          </li>
         ))}
-      </div>
+      </ol>
 
       <section className="mb-16">
         <SearchBook
@@ -279,7 +276,6 @@ const RecommendationsPage = () => {
             type="book-recommendations"
             seedBook={selectedBooks[0]}
             selectedItems={[]}
-            setRecommendedItems={setRecommendedBooks}
             setFallbackUsed={setFallbackUsed}
           />
           <div className="mt-10 flex flex-wrap gap-4 justify-center">

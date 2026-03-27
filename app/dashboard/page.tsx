@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import SearchBook from "@/components/search/SearchBook";
 import PageContainer from "@/components/layout/PageContainer";
-import { getRecentSeeds } from "@/app/lib/recentSeeds";
+import { formatRecentSeedAuthorSuffix, getRecentSeeds } from "@/app/lib/recentSeeds";
 import type { SearchBookType } from "@/app/types/book";
 import Button from "@/components/layout/Button";
 
@@ -86,11 +86,7 @@ export default function Dashboard() {
                         className="text-accent hover:underline font-medium"
                       >
                         {seed.title}
-                        {Array.isArray(seed.author_name)
-                          ? ` by ${seed.author_name.join(", ")}`
-                          : seed.author_name
-                            ? ` by ${seed.author_name}`
-                            : ""}
+                        {formatRecentSeedAuthorSuffix(seed)}
                       </Link>
                       <span className="text-slate-500 ml-2">— Find similar again</span>
                     </li>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import Button from "../layout/Button";
 import type { SearchBookType } from "@/app/types/book";
 
-type SearchBookProps = {
+type SearchBookProps = Readonly<{
   onSelectBook?: (books: SearchBookType[]) => void;
   selectedBooks?: SearchBookType[];
   onClearSelection?: () => void;
@@ -14,27 +14,26 @@ type SearchBookProps = {
   showChangeBook?: boolean;
   /** Optional example search terms shown when the user hasn't searched yet (e.g. ["Dune", "Harry Potter"]). Clicking a chip sets the query and runs search. */
   exampleQueries?: string[];
-};
+}>;
+
+type BookEntryProps = Readonly<{
+  book: SearchBookType;
+  handleBookClick: (book: SearchBookType) => void;
+  authorDisplay: (b: SearchBookType) => string;
+  isSelected: (book: SearchBookType) => boolean;
+}>;
 
 const BookEntry = ({
   book,
   handleBookClick,
   authorDisplay,
-  isSelected
-}) => {
+  isSelected,
+}: BookEntryProps) => {
   return (
-    <div
-      key={book.work_id || book.key || book.title}
-      role="button"
-      tabIndex={0}
+    <button
+      type="button"
       onClick={() => handleBookClick(book)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          handleBookClick(book);
-        }
-      }}
-      className={`group p-4 border rounded-lg cursor-pointer transition-transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 hover:border-accent hover:scale-[1.02] ${isSelected(book) ? "border-accent bg-teal-50/50" : "border-slate-200"
+      className={`group w-full text-left p-4 border rounded-lg cursor-pointer transition-transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 hover:border-accent hover:scale-[1.02] ${isSelected(book) ? "border-accent bg-teal-50/50" : "border-slate-200"
         }`}
     >
       <div className="relative w-full h-48 mb-4 bg-slate-100 rounded-lg overflow-hidden">
@@ -58,9 +57,9 @@ const BookEntry = ({
       {book.first_publish_year && (
         <p className="text-xs text-slate-500">{book.first_publish_year}</p>
       )}
-    </div>
-  )
-}
+    </button>
+  );
+};
 
 
 export default function SearchBook({
@@ -79,14 +78,15 @@ export default function SearchBook({
   const [hasSearched, setHasSearched] = useState(false);
 
   const searchBooks = async (overrideQuery?: string) => {
-    const q = String(overrideQuery ?? query ?? "").trim();
+    const fromChip = typeof overrideQuery === "string" ? overrideQuery : undefined;
+    const q = String(fromChip ?? query ?? "").trim();
     if (!q) {
       setResults([]);
       setError(null);
       setHasSearched(true);
       return;
     }
-    setQuery(overrideQuery ?? query);
+    setQuery(fromChip ?? query);
     setLoading(true);
     setError(null);
     setHasSearched(false);
@@ -122,12 +122,18 @@ export default function SearchBook({
     }
   };
 
-  const authorDisplay = (b: SearchBookType) =>
-    Array.isArray(b.author_name) ? (b.author_name as string[]).join(", ") : (b.author_name as string) || "Unknown";
+  const authorDisplay = (b: SearchBookType) => {
+    const a = b.author_name;
+    const text = Array.isArray(a) ? a.join(", ") : a;
+    return text || "Unknown";
+  };
 
   const initialCount = 6;
   const hasMore = results.length > initialCount;
   const extraCount = Math.max(0, results.length - initialCount);
+  const moreResultsButtonLabel = showMore
+    ? "Show less"
+    : `Show ${extraCount} more ${extraCount === 1 ? "result" : "results"}`;
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg border border-slate-200">
@@ -199,22 +205,21 @@ export default function SearchBook({
               ))}
             </div>
             {hasMore && (
-              <div className="mt-6 flex justify-center" role="region" aria-label="Additional search results">
+              <section className="mt-6 flex justify-center" aria-label="Additional search results">
                 <Button
                   variant="outline"
                   onClick={() => setShowMore(!showMore)}
                   aria-expanded={showMore}
                   aria-controls="search-results-extra"
                 >
-                  {showMore ? "Show less" : `Show ${extraCount} more result${extraCount !== 1 ? "s" : ""}`}
+                  {moreResultsButtonLabel}
                 </Button>
-              </div>
+              </section>
             )}
             {showMore && hasMore && (
-              <div
+              <section
                 id="search-results-extra"
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
-                role="region"
                 aria-label="More search results"
               >
                 {results.slice(initialCount, 20).map((book, index) => (
@@ -226,7 +231,7 @@ export default function SearchBook({
                     isSelected={isSelected}
                   />
                 ))}
-              </div>
+              </section>
             )}
           </>
         ) : (

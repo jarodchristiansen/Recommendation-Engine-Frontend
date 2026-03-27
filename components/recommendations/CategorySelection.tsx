@@ -4,10 +4,10 @@
  */
 import React from "react";
 
-type CategorySelectionProps = {
+type CategorySelectionProps = Readonly<{
   onSelectSong: (song: { name: string; artist: string }) => void;
   selectedSongs: { name: string; artist: string }[];
-};
+}>;
 
 const CategorySelection = ({
   onSelectSong,
@@ -34,14 +34,16 @@ const CategorySelection = ({
           <h3 className="text-lg font-semibold mb-2">{category.name}</h3>
           <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {category.songs.map((song) => (
-              <li
-                key={song.name}
-                className={`cursor-pointer p-4 rounded-lg border ${
-                  selectedSongs.includes(song) ? "bg-blue-100" : "bg-gray-100"
-                }`}
-                onClick={() => onSelectSong(song)}
-              >
-                {song.name} by {song.artist}
+              <li key={song.name} className="list-none">
+                <button
+                  type="button"
+                  className={`w-full text-left cursor-pointer p-4 rounded-lg border ${
+                    selectedSongs.includes(song) ? "bg-blue-100" : "bg-gray-100"
+                  }`}
+                  onClick={() => onSelectSong(song)}
+                >
+                  {song.name} by {song.artist}
+                </button>
               </li>
             ))}
           </ul>

@@ -6,10 +6,12 @@ import { getRedisClient } from "../redis";
 const CACHE_TTL_SEC = 3600 * 24 * 30; // 30 days
 const CACHE_KEY_PREFIX = "rec:zilliz:";
 const CACHE_KEY_VERSION = "v1";
+/** Open Library work OL…W id inside a path or raw string */
+const OL_WORK_KEY_RE = /OL\d+W/i;
 
 function normalizeWorkKey(workId: string): string {
   const trimmed = workId.trim();
-  const m = trimmed.match(/OL\d+W/i);
+  const m = OL_WORK_KEY_RE.exec(trimmed);
   const id = m ? m[0].toUpperCase() : trimmed.replace(/^\/works\//, "");
   return id.startsWith("/") ? id : `/works/${id}`;
 }

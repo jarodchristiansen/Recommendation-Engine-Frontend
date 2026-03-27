@@ -49,10 +49,9 @@ const MetaData = ({ path }: MetaDataProps) => {
           />
           <meta property="og:type" content={openGraph.type} />
           <meta property="og:url" content={openGraph.url} />
-          {openGraph.images &&
-            openGraph.images.map((image, index) => (
-              <meta key={index} property="og:image" content={image.url} />
-            ))}
+          {openGraph.images?.map((image) => (
+            <meta key={image.url} property="og:image" content={image.url} />
+          ))}
         </>
       )}
 

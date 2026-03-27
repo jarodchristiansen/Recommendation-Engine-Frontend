@@ -35,7 +35,7 @@ describe("CardGrid", () => {
       />,
     );
 
-    const songTwo = screen.getByText("Book Two").closest("div");
+    const songTwo = screen.getByText("Book Two").closest("button");
     fireEvent.click(songTwo!);
 
     expect(handleItemClick).toHaveBeenCalledWith(recommendationCardItems[1]);

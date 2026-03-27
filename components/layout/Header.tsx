@@ -5,17 +5,15 @@ import { useRouter, usePathname } from "next/navigation";
 import Image from "next/image";
 
 import HeaderIcon from '../../public/images/icons/book-open-svgrepo-com.svg'
+import { prefetchAppRoutes } from "@/app/lib/prefetchAppRoutes";
 
 const Header = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
-  // TODO: Move to centralized location for prefetching client side routes
   useEffect(() => {
-    router.prefetch("/recommendations");
-    router.prefetch("/auth");
-    router.prefetch("/dashboard");
+    prefetchAppRoutes(router);
   }, [router]);
 
   const baseUrl = process.env.BASE_URL || "";
@@ -68,22 +66,15 @@ const Header = () => {
       </ul>
 
       {/* Hamburger Menu - visible on small screens */}
-      <div
+      <button
+        type="button"
         onClick={() => setNav(!nav)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            setNav((prev) => !prev);
-          }
-        }}
-        className="cursor-pointer pr-4 z-10 text-gray-500 md:hidden outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded"
-        role="button"
-        tabIndex={0}
+        className="cursor-pointer pr-4 z-10 text-gray-500 md:hidden outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded bg-transparent border-0 p-0"
         aria-expanded={nav}
         aria-label={nav ? "Close menu" : "Open menu"}
       >
         {nav ? <FaTimes size={30} /> : <FaBars size={30} />}
-      </div>
+      </button>
 
       {/* Mobile Menu with transition */}
       <div

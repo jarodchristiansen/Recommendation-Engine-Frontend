@@ -126,9 +126,7 @@ describe("SearchBook", () => {
       expect(screen.getByText("Book One")).toBeInTheDocument();
     });
 
-    const card =
-      screen.getByText("Book One").closest("[role='button']") ??
-      screen.getByText("Book One").closest("div");
+    const card = screen.getByText("Book One").closest("button");
     fireEvent.click(card!);
 
     expect(onSelectBook).toHaveBeenCalledWith(
