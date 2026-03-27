@@ -43,7 +43,9 @@ describe("DynamicDataDisplay Component", () => {
 
     render(<DynamicDataDisplay {...defaultProps} />);
 
-    expect(screen.getByRole("status")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Finding books that match your taste/i),
+    ).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText("Book One")).toBeInTheDocument();
@@ -71,7 +73,9 @@ describe("DynamicDataDisplay Component", () => {
     await waitFor(() => {
       expect(screen.getByText("Failed to fetch data")).toBeInTheDocument();
     });
-    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Finding books that match your taste/i),
+    ).not.toBeInTheDocument();
   });
 
   it("handles item click and selection", async () => {
@@ -89,9 +93,7 @@ describe("DynamicDataDisplay Component", () => {
       expect(screen.getByText("Book One")).toBeInTheDocument();
     });
 
-    const bookOne =
-      screen.getByText("Book One").closest("[role='button']") ??
-      screen.getByText("Book One").closest("div");
+    const bookOne = screen.getByText("Book One").closest("button");
     fireEvent.click(bookOne!);
 
     expect(mockOnSelectItems).toHaveBeenCalled();

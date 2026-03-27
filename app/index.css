@@ -7,7 +7,6 @@
 }
 
 .audio-hero {
-  /* background-image: url('../images/audioboard-hero-2.jpg'); */
   background-image: url('../public/images/mic-hero.jpg'); /* Adjust the path */
 
   background-size: contain;

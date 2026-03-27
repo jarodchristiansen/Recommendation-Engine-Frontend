@@ -23,7 +23,7 @@ function defaultFetch(url) {
           json: () => Promise.resolve({ error: "Query is required" }),
         });
       }
-    } catch (_) {
+    } catch {
       return Promise.resolve({
         ok: false,
         json: () => Promise.resolve({ error: "Query is required" }),

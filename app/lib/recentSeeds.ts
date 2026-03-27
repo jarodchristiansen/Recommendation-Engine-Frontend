@@ -7,6 +7,17 @@ export type RecentSeed = {
   author_name: string | string[];
 };
 
+/** Suffix after title in lists, e.g. ` by Author` or `""`. */
+export function formatRecentSeedAuthorSuffix(seed: RecentSeed): string {
+  if (Array.isArray(seed.author_name)) {
+    return ` by ${seed.author_name.join(", ")}`;
+  }
+  if (seed.author_name) {
+    return ` by ${seed.author_name}`;
+  }
+  return "";
+}
+
 export function getRecentSeeds(): RecentSeed[] {
   if (typeof window === "undefined") return [];
   try {

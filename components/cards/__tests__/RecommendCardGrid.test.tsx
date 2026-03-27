@@ -20,9 +20,7 @@ describe("RecommendCardGrid", () => {
       />,
     );
 
-    const card =
-      screen.getByText("Book Two").closest("[role='button']") ??
-      screen.getByText("Book Two").closest("div");
+    const card = screen.getByText("Book Two").closest("button");
     fireEvent.click(card!);
 
     expect(handleItemClick).toHaveBeenCalledWith(recommendationCardItems[1]);
@@ -54,9 +52,7 @@ describe("RecommendCardGrid", () => {
     );
 
     expect(screen.getByText("Book One")).toBeInTheDocument();
-    const bookOneCard =
-      screen.getByText("Book One").closest("[role='button']") ??
-      screen.getByText("Book One").closest("div");
+    const bookOneCard = screen.getByText("Book One").closest("button");
     fireEvent.click(bookOneCard!);
     expect(handleItemClick).toHaveBeenCalled();
   });

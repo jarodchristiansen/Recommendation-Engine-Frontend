@@ -1,8 +1,8 @@
-type PageContainerProps = {
+type PageContainerProps = Readonly<{
   children: React.ReactNode;
   className?: string;
   as?: "div" | "main" | "section";
-};
+}>;
 
 /** Shared page content width and horizontal padding. Use for dashboard, recommendations, and landing content. */
 export default function PageContainer({

@@ -1,13 +1,23 @@
 /**
  * Polyfill fetch/Response for MSW in Jest (jsdom does not provide these).
  * Must be imported before any msw/node code.
+ *
+ * Undici's fetch types differ from lib.dom (ReadableStream generics); we patch globals as `unknown`.
  */
-if (typeof (globalThis as any).Response === "undefined") {
-  const undici = require("undici");
-  (globalThis as any).Response = undici.Response;
-  (globalThis as any).Request = undici.Request;
-  (globalThis as any).Headers = undici.Headers;
-  (globalThis as any).fetch = undici.fetch;
+import { fetch, Headers, Request, Response } from "undici";
+
+const patchable = globalThis as unknown as {
+  Response?: unknown;
+  Request?: unknown;
+  Headers?: unknown;
+  fetch?: unknown;
+};
+
+if (typeof patchable.Response === "undefined") {
+  patchable.Response = Response;
+  patchable.Request = Request;
+  patchable.Headers = Headers;
+  patchable.fetch = fetch;
 }
 
 export {};

@@ -7,6 +7,7 @@ import type {
   SearchBookType,
 } from "@/app/types/book";
 import { getCoverUrl } from "@/app/lib/covers";
+import { errorMessageFromApiBody } from "@/app/lib/apiErrors";
 
 const LOADING_MESSAGES = [
   "Matching themes…",
@@ -14,21 +15,34 @@ const LOADING_MESSAGES = [
   "Ranking by reception…",
 ];
 
+function authorNameFromBook(book: SearchBookType): string {
+  const a = book.author_name;
+  if (typeof a === "string") return a;
+  if (Array.isArray(a)) return a.join(", ");
+  return "";
+}
+
 /** Build recommend request body from a search-selected book (avoids Open Library fetch). */
 function buildRecommendBody(book: SearchBookType): RecommendRequestSeed {
   const work_key = book.key?.startsWith("/works/") ? book.key : `/works/${book.work_id}`;
-  const author_name =
-    typeof book.author_name === "string"
-      ? book.author_name
-      : Array.isArray(book.author_name)
-        ? book.author_name.join(", ")
-        : "";
+  const author_name = authorNameFromBook(book);
   const subjects = Array.isArray(book.subject) ? book.subject.slice(0, 10) : [];
   return {
     work_key,
     title: book.title ?? "",
     author_name,
     subjects,
+  };
+}
+
+type ItemIdFields = { work_id?: string; id?: string };
+
+function itemIdFields(item: unknown): ItemIdFields | null {
+  if (typeof item !== "object" || item === null) return null;
+  const o = item as Record<string, unknown>;
+  return {
+    work_id: typeof o.work_id === "string" ? o.work_id : undefined,
+    id: typeof o.id === "string" ? o.id : undefined,
   };
 }
 
@@ -78,15 +92,7 @@ const DynamicDataDisplay = ({
     };
 
     if (!res.ok) {
-      const err =
-        typeof result?.error === "string"
-          ? result.error
-          : typeof result?.detail === "string"
-            ? result.detail
-            : result?.detail ?? result?.error
-              ? JSON.stringify(result.detail ?? result.error)
-              : "Request failed";
-      setError(err);
+      setError(errorMessageFromApiBody(result));
       setData([]);
       setRecommendedItems?.([]);
       return;
@@ -112,25 +118,29 @@ const DynamicDataDisplay = ({
     return () => clearInterval(interval);
   }, [data.length, error]);
 
-  const isSelected = (item: { work_id?: string; id?: string }) => {
-    const id = item?.work_id ?? item?.id;
-    return selectedItems?.some(
-      (s: unknown) => (s as { work_id?: string; id?: string })?.work_id === item.work_id ||
-        (s as { id?: string })?.id === id
-    );
+  const isSelected = (item: ItemIdFields) => {
+    const id = item.work_id ?? item.id;
+    return selectedItems.some((s) => {
+      const f = itemIdFields(s);
+      if (!f) return false;
+      return f.work_id === item.work_id || f.id === id;
+    });
   };
 
   const handleItemClick = (item: unknown) => {
     if (!onSelectItems) return;
-    const i = item as { work_id?: string; id?: string };
-    const id = i?.work_id ?? i?.id;
+    const i = itemIdFields(item);
+    if (!i) return;
+    const id = i.work_id ?? i.id;
     if (isSelected(i)) {
-      const filtered = (selectedItems as unknown[]).filter(
-        (s: unknown) => (s as { work_id?: string; id?: string })?.work_id !== i.work_id && (s as { id?: string })?.id !== id
-      );
+      const filtered = selectedItems.filter((s) => {
+        const f = itemIdFields(s);
+        if (!f) return true;
+        return f.work_id !== i.work_id && f.id !== id;
+      });
       onSelectItems(filtered);
-    } else if ((selectedItems?.length ?? 0) < 3) {
-      onSelectItems([...(selectedItems ?? []), item]);
+    } else if (selectedItems.length < 3) {
+      onSelectItems([...selectedItems, item]);
     }
   };
 
@@ -168,7 +178,7 @@ const DynamicDataDisplay = ({
 
   return (
     <div className="mt-4 p-6 bg-white shadow-md rounded-lg border border-slate-200">
-      {selectedItems && (selectedItems as unknown[]).length > 0 && onClearSelection && (
+      {selectedItems.length > 0 && onClearSelection && (
         <div className="mb-4">
           <Button variant="secondary" size="small" onClick={onClearSelection}>
             Clear Selection
@@ -198,11 +208,10 @@ const DynamicDataDisplay = ({
       )}
 
       {!mappedItems.length && !error && (
-        <div
-          className="flex flex-col items-center text-center text-slate-500 py-12"
+        <output
+          className="flex flex-col items-center text-center text-slate-500 py-12 block w-full"
           aria-live="polite"
           aria-busy="true"
-          role="status"
         >
           <div className="w-12 h-12 border-4 border-slate-200 border-t-accent rounded-full animate-spin mb-4" aria-hidden />
           <span className="text-xl font-semibold mb-2">
@@ -214,7 +223,7 @@ const DynamicDataDisplay = ({
           <p className="text-sm max-w-sm text-slate-400">
             This can take a minute the first time. We&apos;re looking for similar books based on themes, era, and reception.
           </p>
-        </div>
+        </output>
       )}
     </div>
   );

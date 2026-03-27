@@ -46,18 +46,11 @@ const RecommendCardGrid = ({
         const itemId = item.id || `${item.name}-${index}`;
         const showFallback = !item?.image || failedCoverIds.has(itemId);
         return (
-          <div
+          <button
             key={itemId}
-            role="button"
-            tabIndex={0}
+            type="button"
             onClick={() => handleItemClick(item)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleItemClick(item);
-              }
-            }}
-            className={`group p-6 border rounded-lg cursor-pointer transition-transform transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 animate-card-fade-in ${
+            className={`group w-full text-left p-6 border rounded-lg cursor-pointer transition-transform transform outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 animate-card-fade-in ${
               isSelected(item) ? "border-accent scale-[1.02]" : "border-slate-200"
             } hover:border-accent hover:scale-[1.02] bg-white shadow-md border-slate-200`}
             style={{ animationDelay: `${index * 45}ms` }}
@@ -131,10 +124,10 @@ const RecommendCardGrid = ({
 
           {item.similarity_score != null && (
             <span className="inline-block mt-2 text-caption font-medium text-slate-400">
-              {Math.round((item.similarity_score as number) * 100)}% match
+              {Math.round(item.similarity_score * 100)}% match
             </span>
           )}
-        </div>
+        </button>
         );
       })}
     </div>

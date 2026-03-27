@@ -9,6 +9,8 @@ const CACHE_TTL_SEC = 3600 * 24 * 90; // 90 days
 const DEFAULT_LIMIT = 20;
 const FIELDS =
   "key,title,author_name,first_publish_year,cover_i,edition_count,subject,ratings_average,ratings_count";
+/** Open Library work OL…W id inside a key path */
+const OL_WORK_KEY_RE = /OL\d+W/i;
 
 function buildCoverUrl(cover_i: number | undefined): string | undefined {
   if (cover_i == null || cover_i < 0) return undefined;
@@ -16,7 +18,7 @@ function buildCoverUrl(cover_i: number | undefined): string | undefined {
 }
 
 function normalizeWorkId(key: string): string {
-  const m = key.match(/OL\d+W/i);
+  const m = OL_WORK_KEY_RE.exec(key);
   return m ? m[0].toUpperCase() : key;
 }
 
@@ -29,7 +31,7 @@ export async function GET(request: NextRequest) {
   );
   const page = Math.max(1, Number(searchParams.get("page")) || 1);
 
-  if (!q || !q.trim()) {
+  if (!q?.trim()) {
     return NextResponse.json({ error: "Query is required" }, { status: 400 });
   }
 
