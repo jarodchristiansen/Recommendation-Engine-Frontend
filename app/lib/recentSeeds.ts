@@ -5,6 +5,8 @@ export type RecentSeed = {
   work_id: string;
   title: string;
   author_name: string | string[];
+  /** Open Library subject strings; forwarded to POST /recommend for tiered explanations. */
+  subjects?: string[];
 };
 
 /** Suffix after title in lists, e.g. ` by Author` or `""`. */

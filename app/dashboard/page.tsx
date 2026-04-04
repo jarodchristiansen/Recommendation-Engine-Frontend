@@ -1,16 +1,38 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import SearchBook from "@/components/search/SearchBook";
 import PageContainer from "@/components/layout/PageContainer";
+import DynamicDataDisplay from "@/components/cards/DynamicDataDisplay";
 import { formatRecentSeedAuthorSuffix, getRecentSeeds } from "@/app/lib/recentSeeds";
 import type { SearchBookType } from "@/app/types/book";
 import Button from "@/components/layout/Button";
 
+const MOODS = [
+  { id: "cozy",          label: "Cozy" },
+  { id: "epic",          label: "Epic" },
+  { id: "dark",          label: "Dark" },
+  { id: "hopeful",       label: "Hopeful" },
+  { id: "fast-paced",    label: "Fast-paced" },
+  { id: "intellectual",  label: "Intellectual" },
+  { id: "heartbreaking", label: "Heartbreaking" },
+  { id: "funny",         label: "Funny" },
+  { id: "romantic",      label: "Romantic" },
+  { id: "mind-bending",  label: "Mind-bending" },
+] as const;
+
+const EMPTY_ARRAY: never[] = [];
+
 export default function Dashboard() {
-  const recentSeeds = useMemo(() => getRecentSeeds(), []);
+  const [recentSeeds, setRecentSeeds] = useState<ReturnType<typeof getRecentSeeds>>([]);
+  useEffect(() => { setRecentSeeds(getRecentSeeds()); }, []);
   const [selectedBook, setSelectedBook] = useState<SearchBookType | null>(null);
+  const [activeMood, setActiveMood] = useState<string | null>(null);
+  const moodPayload = useMemo(
+    () => (activeMood ? { mood: activeMood } : null),
+    [activeMood]
+  );
 
   return (
     <div className="bg-surface min-h-screen">
@@ -65,6 +87,40 @@ export default function Dashboard() {
                 <Button variant="accent">Get similar books</Button>
               </Link>
             </div>
+          )}
+        </section>
+
+        <section className="mb-16">
+          <h2 className="text-3xl font-semibold text-primary mb-2">
+            Browse by mood
+          </h2>
+          <p className="text-body font-normal text-slate-600 mb-4">
+            Pick a reading vibe and we&apos;ll surface popular books that match.
+          </p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {MOODS.map(({ id, label }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setActiveMood(activeMood === id ? null : id)}
+                className={`rounded-full border px-4 py-2 text-small font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
+                  activeMood === id
+                    ? "border-accent bg-accent text-white"
+                    : "border-slate-200 bg-secondary text-primary hover:border-accent hover:bg-accent/10"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          {activeMood && (
+            <DynamicDataDisplay
+              key={activeMood}
+              endpoint="/api/recommendations/mood"
+              type="mood-recommendations"
+              selectedItems={EMPTY_ARRAY}
+              moodPayload={moodPayload}
+            />
           )}
         </section>
 

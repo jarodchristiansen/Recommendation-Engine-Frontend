@@ -1,12 +1,10 @@
-// Proxies to recommendation-server book recommendations (Zilliz). POST /recommend with work_key + metadata.
+import { createHash } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
+import { getRedisClient, redisGetCached, redisSetCache } from "../redis";
 
-import { getRedisClient } from "../redis";
-
-const CACHE_TTL_SEC = 3600 * 24 * 30; // 30 days
+const CACHE_TTL_SEC = 3600 * 24 * 30;
 const CACHE_KEY_PREFIX = "rec:zilliz:";
-const CACHE_KEY_VERSION = "v1";
-/** Open Library work OL…W id inside a path or raw string */
+const CACHE_KEY_VERSION = "v2";
 const OL_WORK_KEY_RE = /OL\d+W/i;
 
 function normalizeWorkKey(workId: string): string {
@@ -16,15 +14,35 @@ function normalizeWorkKey(workId: string): string {
   return id.startsWith("/") ? id : `/works/${id}`;
 }
 
+function payloadFingerprint(parts: {
+  title: string;
+  author_name: string;
+  subjects: string[];
+}): string {
+  const normalized = JSON.stringify({
+    t: parts.title.trim(),
+    a: parts.author_name.trim(),
+    s: [...parts.subjects]
+      .map((x) => String(x).trim().toLowerCase())
+      .filter(Boolean)
+      .sort(),
+  });
+  return createHash("sha256").update(normalized).digest("hex").slice(0, 12);
+}
+
+function recommendBaseUrl(): string {
+  return process.env.REC_SERVICE_URL?.trim() || "http://127.0.0.1:8000";
+}
+
 async function callRecommendService(body: {
   work_key: string;
   title: string;
   author_name: string;
   subjects: string[];
 }): Promise<{ recommendations: unknown[]; fallback_used: boolean }> {
-  const baseUrl = process.env.REC_SERVICE_URL || "http://localhost:8000";
+  const baseUrl = recommendBaseUrl();
   const token = process.env.REC_SERVICE_TOKEN;
-  const url = `${baseUrl}/recommend`;
+  const url = `${baseUrl.replace(/\/$/, "")}/recommend`;
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -61,19 +79,15 @@ export async function GET(request: NextRequest) {
   }
 
   const work_key = normalizeWorkKey(work_id);
-  const cacheKey = `${CACHE_KEY_PREFIX}${work_key}:${CACHE_KEY_VERSION}`;
+  const fp = payloadFingerprint({ title: "", author_name: "", subjects: [] });
+  const cacheKey = `${CACHE_KEY_PREFIX}${work_key}:${fp}:${CACHE_KEY_VERSION}`;
 
-  try {
-    const redisClient = getRedisClient();
-    const cached = await redisClient.get(cacheKey);
-    if (cached) {
-      return NextResponse.json(JSON.parse(cached));
-    }
-  } catch {
-    // proceed without cache
+  const redisClient = getRedisClient();
+  const cached = await redisGetCached(redisClient, cacheKey);
+  if (cached) {
+    return NextResponse.json(JSON.parse(cached));
   }
 
-  // GET is work_id-only; no Open Library fetch. Recommendations only when book is in Zilliz (Tier 1).
   const body = {
     work_key,
     title: "",
@@ -83,18 +97,13 @@ export async function GET(request: NextRequest) {
 
   try {
     const response = await callRecommendService(body);
-    try {
-      const redisClient = getRedisClient();
-      if (response.recommendations.length > 0) {
-        await redisClient.set(
-          cacheKey,
-          JSON.stringify(response),
-          "EX",
-          CACHE_TTL_SEC,
-        );
-      }
-    } catch {
-      // ignore cache write errors
+    if (response.recommendations.length > 0) {
+      await redisSetCache(
+        redisClient,
+        cacheKey,
+        JSON.stringify(response),
+        CACHE_TTL_SEC,
+      );
     }
     return NextResponse.json(response);
   } catch (e) {
@@ -135,32 +144,24 @@ export async function POST(request: NextRequest) {
     subjects: Array.isArray(body.subjects) ? body.subjects : [],
   };
 
-  const cacheKey = `${CACHE_KEY_PREFIX}${work_key}:${CACHE_KEY_VERSION}`;
+  const fp = payloadFingerprint(payload);
+  const cacheKey = `${CACHE_KEY_PREFIX}${work_key}:${fp}:${CACHE_KEY_VERSION}`;
 
-  try {
-    const redisClient = getRedisClient();
-    const cached = await redisClient.get(cacheKey);
-    if (cached) {
-      return NextResponse.json(JSON.parse(cached));
-    }
-  } catch {
-    // proceed without cache
+  const redisClient = getRedisClient();
+  const cached = await redisGetCached(redisClient, cacheKey);
+  if (cached) {
+    return NextResponse.json(JSON.parse(cached));
   }
 
   try {
     const response = await callRecommendService(payload);
-    try {
-      const redisClient = getRedisClient();
-      if (response.recommendations.length > 0) {
-        await redisClient.set(
-          cacheKey,
-          JSON.stringify(response),
-          "EX",
-          CACHE_TTL_SEC,
-        );
-      }
-    } catch {
-      // ignore
+    if (response.recommendations.length > 0) {
+      await redisSetCache(
+        redisClient,
+        cacheKey,
+        JSON.stringify(response),
+        CACHE_TTL_SEC,
+      );
     }
     return NextResponse.json(response);
   } catch (e) {

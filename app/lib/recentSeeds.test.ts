@@ -97,4 +97,15 @@ describe("recentSeeds", () => {
     });
     expect(findSeedByWorkId("OL999W")).toBeUndefined();
   });
+
+  it("addRecentSeed persists optional subjects for explanation POST body", () => {
+    addRecentSeed({
+      work_id: "OL1W",
+      title: "Dune",
+      author_name: "Frank Herbert",
+      subjects: ["Science fiction", "Adventure"],
+    });
+    const found = findSeedByWorkId("OL1W");
+    expect(found?.subjects).toEqual(["Science fiction", "Adventure"]);
+  });
 });

@@ -67,3 +67,35 @@ export function getRedisClient() {
 
   return redisInstance;
 }
+/** lazyConnect clients stay in wait until connect(); improves reliability in serverless. */
+export async function ensureRedisConnected(client) {
+  try {
+    if (client.status === "wait" || client.status === "end") {
+      await client.connect();
+    }
+  } catch (err) {
+    console.warn("[Redis] ensureRedisConnected:", err?.message || err);
+    throw err;
+  }
+}
+const REDIS_GET_MS = 3000;
+const REDIS_SET_MS = 2500;
+export async function redisGetCached(client, key) {
+  try { await ensureRedisConnected(client); } catch { return null; }
+  try {
+    return await Promise.race([
+      client.get(key),
+      new Promise((resolve) => setTimeout(() => resolve(null), REDIS_GET_MS)),
+    ]);
+  } catch { return null; }
+}
+export async function redisSetCache(client, key, value, ttlSec) {
+  try { await ensureRedisConnected(client); } catch { return; }
+  try {
+    await Promise.race([
+      client.set(key, value, "EX", ttlSec),
+      new Promise((resolve) => setTimeout(resolve, REDIS_SET_MS)),
+    ]);
+  } catch (err) { console.warn("[Redis] SET failed:", err?.message || err); }
+}
+

@@ -110,9 +110,9 @@ const RecommendCardGrid = ({
             <p className="mt-2 text-small text-slate-400">No ratings yet</p>
           )}
 
-          {/* Human-readable explanation instead of raw feature radar */}
+          {/* Deterministic explanation (Feature 1) — falls back to feature-based text for legacy items */}
           <p className="mt-3 text-small text-slate-500 italic" aria-label="Why this book is similar">
-            {getWhySimilarText(item.feature_difference)}
+            {item.explanation ?? getWhySimilarText(item.feature_difference)}
           </p>
 
           {/* Description when present (~22% of books); line-clamp to avoid overwhelming the card */}

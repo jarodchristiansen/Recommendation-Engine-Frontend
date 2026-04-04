@@ -76,4 +76,6 @@ export type RecommendationCardItem = {
   description?: string;
   /** Comma-separated from Zilliz; render as tags. */
   subjects?: string;
+  /** Deterministic explanation from backend (Feature 1). */
+  explanation?: string;
 };

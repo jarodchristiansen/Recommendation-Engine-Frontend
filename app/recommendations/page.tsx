@@ -52,7 +52,13 @@ const RecommendationsPage = () => {
     if (!workId || selectedBooks.length > 0) return;
     const seed = findSeedByWorkId(workId);
     const book: SearchBookType = seed
-      ? { work_id: seed.work_id, key: `/works/${seed.work_id}`, title: seed.title, author_name: seed.author_name }
+      ? {
+        work_id: seed.work_id,
+        key: `/works/${seed.work_id}`,
+        title: seed.title,
+        author_name: seed.author_name,
+        ...(seed.subjects?.length ? { subject: seed.subjects } : {}),
+      }
       : { work_id: workId, key: `/works/${workId}`, title: "A book you chose", author_name: "" };
     setSelectedBooks([book]);
     setCurrentStep(2);
@@ -209,6 +215,9 @@ const RecommendationsPage = () => {
                   work_id: book.work_id,
                   title: book.title,
                   author_name: (Array.isArray(book.author_name) ? book.author_name.join(", ") : book.author_name) ?? "",
+                  ...(Array.isArray(book.subject) && book.subject.length > 0
+                    ? { subjects: book.subject.slice(0, 10) }
+                    : {}),
                 });
               }
               setShowRecommendations(true);
