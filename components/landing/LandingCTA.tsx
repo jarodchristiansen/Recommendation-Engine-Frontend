@@ -222,7 +222,7 @@ const LandingCTA = () => {
             minutes.
           </p>
           <p className="text-sm text-slate-500 mb-10">
-            No account required. No data stored. Free forever.
+            No account required. No data stored. Free Service.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/recommendations">

@@ -55,7 +55,7 @@ const Footer = () => {
             <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">Our promise</p>
             <ul className="space-y-2">
               {[
-                "Free forever—no hidden tiers",
+                "Free service, no hidden tiers",
                 "No data stored or sold",
                 "No account required to start",
                 "Open catalog, transparent picks",

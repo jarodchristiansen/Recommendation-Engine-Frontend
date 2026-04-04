@@ -46,3 +46,11 @@ export function getCoverUrl(options: {
 }): string | null {
   return getCoverUrlFromId(options.cover_id ?? options.cover_i);
 }
+
+/** Public work page on openlibrary.org (for reader-facing detail links). */
+export function openLibraryWorkPageUrl(workId: string | null | undefined): string | null {
+  if (!workId || typeof workId !== "string") return null;
+  const olid = workId.replace(/^\/works\//, "").trim();
+  if (!olid) return null;
+  return `https://openlibrary.org/works/${encodeURIComponent(olid)}`;
+}
