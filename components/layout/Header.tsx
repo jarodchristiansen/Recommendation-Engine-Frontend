@@ -24,7 +24,7 @@ const Header = () => {
       className="flex justify-between items-center w-full h-20 px-4 text-white bg-primary fixed top-0 z-50"
       data-testid="banner"
     >
-      {/* Logo - open book icon for Book Rec */}
+      {/* Logo - open book icon + brand name */}
       <div>
         <h1 className="text-2xl ml-2">
           <a
@@ -34,6 +34,7 @@ const Header = () => {
             aria-label="Book Rec home"
           >
             <Image src={HeaderIcon} alt="book icon" />
+            <span className="text-lg font-semibold tracking-tight text-primary-foreground">Book Rec</span>
           </a>
         </h1>
       </div>
@@ -44,15 +45,27 @@ const Header = () => {
           return (
             <li
               key={id}
-              className={`px-4 cursor-pointer capitalize font-medium hover:text-accent duration-200 ${index === links.length - 1 ? "font-bold" : "text-gray-400"
-                }`}
+              className={`px-4 cursor-pointer capitalize font-medium hover:text-accent duration-200 ${
+                index === links.length - 1
+                  ? "ml-2"
+                  : "text-gray-400"
+              }`}
             >
-              <Link
-                href={`${baseUrl}${link}`}
-                className="outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded"
-              >
-                {text}
-              </Link>
+              {index === links.length - 1 ? (
+                <Link
+                  href={`${baseUrl}${link}`}
+                  className="inline-block px-4 py-1.5 rounded-full border border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200 text-sm font-semibold outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+                >
+                  {text}
+                </Link>
+              ) : (
+                <Link
+                  href={`${baseUrl}${link}`}
+                  className="outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded"
+                >
+                  {text}
+                </Link>
+              )}
             </li>
           );
         })}

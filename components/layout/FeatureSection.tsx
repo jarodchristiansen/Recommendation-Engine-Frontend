@@ -8,19 +8,20 @@ type FeatureProps = {
 
 const FeatureSection = ({ title, description, icon = "" }: FeatureProps) => {
   return (
-    <div className="text-center bg-surface border border-slate-200 p-8 rounded-lg shadow-sm hover:border-accent/30 hover:shadow-md transition-all duration-200">
-      {/* Add an icon here */}
-      <div className="mb-4">
+    <div className="flex flex-col bg-white border border-slate-200 p-7 rounded-xl shadow-sm hover:border-accent/40 hover:shadow-md transition-all duration-200 group">
+      {/* Icon in tinted circle */}
+      <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent/20 transition-colors duration-200 flex-shrink-0">
         <Image
           src={icon}
-          alt={`${title} icon`}
-          width={50}
-          height={50}
-          className="mx-auto h-20 w-20"
+          alt=""
+          width={24}
+          height={24}
+          className="w-6 h-6"
+          aria-hidden
         />
       </div>
-      <h3 className="text-2xl font-semibold mb-4">{title}</h3>
-      <p className="text-slate-600 font-normal">{description}</p>
+      <h3 className="text-lg font-semibold text-primary mb-2">{title}</h3>
+      <p className="text-slate-500 text-sm leading-relaxed">{description}</p>
     </div>
   );
 };
