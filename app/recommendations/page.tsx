@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/legacy/image";
 import { useSearchParams } from "next/navigation";
 import SearchBook from "@/components/search/SearchBook";
@@ -53,12 +53,12 @@ const RecommendationsPage = () => {
     const seed = findSeedByWorkId(workId);
     const book: SearchBookType = seed
       ? {
-          work_id: seed.work_id,
-          key: `/works/${seed.work_id}`,
-          title: seed.title,
-          author_name: seed.author_name,
-          ...(seed.subjects?.length ? { subject: seed.subjects } : {}),
-        }
+        work_id: seed.work_id,
+        key: `/works/${seed.work_id}`,
+        title: seed.title,
+        author_name: seed.author_name,
+        ...(seed.subjects?.length ? { subject: seed.subjects } : {}),
+      }
       : { work_id: workId, key: `/works/${workId}`, title: "A book you chose", author_name: "" };
     setSelectedBooks([book]);
     setCurrentStep(2);
