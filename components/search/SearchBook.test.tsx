@@ -46,7 +46,7 @@ describe("SearchBook", () => {
     fireEvent.click(screen.getByRole("button", { name: /search/i }));
 
     expect(
-      await screen.findByText(/no books found\. try another search\./i, {}, { timeout: 3000 }),
+      await screen.findByText(/no books matched that search/i, {}, { timeout: 3000 }),
     ).toBeInTheDocument();
     expect(screen.queryByText("Book One")).not.toBeInTheDocument();
   });
@@ -100,7 +100,7 @@ describe("SearchBook", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(/no books found\. try another search\./i),
+        screen.getByText(/no books matched that search/i),
       ).toBeInTheDocument();
     });
   });

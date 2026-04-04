@@ -41,7 +41,7 @@ describe("RecommendationsPage", () => {
       screen.getByText(/pick a book above to get started/i),
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: /see similar books/i }),
+      screen.queryByRole("button", { name: /find similar books/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -62,7 +62,7 @@ describe("RecommendationsPage", () => {
     });
 
     expect(
-      screen.getByRole("button", { name: /see similar books/i }),
+      screen.getByRole("button", { name: /find similar books/i }),
     ).toBeInTheDocument();
   });
 });
