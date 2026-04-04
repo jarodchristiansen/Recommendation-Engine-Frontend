@@ -1,20 +1,13 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 import HeaderIcon from '../../public/images/icons/book-open-svgrepo-com.svg'
-import { prefetchAppRoutes } from "@/app/lib/prefetchAppRoutes";
-
 const Header = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
-
-  useEffect(() => {
-    prefetchAppRoutes(router);
-  }, [router]);
 
   const baseUrl = process.env.BASE_URL || "";
 

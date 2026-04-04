@@ -48,9 +48,11 @@ function itemIdFields(item: unknown): ItemIdFields | null {
 
 type DynamicDataDisplayProps = {
   endpoint: string;
-  type: "book-recommendations" | "recommendations";
+  type: "book-recommendations" | "mood-recommendations";
   /** When set, POST this seed to endpoint instead of GET. Use for book recommendations to avoid Open Library fetch. */
   seedBook?: SearchBookType | null;
+  /** When set, POST this JSON payload directly (e.g. mood requests). Takes precedence over seedBook. */
+  moodPayload?: Record<string, unknown> | null;
   onSelectItems?: (items: unknown[]) => void;
   selectedItems: unknown[];
   onClearSelection?: () => void;
@@ -63,6 +65,7 @@ const DynamicDataDisplay = ({
   endpoint,
   type,
   seedBook,
+  moodPayload,
   onSelectItems,
   selectedItems,
   onClearSelection,
@@ -75,7 +78,13 @@ const DynamicDataDisplay = ({
 
   const fetchData = useCallback(async () => {
     setError(null);
-    const init: RequestInit = seedBook
+    const init: RequestInit = moodPayload
+      ? {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(moodPayload),
+        }
+      : seedBook
       ? {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -103,7 +112,7 @@ const DynamicDataDisplay = ({
     setData(list);
     setRecommendedItems?.(list);
     setFallbackUsed?.(result.fallback_used ?? false);
-  }, [endpoint, seedBook, setRecommendedItems, setFallbackUsed]);
+  }, [endpoint, seedBook, moodPayload, setRecommendedItems, setFallbackUsed]);
 
   useEffect(() => {
     fetchData();
@@ -172,6 +181,7 @@ const DynamicDataDisplay = ({
         avg_rating: item.avg_rating as number | undefined,
         description: (item.description as string)?.trim() || undefined,
         subjects: (item.subjects as string)?.trim() || undefined,
+        explanation: (item.explanation as string) || undefined,
       };
     });
   }, [data]);
